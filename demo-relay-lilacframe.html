@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Illustrative Relay Lilacframe concept: business-first automation, AI assistants, connected systems, and human checkpoints.">
+  <title>Relay — Lilacframe</title>
+  <style>
+:root{color-scheme:light;--ink:#171820;--paper:#f7f4ef;--lab:#11131a;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-12:48px;--radius-sm:8px;--radius-md:24px;--radius-lg:32px;--radius-pill:999px;--font-sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--font-mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;--type-caption:11px;--type-micro:12px;--type-small:13px;--type-compact:14px;--type-body:15px;--type-card:16px;--motion-fast:150ms;--ease:cubic-bezier(.2,.75,.2,1);--focus:3px solid var(--color-white);--focus-shadow:0 0 0 6px var(--color-black);--color-white:#fff;--color-black:#111;--focus-ink:#293a86;--lilac-button:#7f62ad;--lilac-caption:#43334e;--lilac-card:#fbf9f1;--lilac-deep:#392345;--lilac-frame:#ae83d2;--lilac-ink:#291b36;--lilac-panel:#d8c5f2;--lilac-paper:#f9f6ed;}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px;background:var(--lab)}
+body{min-width:320px;margin:0;color:var(--ink);background:var(--paper);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+svg{display:block;max-width:100%}
+:focus-visible{outline:var(--focus);outline-offset:2px;box-shadow:var(--focus-shadow)}
+::selection{color:var(--color-white);background:var(--focus-ink)}
+.skip-link{position:fixed;z-index:200;inset-block-start:8px;inset-inline-start:8px;padding:10px 14px;border-radius:var(--radius-pill);color:var(--color-black);background:var(--color-white);transform:translateY(-160%);transition:transform var(--motion-fast) var(--ease)}
+.skip-link:focus{transform:translateY(0)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+main{display:block}
+.design{position:relative;min-height:100vh;min-height:100svh;padding:clamp(18px,3.4vw,var(--space-12)) clamp(14px,4vw,60px) clamp(28px,5vw,68px);scroll-margin-top:0}
+.design__inner{width:min(100%,1520px);margin-inline:auto}
+.design__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:34px;margin:0 auto var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);letter-spacing:.02em}
+.design__meta h2{margin:0;color:inherit;font:inherit;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.design__meta p{margin:0;opacity:.78}
+.design__index{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:var(--space-1) 11px;border:1px solid currentColor;border-radius:var(--radius-pill);font-family:var(--font-sans);font-size:var(--type-micro);font-weight:600}
+.mock-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:60px}
+.mock-brand{display:inline-flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.035em}
+.mock-brand__symbol{display:grid;width:28px;height:28px;place-items:center;border:2px solid currentColor;border-radius:50%;font-size:var(--type-compact);font-weight:900}
+.mock-brand__name{font-size:var(--type-card)}
+.mock-links{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex-wrap:wrap}
+.mock-links a{display:inline-flex;align-items:center;min-height:40px;font-size:var(--type-micro);font-weight:600}
+.mock-cta{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:9px var(--space-4);border:1px solid currentColor;border-radius:var(--radius-pill);font-size:var(--type-micro);font-weight:700;transition:transform var(--motion-fast) var(--ease),background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease)}
+.mock-cta:hover{transform:translateY(-2px)}
+.eyebrow{margin:0 0 var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);font-weight:600;letter-spacing:.11em;text-transform:uppercase}
+.body-copy{max-width:58ch;margin:0;font-size:var(--type-body);line-height:1.6}
+.arrow{display:inline-block;font-size:var(--type-card);line-height:1}
+[dir="rtl"] .arrow{transform:scaleX(-1)}
+[dir="rtl"] .design *{letter-spacing:normal}
+.design--lilacframe{color:var(--lilac-ink);background:var(--lilac-frame)}
+.lilac-window{padding:clamp(var(--space-3),2.2vw,28px);border:3px solid var(--lilac-ink);border-radius:var(--radius-lg);background:var(--lilac-paper);box-shadow:8px 8px 0 var(--lilac-ink)}
+.lilac-nav{padding:0 6px var(--space-4)}
+.lilac-nav .mock-brand__symbol{border-radius:var(--radius-sm);color:var(--lilac-paper);background:var(--lilac-ink)}
+.lilac-nav .mock-cta{border:1px solid var(--lilac-ink);color:var(--lilac-paper);background:var(--lilac-ink)}
+.lilac-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(260px,.95fr);align-items:center;gap:clamp(var(--space-5),5vw,72px);min-height:390px;padding:clamp(22px,4vw,56px);border-radius:var(--radius-md);background:var(--lilac-panel)}
+.lilac-hero h3{max-width:14ch;margin:0;font-size:clamp(35px,5.1vw,66px);font-weight:700;letter-spacing:-.065em;line-height:.98;text-wrap:balance}
+.lilac-hero .body-copy{margin-top:17px;color:var(--lilac-caption)}
+.lilac-hero .mock-cta{margin-top:22px;color:var(--lilac-paper);background:var(--lilac-deep);border-color:var(--lilac-deep)}
+.lilac-art{width:min(100%,490px);justify-self:center}
+.lilac-capabilities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-3);padding:var(--space-5) var(--space-1) 0}
+.lilac-capability{display:flex;align-items:center;gap:10px;min-height:62px;padding:var(--space-3) 15px;border:1px solid var(--lilac-ink);border-radius:14px;background:var(--lilac-card);font-size:var(--type-small);font-weight:600}
+.lilac-capability b{display:grid;flex:0 0 auto;width:28px;height:28px;place-items:center;border-radius:50%;color:var(--lilac-paper);background:var(--lilac-button);font-family:var(--font-mono);font-size:var(--type-micro)}
+.lilac-proof{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-top:var(--space-4);padding:var(--space-4) 6px 2px;border-top:1px solid rgba(41,27,54,.3);font-size:var(--type-micro)}
+@media(max-width:1000px){.lilac-hero{grid-template-columns:minmax(0,1fr) minmax(220px,.8fr)}}
+@media(max-width:760px){.design__meta{align-items:flex-start;flex-wrap:wrap}.design__meta p{order:3;width:100%}.mock-nav{flex-wrap:wrap;justify-content:space-between;padding-block:var(--space-2)}.mock-links{justify-content:flex-start}.lilac-nav{padding-bottom:var(--space-3)}.lilac-hero{grid-template-columns:minmax(0,1fr);min-height:auto}.lilac-art{width:min(100%,410px)}.lilac-capabilities{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:520px){.design{padding:14px 10px 30px;scroll-margin-top:0}.design__meta{font-size:var(--type-caption)}.design__index{min-height:34px;padding-inline:9px}.mock-nav{gap:var(--space-2)}.mock-links{gap:2px 10px}.mock-links a{min-height:38px;font-size:var(--type-micro)}.mock-cta{min-height:44px;padding:var(--space-2) var(--space-3);font-size:var(--type-micro)}.lilac-window{padding:10px;border-width:2px;border-radius:22px;box-shadow:5px 5px 0 var(--lilac-ink)}.lilac-hero{gap:18px;padding:22px 17px;border-radius:17px}.lilac-hero h3{font-size:clamp(35px,10vw,48px)}.lilac-art{width:100%}.lilac-proof{align-items:flex-start;flex-direction:column}}
+@media(pointer:coarse){.mock-links a,.mock-cta,.design__index{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(forced-colors:active){.design,.mock-cta{border:1px solid CanvasText}.mock-cta{color:ButtonText;background:ButtonFace}:focus-visible{outline:3px solid Highlight;box-shadow:0 0 0 5px Canvas}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#lilacframe">Skip to the concept</a>
+  <main id="main">
+    <h1 class="visually-hidden">02 / Lilacframe — Relay concept</h1>
+    <section class="design design--lilacframe" id="lilacframe" aria-labelledby="label-lilacframe">
+      <div class="design__inner">
+        <div class="design__meta"><h2 id="label-lilacframe">02 / Lilacframe</h2><p>Lavender canvas · framed browser chrome · floating paper illustration</p><a class="design__index" href="#lilacframe">Back to top <span class="arrow" aria-hidden="true">↑</span></a></div>
+        <div class="lilac-window">
+          <header class="mock-nav lilac-nav"><a class="mock-brand" href="#lilacframe" aria-label="Relay Lilacframe, top"><span class="mock-brand__symbol" aria-hidden="true">R</span><span class="mock-brand__name">Relay</span></a><nav class="mock-links" aria-label="Lilacframe navigation"><a href="#lilacframe-approach">Approach</a><a href="#lilacframe-capabilities">Capabilities</a></nav><a class="mock-cta" href="#lilacframe-approach">Explore the system <span class="arrow" aria-hidden="true">↗</span></a></header>
+          <div class="lilac-hero" id="lilacframe-approach"><div><p class="eyebrow">Clear systems, quieter days</p><h3>You keep the decisions. Relay carries the routine.</h3><p class="body-copy">A business-first partner for automation, AI assistance, and integrations that make the work behind the work feel lighter.</p><a class="mock-cta" href="#lilacframe-capabilities">See what Relay connects <span class="arrow" aria-hidden="true">↘</span></a></div><svg class="lilac-art" viewBox="0 0 560 380" aria-hidden="true"><path d="M76 309c19-70 66-127 124-160 36-20 82-44 150-41 67 2 112 36 142 81 25 38 25 75 11 115z" fill="#987dc6" stroke="#291b36" stroke-width="5"/><path d="M125 266c-2-51 12-92 41-120 21-20 46-22 62-4 15 17 6 39-13 57l-28 26 45-19c16-7 29 0 30 14 1 17-17 27-41 36l-40 15c22 0 49-8 66 0 14 7 13 24-1 31H117z" fill="#fbf8f0" stroke="#291b36" stroke-width="5" stroke-linejoin="round"/><path d="m174 194 48-32m-34 59 74-31" stroke="#291b36" stroke-width="5" stroke-linecap="round"/><rect x="302" y="62" width="166" height="76" rx="12" fill="#fbf8f0" stroke="#291b36" stroke-width="4" transform="rotate(5 302 62)"/><path d="M325 91h96m-96 17h58" stroke="#8c6db7" stroke-width="6" stroke-linecap="round"/><rect x="359" y="166" width="148" height="74" rx="12" fill="#dff6ab" stroke="#291b36" stroke-width="4" transform="rotate(-7 359 166)"/><circle cx="384" cy="197" r="10" fill="#e36c9c" stroke="#291b36" stroke-width="3"/><path d="M405 194h76m-76 19h53" stroke="#291b36" stroke-width="5" stroke-linecap="round"/><path d="m96 113 17-10 16 10-16 10z" fill="#f6a7ca" stroke="#291b36" stroke-width="3"/><path d="m471 284 9 18 20 3-15 13 4 20-18-10-17 11 4-21-16-12 21-3z" fill="#ffe284" stroke="#291b36" stroke-width="3"/><circle cx="260" cy="78" r="5" fill="#291b36"/><path d="M260 38v17m-24 23h13m-6-18 9 9m20-9-9 9" stroke="#291b36" stroke-width="3" stroke-linecap="round"/></svg></div>
+          <div class="lilac-capabilities" id="lilacframe-capabilities"><div class="lilac-capability"><b>01</b><span>Automate routine work</span></div><div class="lilac-capability"><b>02</b><span>Carry useful context</span></div><div class="lilac-capability"><b>03</b><span>Pause for human review</span></div></div>
+          <div class="lilac-proof"><span>Built around your business process</span><span>Illustrative Relay concept · no performance claims</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

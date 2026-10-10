@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Illustrative Relay Afterdark concept: business-first automation, AI assistants, connected systems, and human checkpoints.">
+  <title>Relay — Afterdark</title>
+  <style>
+:root{color-scheme:light;--ink:#171820;--paper:#f7f4ef;--lab:#11131a;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-12:48px;--radius-sm:8px;--radius-pill:999px;--font-sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--font-mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;--type-caption:11px;--type-micro:12px;--type-small:13px;--type-compact:14px;--type-body:15px;--type-card:16px;--type-subhead:17px;--motion-fast:150ms;--ease:cubic-bezier(.2,.75,.2,1);--focus:3px solid var(--color-white);--focus-shadow:0 0 0 6px var(--color-black);--color-white:#fff;--color-black:#111;--focus-ink:#293a86;--afterdark-bg:#111014;--afterdark-card:#f7efe7;--afterdark-cta:#f05ba8;--afterdark-ink:#17151b;--afterdark-lime:#d7ff55;--afterdark-line:#2c2a30;--afterdark-muted:#d3d0d3;--afterdark-muted-soft:#c5c0c5;--afterdark-paper:#fff9f4;--afterdark-pink:#ff6ba9;--afterdark-soft-surface:#f2eff0;}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px;background:var(--lab)}
+body{min-width:320px;margin:0;color:var(--ink);background:var(--paper);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+svg{display:block;max-width:100%}
+:focus-visible{outline:var(--focus);outline-offset:2px;box-shadow:var(--focus-shadow)}
+::selection{color:var(--color-white);background:var(--focus-ink)}
+.skip-link{position:fixed;z-index:200;inset-block-start:8px;inset-inline-start:8px;padding:10px 14px;border-radius:var(--radius-pill);color:var(--color-black);background:var(--color-white);transform:translateY(-160%);transition:transform var(--motion-fast) var(--ease)}
+.skip-link:focus{transform:translateY(0)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+main{display:block}
+.design{position:relative;min-height:100vh;min-height:100svh;padding:clamp(18px,3.4vw,var(--space-12)) clamp(14px,4vw,60px) clamp(28px,5vw,68px);scroll-margin-top:0}
+.design__inner{width:min(100%,1520px);margin-inline:auto}
+.design__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:34px;margin:0 auto var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);letter-spacing:.02em}
+.design__meta h2{margin:0;color:inherit;font:inherit;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.design__meta p{margin:0;opacity:.78}
+.design__index{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:var(--space-1) 11px;border:1px solid currentColor;border-radius:var(--radius-pill);font-family:var(--font-sans);font-size:var(--type-micro);font-weight:600}
+.mock-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:60px}
+.mock-brand{display:inline-flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.035em}
+.mock-brand__symbol{display:grid;width:28px;height:28px;place-items:center;border:2px solid currentColor;border-radius:50%;font-size:var(--type-compact);font-weight:900}
+.mock-brand__name{font-size:var(--type-card)}
+.mock-links{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex-wrap:wrap}
+.mock-links a{display:inline-flex;align-items:center;min-height:40px;font-size:var(--type-micro);font-weight:600}
+.mock-cta{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:9px var(--space-4);border:1px solid currentColor;border-radius:var(--radius-pill);font-size:var(--type-micro);font-weight:700;transition:transform var(--motion-fast) var(--ease),background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease)}
+.mock-cta:hover{transform:translateY(-2px)}
+.eyebrow{margin:0 0 var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);font-weight:600;letter-spacing:.11em;text-transform:uppercase}
+.body-copy{max-width:58ch;margin:0;font-size:var(--type-body);line-height:1.6}
+.arrow{display:inline-block;font-size:var(--type-card);line-height:1}
+[dir="rtl"] .arrow{transform:scaleX(-1)}
+[dir="rtl"] .design *{letter-spacing:normal}
+.small-note{font-size:var(--type-micro);line-height:1.5}
+.capability-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-3)}
+.capability{min-width:0;padding:var(--space-4);border:1px solid currentColor;border-radius:16px}
+.capability__index{display:block;margin-bottom:var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);opacity:.72}
+.capability h4{margin:0;font-size:var(--type-card);font-weight:700;letter-spacing:-.02em}
+.capability p{margin:7px 0 0;font-size:var(--type-small);line-height:1.5}
+.design--afterdark{color:var(--afterdark-paper);background:var(--afterdark-bg)}
+.afterdark-site{position:relative;isolation:isolate;overflow:hidden;padding:clamp(14px,2vw,28px);border:1px solid rgba(255,255,255,.38);border-radius:30px;background:var(--afterdark-bg)}
+.afterdark__contours{position:absolute;z-index:-1;inset:0;width:100%;height:100%;pointer-events:none;opacity:.68}
+.afterdark__contours path{fill:none;stroke:var(--afterdark-line);stroke-width:2}
+.afterdark-nav{position:relative;z-index:2;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:clamp(10px,2vw,24px);min-height:66px;padding:8px 10px 8px 16px;border:1px solid rgba(255,255,255,.82);border-radius:16px;color:var(--afterdark-ink);background:var(--afterdark-paper);box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.afterdark-nav .mock-brand__symbol{width:34px;height:34px;border:0;border-radius:9px;color:var(--afterdark-ink);background:var(--afterdark-lime);font-size:var(--type-subhead)}
+.afterdark-nav .mock-links{gap:5px}
+.afterdark-nav .mock-links a{min-height:42px;padding-inline:12px;border-radius:9px;transition:background var(--motion-fast) var(--ease)}
+.afterdark-nav .mock-links a:hover{background:rgba(23,21,27,.08)}
+.afterdark-nav .mock-cta{justify-self:end;min-height:44px;padding-inline:15px;border-color:transparent;border-radius:11px;color:var(--afterdark-ink);background:var(--afterdark-cta)}
+.afterdark-hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr);align-items:center;max-width:1240px;min-height:410px;margin:0 auto;padding:clamp(62px,8vw,112px) 0 42px;text-align:center}
+.afterdark-hero__copy{position:relative;z-index:2;max-width:980px;margin-inline:auto}
+.afterdark-hero .eyebrow{color:var(--afterdark-lime)}
+.afterdark-hero h3{max-width:920px;margin:0 auto;font-family:Impact,Haettenschweiler,"Arial Narrow Bold",var(--font-sans);font-size:clamp(44px,7.6vw,100px);font-weight:900;letter-spacing:-.035em;line-height:.94;text-wrap:balance}
+.afterdark-hero h3 em{color:var(--afterdark-pink);font-style:normal}
+.afterdark-hero .body-copy{max-width:58ch;margin:18px auto 0;color:var(--afterdark-muted);font-size:var(--type-body)}
+.afterdark-hero .mock-cta{margin-top:21px;border-color:var(--afterdark-pink);color:var(--afterdark-ink);background:var(--afterdark-pink)}
+.afterdark-ribbon{display:flex;align-items:center;justify-content:center;gap:clamp(14px,4vw,56px);flex-wrap:wrap;padding:14px var(--space-3);border-block:1px solid rgba(255,255,255,.2);color:var(--afterdark-soft-surface);font-family:var(--font-mono);font-size:var(--type-micro);letter-spacing:.1em;text-transform:uppercase}
+.afterdark-ribbon span{display:inline-flex;align-items:center;gap:9px}
+.afterdark-ribbon span::before{width:8px;height:8px;border-radius:50%;background:var(--afterdark-lime);content:""}
+.afterdark-work{padding:clamp(25px,4vw,var(--space-12)) clamp(var(--space-1),2vw,22px) var(--space-4)}
+.afterdark-work__head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:var(--space-5)}
+.afterdark-work h4{max-width:15ch;margin:0;font-family:Impact,Haettenschweiler,var(--font-sans);font-size:clamp(26px,4vw,44px);font-weight:700;line-height:1;text-transform:uppercase}
+.afterdark-work .small-note{max-width:46ch;margin:0;color:var(--afterdark-muted-soft)}
+.afterdark-card{color:var(--afterdark-bg);background:var(--afterdark-card);border-color:var(--afterdark-card)}
+.afterdark-card:nth-child(2){color:var(--afterdark-ink);background:var(--afterdark-lime);border-color:var(--afterdark-lime)}
+.afterdark-card:nth-child(3){color:var(--afterdark-ink);background:var(--afterdark-pink);border-color:var(--afterdark-pink)}
+.afterdark-card p{font-size:var(--type-small)}
+.afterdark-footer{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:22px;padding-top:var(--space-4);border-top:1px solid rgba(255,255,255,.22);color:var(--afterdark-muted);font-size:var(--type-micro)}
+.afterdark-explore{display:grid;grid-template-columns:minmax(180px,.72fr) minmax(0,2fr);align-items:center;gap:22px;margin:18px clamp(0px,1vw,16px) 2px;padding:22px;border:1px solid rgba(255,255,255,.24);border-radius:16px;background:rgba(255,255,255,.035)}
+.afterdark-explore__intro .eyebrow{margin-bottom:9px;color:var(--afterdark-lime)}
+.afterdark-explore__intro h3{max-width:16ch;margin:0;font-size:clamp(21px,2.2vw,29px);font-weight:750;letter-spacing:-.035em;line-height:1.05}
+.afterdark-explore__list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0;margin:0;list-style:none}
+.afterdark-explore__list a{display:flex;align-items:center;justify-content:space-between;gap:7px;min-width:0;min-height:46px;padding:8px 10px;border:1px solid rgba(255,255,255,.22);border-radius:10px;color:var(--afterdark-paper);background:rgba(255,255,255,.025);font-size:var(--type-micro);font-weight:650;transition:background var(--motion-fast) var(--ease),border-color var(--motion-fast) var(--ease),transform var(--motion-fast) var(--ease)}
+.afterdark-explore__list a:hover{transform:translateY(-2px);border-color:var(--afterdark-lime);background:rgba(215,255,85,.08)}
+.afterdark-explore__number{color:var(--afterdark-muted-soft);font-family:var(--font-mono);font-size:var(--type-caption)}
+.afterdark-explore__name{min-width:0;flex:1}
+.afterdark-explore__arrow{color:var(--afterdark-pink);font-size:16px}
+@media(max-width:1000px){.afterdark-hero{min-height:340px;padding:clamp(52px,8vw,86px) 6px 34px}.afterdark-hero h3{font-size:clamp(46px,8.5vw,82px)}.afterdark-explore{grid-template-columns:1fr}.afterdark-explore__intro h3{max-width:none}}
+@media(max-width:760px){.design__meta{align-items:flex-start;flex-wrap:wrap}.design__meta p{order:3;width:100%}.mock-nav{flex-wrap:wrap;justify-content:space-between;padding-block:var(--space-2)}.mock-links{justify-content:flex-start}.capability-grid{grid-template-columns:minmax(0,1fr)}.capability{padding:14px}.afterdark-nav{grid-template-columns:1fr auto}.afterdark-nav .mock-links{grid-column:1/-1;grid-row:2;justify-content:flex-start}.afterdark-nav .mock-cta{grid-column:2;grid-row:1}.afterdark-hero{padding-top:var(--space-12)}.afterdark-hero h3{font-size:clamp(43px,9vw,70px)}.afterdark-explore{padding:18px}.afterdark-explore__list{grid-template-columns:repeat(2,minmax(0,1fr))}.afterdark-work__head{align-items:flex-start;flex-direction:column}}
+@media(max-width:520px){.design{padding:14px 10px 30px;scroll-margin-top:0}.design__meta{font-size:var(--type-caption)}.design__index{min-height:34px;padding-inline:9px}.mock-nav{gap:var(--space-2)}.mock-links{gap:2px 10px}.mock-links a{min-height:38px;font-size:var(--type-micro)}.mock-cta{min-height:44px;padding:var(--space-2) var(--space-3);font-size:var(--type-micro)}.afterdark-site{padding:10px;border-radius:20px}.afterdark-nav{padding-inline:9px;border-radius:14px}.afterdark-hero{padding:var(--space-12) 0 var(--space-6)}.afterdark-hero h3{font-size:clamp(42px,12vw,58px)}.afterdark-hero .body-copy{font-size:var(--type-compact)}.afterdark-work{padding:25px var(--space-1) 10px}.afterdark-work h4{font-size:32px}.afterdark-footer{font-size:var(--type-micro)}}
+@media(max-width:420px){.afterdark-explore__list{grid-template-columns:minmax(0,1fr)}}
+@media(pointer:coarse){.mock-links a,.afterdark-nav .mock-links a,.mock-cta,.design__index,.afterdark-explore__list a{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(forced-colors:active){.design,.mock-cta,.capability{border:1px solid CanvasText}.mock-cta{color:ButtonText;background:ButtonFace}:focus-visible{outline:3px solid Highlight;box-shadow:0 0 0 5px Canvas}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#afterdark">Skip to the concept</a>
+  <main id="main">
+    <h1 class="visually-hidden">01 / Afterdark — Relay concept</h1>
+    <section class="design design--afterdark" id="afterdark" aria-labelledby="label-afterdark">
+      <div class="design__inner">
+        <div class="design__meta"><h2 id="label-afterdark">01 / Afterdark</h2><p>Ink-black contours · electric details · playful systems art</p><a class="design__index" href="#afterdark">Back to top <span class="arrow" aria-hidden="true">↑</span></a></div>
+        <div class="afterdark-site">
+          <svg class="afterdark__contours" viewBox="0 0 1440 1080" preserveAspectRatio="none" aria-hidden="true"><path d="M-90 125C72 6 274 2 417 65s250 164 438 121 285-42 432 29 184 190 116 302-247 92-422 128-213 167-417 186-384-39-481 61-144 243-231 321"/><path d="M-82 220C80 101 281 96 424 159s250 164 438 121 285-42 432 29 184 190 116 302-247 92-422 128-213 167-417 186-384-39-481 61-144 243-231 321"/><path d="M-74 315C88 196 289 191 432 254s250 164 438 121 285-42 432 29 184 190 116 302-247 92-422 128-213 167-417 186-384-39-481 61-144 243-231 321"/><path d="M-66 410C96 291 297 286 440 349s250 164 438 121 285-42 432 29 184 190 116 302-247 92-422 128-213 167-417 186-384-39-481 61-144 243-231 321"/><path d="M-58 505C104 386 305 381 448 444s250 164 438 121 285-42 432 29 184 190 116 302-247 92-422 128-213 167-417 186-384-39-481 61-144 243-231 321"/></svg>
+          <header class="mock-nav afterdark-nav"><a class="mock-brand" href="#afterdark" aria-label="Relay Afterdark, top"><span class="mock-brand__symbol" aria-hidden="true">R</span><span class="mock-brand__name">Relay</span></a><nav class="mock-links" aria-label="Afterdark navigation"><a href="#afterdark-core">Systems</a><a href="#afterdark-approach">Approach</a><a href="#afterdark-directions">Directions</a></nav><a class="mock-cta" href="#afterdark-approach">Start with a workflow <span class="arrow" aria-hidden="true">↗</span></a></header>
+          <div class="afterdark-hero">
+            <div class="afterdark-hero__copy"><p class="eyebrow">Relay / work systems, made human</p><h3>Keep the weird work <em>out of your way.</em></h3><p class="body-copy">Automate the repeatable, connect the context, and let a person take the wheel when judgment matters.</p><a class="mock-cta" href="#afterdark-core">See the moving parts <span class="arrow" aria-hidden="true">↘</span></a></div>
+          </div>
+          <div class="afterdark-ribbon" role="group" aria-label="Relay service principles"><span>Automate the repeatable</span><span>Connect the context</span><span>Keep people in</span></div>
+          <section class="afterdark-work" id="afterdark-core" aria-labelledby="afterdark-core-title"><div class="afterdark-work__head"><h4 id="afterdark-core-title">Three ways to calm the chaos</h4><p class="small-note">An illustrative workflow model—not a client case study.</p></div><div class="capability-grid"><article class="capability afterdark-card"><span class="capability__index">01 / ROUTE</span><h4>Move routine steps.</h4><p>Let clear rules carry repeat work; flag exceptions instead of hiding them.</p></article><article class="capability afterdark-card"><span class="capability__index">02 / CONNECT</span><h4>Bring context along.</h4><p>Give AI assistants approved knowledge and connected systems to work with.</p></article><article class="capability afterdark-card"><span class="capability__index">03 / REVIEW</span><h4>Keep judgment visible.</h4><p>Put a human checkpoint where a decision needs a human owner.</p></article></div><div class="afterdark-footer" id="afterdark-approach"><span>Relay / concept direction: Afterdark</span><span>Original artwork · sample workflows only</span></div></section>
+          <nav class="afterdark-explore" id="afterdark-directions" aria-labelledby="afterdark-directions-title"><div class="afterdark-explore__intro"><p class="eyebrow">More ways into Relay</p><h3 id="afterdark-directions-title">Explore the other directions</h3></div><ol class="afterdark-explore__list"><li><a href="demo-relay-lilacframe.html"><span class="afterdark-explore__number">02</span><span class="afterdark-explore__name">Lilacframe</span><span class="afterdark-explore__arrow" aria-hidden="true">↗</span></a></li><li><a href="demo-relay-gridgarden.html"><span class="afterdark-explore__number">03</span><span class="afterdark-explore__name">Gridgarden</span><span class="afterdark-explore__arrow" aria-hidden="true">↗</span></a></li><li><a href="demo-relay-sproutline.html"><span class="afterdark-explore__number">04</span><span class="afterdark-explore__name">Sproutline</span><span class="afterdark-explore__arrow" aria-hidden="true">↗</span></a></li><li><a href="demo-relay-bookfold.html"><span class="afterdark-explore__number">05</span><span class="afterdark-explore__name">Bookfold</span><span class="afterdark-explore__arrow" aria-hidden="true">↗</span></a></li><li><a href="demo-relay-skyframe.html"><span class="afterdark-explore__number">06</span><span class="afterdark-explore__name">Skyframe</span><span class="afterdark-explore__arrow" aria-hidden="true">↗</span></a></li><li><a href="demo-relay-cloudline.html"><span class="afterdark-explore__number">07</span><span class="afterdark-explore__name">Cloudline</span><span class="afterdark-explore__arrow" aria-hidden="true">↗</span></a></li><li><a href="demo-relay-daybreak.html"><span class="afterdark-explore__number">08</span><span class="afterdark-explore__name">Daybreak</span><span class="afterdark-explore__arrow" aria-hidden="true">↗</span></a></li><li><a href="demo-relay-typeaxis.html"><span class="afterdark-explore__number">09</span><span class="afterdark-explore__name">Typeaxis</span><span class="afterdark-explore__arrow" aria-hidden="true">↗</span></a></li></ol></nav>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

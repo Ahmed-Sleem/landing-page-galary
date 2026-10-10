@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Illustrative Relay Typeaxis concept: business-first automation, AI assistants, connected systems, and human checkpoints.">
+  <title>Relay — Typeaxis</title>
+  <style>
+:root{color-scheme:light;--ink:#171820;--paper:#f7f4ef;--lab:#11131a;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-12:48px;--radius-pill:999px;--font-sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--font-mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;--type-caption:11px;--type-micro:12px;--type-small:13px;--type-compact:14px;--type-card:16px;--type-weight:600;--motion-fast:150ms;--ease:cubic-bezier(.2,.75,.2,1);--focus:3px solid var(--color-white);--focus-shadow:0 0 0 6px var(--color-black);--color-white:#fff;--color-black:#111;--focus-ink:#293a86;--typeaxis-display:#101010;--typeaxis-panel:#1b1b1b;--typeaxis-pink:#ef9bdc;}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px;background:var(--lab)}
+body{min-width:320px;margin:0;color:var(--ink);background:var(--paper);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+svg{display:block;max-width:100%}
+:focus-visible{outline:var(--focus);outline-offset:2px;box-shadow:var(--focus-shadow)}
+::selection{color:var(--color-white);background:var(--focus-ink)}
+.skip-link{position:fixed;z-index:200;inset-block-start:8px;inset-inline-start:8px;padding:10px 14px;border-radius:var(--radius-pill);color:var(--color-black);background:var(--color-white);transform:translateY(-160%);transition:transform var(--motion-fast) var(--ease)}
+.skip-link:focus{transform:translateY(0)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+main{display:block}
+.design{position:relative;min-height:100vh;min-height:100svh;padding:clamp(18px,3.4vw,var(--space-12)) clamp(14px,4vw,60px) clamp(28px,5vw,68px);scroll-margin-top:0}
+.design__inner{width:min(100%,1520px);margin-inline:auto}
+.design__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:34px;margin:0 auto var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);letter-spacing:.02em}
+.design__meta h2{margin:0;color:inherit;font:inherit;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.design__meta p{margin:0;opacity:.78}
+.design__index{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:var(--space-1) 11px;border:1px solid currentColor;border-radius:var(--radius-pill);font-family:var(--font-sans);font-size:var(--type-micro);font-weight:600}
+.mock-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:60px}
+.mock-brand{display:inline-flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.035em}
+.mock-brand__symbol{display:grid;width:28px;height:28px;place-items:center;border:2px solid currentColor;border-radius:50%;font-size:var(--type-compact);font-weight:900}
+.mock-brand__name{font-size:var(--type-card)}
+.mock-links{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex-wrap:wrap}
+.mock-links a{display:inline-flex;align-items:center;min-height:40px;font-size:var(--type-micro);font-weight:600}
+.mock-cta{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:9px var(--space-4);border:1px solid currentColor;border-radius:var(--radius-pill);font-size:var(--type-micro);font-weight:700;transition:transform var(--motion-fast) var(--ease),background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease)}
+.mock-cta:hover{transform:translateY(-2px)}
+.eyebrow{margin:0 0 var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);font-weight:600;letter-spacing:.11em;text-transform:uppercase}
+.arrow{display:inline-block;font-size:var(--type-card);line-height:1}
+[dir="rtl"] .arrow{transform:scaleX(-1)}
+[dir="rtl"] .design *{letter-spacing:normal}
+.typeaxis__meta{padding-inline:clamp(14px,2vw,28px)}
+.design--typeaxis{color:var(--typeaxis-display);background:var(--typeaxis-pink)}
+.typeaxis-site{overflow:hidden;border:2px solid var(--color-black);border-radius:22px;background:var(--typeaxis-pink)}
+.typeaxis-nav{padding:7px clamp(14px,2vw,28px);border-bottom:2px solid var(--color-black)}
+.typeaxis-nav .mock-brand__symbol{border-radius:5px;color:var(--typeaxis-pink);background:var(--color-black)}
+.typeaxis-nav .mock-cta{border:2px solid var(--color-black);border-radius:7px;background:var(--typeaxis-pink)}
+.typeaxis-panel{position:relative;padding:clamp(26px,5vw,70px) clamp(var(--space-4),5vw,74px)}
+.typeaxis-panel__micro{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-2);padding-inline-end:clamp(64px,9vw,112px);font-family:var(--font-mono);font-size:var(--type-micro);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.typeaxis-panel h3{max-width:14ch;margin:26px 0 0;font-size:clamp(55px,11.6vw,150px);font-weight:900;letter-spacing:-.09em;line-height:.76;text-transform:uppercase;text-wrap:balance}
+.typeaxis-panel__foot{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-top:25px}
+.typeaxis-panel__foot p{max-width:45ch;margin:0;font-size:var(--type-compact);line-height:1.5}
+.typeaxis-panel__foot a{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;font-size:var(--type-small);font-weight:700}
+.typeaxis-panel--ink{color:var(--typeaxis-pink);background:var(--color-black)}
+.typeaxis-panel--ink h3{max-width:100%;font-size:clamp(52px,9vw,112px);font-weight:var(--type-weight,600);letter-spacing:-.075em;line-height:.88;text-transform:none}
+.typeaxis-axis{display:none;align-items:center;gap:14px;flex-wrap:wrap;margin-top:25px;padding:15px var(--space-4);border:1px solid rgba(239,155,220,.6);border-radius:12px;background:var(--typeaxis-panel)}
+.js .typeaxis-axis{display:flex}
+.typeaxis-axis label{font-size:var(--type-small);font-weight:600}
+.typeaxis-axis input{width:min(100%,300px);height:44px;accent-color:var(--typeaxis-pink)}
+.typeaxis-axis output{min-width:100px;font-family:var(--font-mono);font-size:var(--type-micro)}
+.typeaxis-help{display:none;margin:var(--space-2) 0 0;font-size:var(--type-micro);opacity:.83}
+.js .typeaxis-help{display:block}
+.typeaxis-noscript{margin:14px 0 0;font-size:var(--type-micro)}
+.typeaxis-stamp{position:absolute;top:clamp(22px,4vw,55px);inset-inline-end:clamp(18px,5vw,74px);display:grid;width:clamp(64px,9vw,112px);aspect-ratio:1;place-items:center;border:2px solid currentColor;border-radius:50%;font-family:var(--font-mono);font-size:clamp(12px,1.2vw,14px);font-weight:900;text-align:center;transform:rotate(9deg)}
+.typeaxis-last{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:var(--space-6);padding:clamp(22px,4vw,var(--space-12)) clamp(var(--space-4),5vw,74px);border-top:2px solid var(--color-black)}
+.typeaxis-last h4{max-width:15ch;margin:0;font-size:clamp(34px,6vw,72px);font-weight:900;letter-spacing:-.075em;line-height:.88;text-transform:uppercase}
+.typeaxis-last__tags{display:grid;gap:var(--space-2);justify-items:end;font-family:var(--font-mono);font-size:var(--type-micro);font-weight:600}
+.typeaxis-last__tags span{padding:7px 10px;border:1px solid var(--color-black);border-radius:var(--radius-pill)}
+@media(max-width:760px){.design__meta{align-items:flex-start;flex-wrap:wrap}.design__meta p{order:3;width:100%}.mock-nav{flex-wrap:wrap;justify-content:space-between;padding-block:var(--space-2)}.mock-links{justify-content:flex-start}.typeaxis-panel__foot{align-items:flex-start;flex-direction:column}.typeaxis-panel--ink h3{font-size:clamp(48px,10vw,82px)}.typeaxis-last{grid-template-columns:minmax(0,1fr);align-items:start}.typeaxis-last__tags{justify-items:start;display:flex;flex-wrap:wrap}}
+@media(max-width:520px){.design{padding:14px 10px 30px;scroll-margin-top:0}.design__meta{font-size:var(--type-caption)}.design__index{min-height:34px;padding-inline:9px}.mock-nav{gap:var(--space-2)}.mock-links{gap:2px 10px}.mock-links a{min-height:38px;font-size:var(--type-micro)}.mock-cta{min-height:44px;padding:var(--space-2) var(--space-3);font-size:var(--type-micro)}.typeaxis-nav{padding-inline:10px}.typeaxis-panel{padding:25px 15px}.typeaxis-panel h3{font-size:clamp(50px,14vw,75px);line-height:.82}.typeaxis-panel__micro{font-size:var(--type-micro)}.typeaxis-panel__foot p{font-size:var(--type-small)}.typeaxis-panel--ink h3{font-size:clamp(43px,12vw,62px)}.typeaxis-stamp{top:17px;inset-inline-end:14px;width:58px;font-size:var(--type-micro)}.typeaxis-axis{gap:var(--space-2);padding:var(--space-3)}.typeaxis-axis input{width:100%}.typeaxis-last{padding:var(--space-6) 15px}.typeaxis-last h4{font-size:39px}.typeaxis-last__tags{font-size:var(--type-caption)}}
+@media(pointer:coarse){.mock-links a,.mock-cta,.typeaxis-axis input,.design__index{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(forced-colors:active){.design,.mock-cta{border:1px solid CanvasText}.mock-cta{color:ButtonText;background:ButtonFace}:focus-visible{outline:3px solid Highlight;box-shadow:0 0 0 5px Canvas}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#typeaxis">Skip to the concept</a>
+  <main id="main">
+    <h1 class="visually-hidden">09 / Typeaxis — Relay concept</h1>
+    <section class="design design--typeaxis" id="typeaxis" aria-labelledby="label-typeaxis">
+      <div class="design__inner typeaxis-site">
+        <div class="design__meta typeaxis__meta"><h2 id="label-typeaxis">09 / Typeaxis</h2><p>Hot pink · near-black interlude · oversized typographic rhythm</p><a class="design__index" href="#typeaxis">Back to top <span class="arrow" aria-hidden="true">↑</span></a></div>
+        <header class="mock-nav typeaxis-nav"><a class="mock-brand" href="#typeaxis" aria-label="Relay Typeaxis, top"><span class="mock-brand__symbol" aria-hidden="true">R</span><span class="mock-brand__name">Relay / TYPE STUDY</span></a><nav class="mock-links" aria-label="Typeaxis navigation"><a href="#typeaxis-axis">Type axis</a><a href="#typeaxis-approach">Approach</a></nav><a class="mock-cta" href="#typeaxis-approach">Explore Relay <span class="arrow" aria-hidden="true">↗</span></a></header>
+        <section class="typeaxis-panel" aria-labelledby="typeaxis-title"><div class="typeaxis-panel__micro"><span>Less friction / more flow</span><span>Relay · visual direction 09</span></div><span class="typeaxis-stamp" aria-hidden="true">HUMAN<br>IN THE<br>LOOP</span><h3 id="typeaxis-title">Less<br>busywork.</h3><div class="typeaxis-panel__foot"><p>Automate the predictable, connect useful context for AI assistance, and make the next human decision unmistakable.</p><a href="#typeaxis-approach">See the system <span class="arrow" aria-hidden="true">↘</span></a></div></section>
+        <section class="typeaxis-panel typeaxis-panel--ink" id="typeaxis-axis" aria-labelledby="typeaxis-axis-title"><div class="typeaxis-panel__micro"><span>Weight study / display type</span><span>Axis 01 / Weight</span></div><h3 id="typeaxis-axis-title" class="typeaxis-display">More room<br>for good work.</h3><div class="typeaxis-axis"><label for="type-weight">Adjust the display weight</label><input id="type-weight" type="range" min="400" max="900" step="50" value="600" aria-describedby="typeaxis-control-hint"><output id="type-weight-output" for="type-weight" aria-live="polite">600 / weight</output></div><p class="typeaxis-help" id="typeaxis-control-hint">A local type specimen only; changing the slider changes the headline weight in this preview. Nothing is saved or sent.</p><noscript><p class="typeaxis-noscript">Static type specimen / interactive weight control is off.</p></noscript></section>
+        <section class="typeaxis-last" id="typeaxis-approach" aria-labelledby="typeaxis-last-title"><div><p class="eyebrow">Clear handoffs / visible ownership</p><h4 id="typeaxis-last-title">Systems in service of people.</h4></div><div class="typeaxis-last__tags"><span>01 / Automate</span><span>02 / AI assist</span><span>03 / Connect</span><span>04 / Human review</span></div></section>
+      </div>
+    </section>
+  </main>
+  <script>
+    (()=>{
+      document.documentElement.classList.add("js");
+      const slider=document.getElementById("type-weight");
+      const display=document.querySelector(".typeaxis-display");
+      const output=document.getElementById("type-weight-output");
+      if(slider&&display&&output){
+        const update=()=>{display.style.setProperty("--type-weight",slider.value);output.value=`${slider.value} / weight`;output.textContent=`${slider.value} / weight`};
+        slider.addEventListener("input",update);slider.addEventListener("change",update);update();
+      }
+    })();
+  </script>
+</body>
+</html>
