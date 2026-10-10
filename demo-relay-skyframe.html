@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Illustrative Relay Skyframe concept: business-first automation, AI assistants, connected systems, and human checkpoints.">
+  <title>Relay — Skyframe</title>
+  <style>
+
+:root{
+  color-scheme:light;
+  --ink:#171820;--paper:#f7f4ef;--lab:#11131a;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-12:48px;
+  --radius-sm:8px;--radius-md:14px;--radius-lg:24px;--radius-pill:999px;
+  --font-sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+  --type-caption:11px;--type-micro:12px;--type-small:13px;--type-body:15px;--type-card:16px;--type-subhead:18px;
+  --motion-fast:150ms;--ease:cubic-bezier(.2,.75,.2,1);
+  --color-white:#fff;--color-black:#111;--focus-ink:#293a86;--focus:3px solid var(--color-white);--focus-shadow:0 0 0 6px var(--color-black);
+  --skyframe-blue:#69b9e8;--skyframe-blue-dark:#183b4f;--skyframe-blue-pale:#d9e9ff;--skyframe-body:#5d6974;--skyframe-border-muted:#ccd8d8;--skyframe-coral:#f08493;--skyframe-gray:#515d67;--skyframe-green:#638c50;--skyframe-green-ink:#25543f;--skyframe-green-light:#75b98c;--skyframe-green-pale:#d6edc0;--skyframe-ink:#12213a;--skyframe-outline:#d6eaf2;--skyframe-outline-light:#dce2e3;--skyframe-paper:#fffdf7;--skyframe-secondary:#58636e;--skyframe-surface-green:#eef7df;--skyframe-teal:#186c69;--skyframe-ui-bg:#e9eef2;--skyframe-ui-line:#d6dde2;--skyframe-ui-paper:#fff9ed;--skyframe-window-line:#d8e3e7;--skyframe-window-paper:#f8fcfb;--skyframe-yellow:#edc95d;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px;background:var(--lab)}
+body{min-width:320px;margin:0;color:var(--ink);background:var(--paper);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+svg{display:block;max-width:100%}
+:focus-visible{outline:var(--focus);outline-offset:3px;box-shadow:var(--focus-shadow)}
+::selection{color:var(--color-white);background:var(--focus-ink)}
+.skip-link{position:fixed;z-index:200;inset-block-start:8px;inset-inline-start:8px;padding:10px 14px;border-radius:var(--radius-pill);color:var(--color-black);background:var(--color-white);transform:translateY(-160%);transition:transform var(--motion-fast) var(--ease)}
+.skip-link:focus{transform:translateY(0)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+main{display:block}
+.design{position:relative;min-height:100vh;min-height:100svh;padding:clamp(18px,3vw,44px) clamp(14px,4vw,64px) clamp(34px,4vw,58px);scroll-margin-top:0}
+.design__inner{width:min(100%,1680px);margin-inline:auto}
+.design__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:30px;margin:0 auto 14px;font-family:var(--font-mono);font-size:var(--type-micro);letter-spacing:.02em}
+.design__meta h2{margin:0;color:inherit;font:inherit;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.design__meta p{margin:0;opacity:.78}
+.mock-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:60px}
+.mock-links{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex-wrap:wrap}
+.mock-links a{display:inline-flex;align-items:center;min-height:44px;font-size:var(--type-micro);font-weight:600}
+.mock-cta{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:9px var(--space-4);border:1px solid currentColor;border-radius:var(--radius-pill);font-size:var(--type-micro);font-weight:700;transition:transform var(--motion-fast) var(--ease),background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease),box-shadow var(--motion-fast) var(--ease)}
+.mock-cta:hover{transform:translateY(-2px)}
+.eyebrow{margin:0 0 var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);font-weight:600;letter-spacing:.11em;text-transform:uppercase}
+.body-copy{max-width:58ch;margin:0;font-size:var(--type-body);line-height:1.65}
+.arrow{display:inline-block;font-size:var(--type-card);line-height:1}
+[dir="rtl"] .arrow{transform:scaleX(-1)}
+[dir="rtl"] .design *{letter-spacing:normal}
+.design--skyframe{isolation:isolate;overflow:hidden;color:var(--skyframe-ink);background:linear-gradient(135deg,var(--skyframe-blue) 0%,var(--skyframe-blue-pale) 56%,var(--skyframe-blue) 100%)}
+.skyframe-cloud-field{position:absolute;z-index:0;inset:0;overflow:hidden;pointer-events:none}
+.skyframe-cloud{position:absolute;height:auto;filter:drop-shadow(0 14px 18px rgba(18,33,58,.12))}
+.skyframe-cloud path{fill:var(--skyframe-paper);stroke:var(--skyframe-blue-dark);stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.skyframe-cloud--one{inset-block-start:16%;inset-inline-start:2%;width:clamp(145px,18vw,260px);opacity:.55;transform:rotate(-5deg)}
+.skyframe-cloud--two{inset-block-start:26%;inset-inline-end:1%;width:clamp(175px,22vw,320px);opacity:.46;transform:rotate(4deg)}
+.skyframe-cloud--three{inset-block-start:69%;inset-inline-start:13%;width:clamp(112px,13vw,190px);opacity:.34;transform:rotate(3deg)}
+.skyframe-site{position:relative;z-index:1;width:min(100%,1680px);padding:clamp(14px,2vw,28px) clamp(8px,2vw,28px) 24px}
+.skyframe-nav{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:clamp(8px,1.4vw,20px);min-height:66px;padding:8px 10px 8px 12px;border:1px solid rgba(255,255,255,.82);border-radius:18px;background:rgba(255,253,247,.78);backdrop-filter:blur(14px);box-shadow:0 12px 34px rgba(18,33,58,.08)}
+.skyframe-nav__availability{display:inline-flex;align-items:center;gap:var(--space-2);justify-self:start;min-height:44px;padding:8px 13px;border:1px solid rgba(24,108,105,.18);border-radius:12px;background:var(--skyframe-paper);box-shadow:0 4px 14px rgba(18,33,58,.06);font-size:var(--type-micro);font-weight:600;white-space:nowrap}
+.skyframe-nav__availability i{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--skyframe-green)}
+.skyframe-nav .mock-links{gap:4px;padding:4px 6px;border:0;border-radius:14px;background:rgba(255,255,255,.42)}
+.skyframe-nav .mock-links a{min-height:42px;padding-inline:14px;border-radius:10px;transition:color var(--motion-fast) var(--ease),background var(--motion-fast) var(--ease)}
+.skyframe-nav .mock-links a:hover{color:var(--skyframe-teal);background:rgba(24,108,105,.08)}
+.skyframe-nav .mock-cta{justify-self:end;min-height:44px;padding-inline:16px;border-color:var(--skyframe-outline);border-radius:12px;background:var(--skyframe-paper);box-shadow:0 5px 14px rgba(24,108,105,.08)}
+.skyframe-nav .mock-cta:hover{border-color:var(--skyframe-teal);color:var(--skyframe-teal);background:var(--color-white)}
+.skyframe-hero{max-width:1040px;margin-inline:auto;padding:clamp(58px,8vw,108px) clamp(12px,3vw,40px) 0;text-align:center}
+.skyframe-hero h3{max-width:980px;margin:0 auto;font-size:clamp(40px,7vw,88px);font-weight:800;letter-spacing:-.065em;line-height:.98;text-wrap:balance}
+.skyframe-hero .body-copy{max-width:64ch;margin:17px auto 0;color:var(--skyframe-blue-dark);line-height:1.7}
+.skyframe-hero .mock-cta{min-height:48px;margin-top:var(--space-5);padding:11px 18px;border-color:var(--skyframe-teal);border-radius:13px;color:var(--color-white);background:var(--skyframe-teal);box-shadow:0 10px 22px rgba(24,108,105,.2)}
+.skyframe-hero .mock-cta:hover{border-color:var(--skyframe-paper);color:var(--skyframe-teal);background:var(--skyframe-paper)}
+.skyframe-window-stack{position:relative;display:grid;place-items:center;width:min(100%,1320px);min-height:clamp(470px,46vw,590px);margin:clamp(28px,4vw,54px) auto 0;padding-inline:clamp(12px,4vw,64px)}
+.skyframe-window{width:min(100%,1120px);min-width:0;border:1px solid var(--skyframe-window-line);border-radius:24px;background:var(--skyframe-window-paper);box-shadow:0 28px 70px rgba(35,75,107,.15)}
+.skyframe-window--back,.skyframe-window--mid{position:absolute;inset-block:10%;inset-inline:6%;width:auto;min-height:0;pointer-events:none}
+.skyframe-window--back{transform:translate(22px,12px) rotate(1.5deg);border-color:rgba(255,255,255,.8);background:rgba(233,238,242,.78)}
+.skyframe-window--mid{inset-block:7% 12%;inset-inline:4% 6%;transform:translate(-14px,-5px) rotate(-1.1deg);background:rgba(255,249,237,.88)}
+.skyframe-window--front{position:relative;z-index:3;overflow:hidden}
+.skyframe-window__bar{display:flex;align-items:center;gap:7px;min-height:48px;padding-inline:18px;border-bottom:1px solid var(--skyframe-ui-line);color:var(--skyframe-gray);background:rgba(255,255,255,.72);font-family:var(--font-mono);font-size:var(--type-caption)}
+.skyframe-window__bar i{flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--skyframe-coral)}
+.skyframe-window__bar i:nth-child(2){background:var(--skyframe-yellow)}
+.skyframe-window__bar i:nth-child(3){background:var(--skyframe-green-light)}
+.skyframe-window__preview{margin-inline-start:auto;padding:6px 9px;border:1px solid var(--skyframe-ui-line);border-radius:8px;background:var(--color-white);font-size:10px;font-weight:700;letter-spacing:.06em}
+.skyframe-app{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(230px,.85fr);align-items:center;gap:clamp(18px,3vw,34px);padding:clamp(18px,3vw,38px)}
+.skyframe-app__title{margin:0;font-size:clamp(22px,3vw,36px);font-weight:750;letter-spacing:-.05em;line-height:1.05}
+.skyframe-app__caption{max-width:42ch;margin:8px 0 0;color:var(--skyframe-body);font-size:var(--type-small);line-height:1.55}
+.skyframe-tasklist{display:grid;gap:10px;margin-top:18px}
+.skyframe-task{display:flex;align-items:center;gap:10px;min-width:0;min-height:58px;padding:10px 12px;border:1px solid rgba(24,108,105,.12);border-radius:14px;background:var(--color-white);box-shadow:0 3px 9px rgba(18,33,58,.025)}
+.skyframe-task__icon{display:grid;flex:0 0 auto;width:28px;height:28px;place-items:center;border-radius:9px;color:var(--skyframe-blue-dark);background:var(--skyframe-blue-pale);font-family:var(--font-mono);font-size:var(--type-micro);font-weight:700}
+.skyframe-task__copy{min-width:0;flex:1}
+.skyframe-task b{display:block;font-size:13px;line-height:1.3}
+.skyframe-task span{display:block;margin-top:3px;color:var(--skyframe-secondary);font-size:var(--type-micro);line-height:1.35}
+.skyframe-task__state{flex:0 0 auto;padding:6px 8px;border-radius:8px;color:var(--skyframe-teal);background:var(--skyframe-surface-green);font-family:var(--font-mono);font-size:10px;font-weight:700;text-align:center;white-space:nowrap}
+.skyframe-sidecard{display:flex;flex-direction:column;justify-content:center;align-self:stretch;width:100%;padding:clamp(18px,2vw,24px);border:1px solid rgba(99,140,80,.18);border-radius:18px;background:var(--skyframe-surface-green);box-shadow:0 10px 24px rgba(37,84,63,.08)}
+.skyframe-sidecard__tag{align-self:flex-start;padding:7px 10px;border-radius:8px;color:var(--skyframe-green-ink);background:var(--skyframe-green-pale);font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.05em}
+.skyframe-sidecard h4{margin:18px 0 0;font-size:20px;letter-spacing:-.025em}
+.skyframe-sidecard p{max-width:36ch;margin:8px 0 0;font-size:var(--type-small);line-height:1.65}
+.skyframe-footnote{display:flex;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;width:min(100%,1120px);margin:0 auto;padding-top:17px;border-top:1px solid rgba(24,59,79,.18);color:var(--skyframe-blue-dark);font-family:var(--font-mono);font-size:var(--type-micro);line-height:1.5}
+.cloud-art-credit{flex-basis:100%;font-size:10px;line-height:1.5;opacity:.78}
+.cloud-art-credit a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+.cloud-art-credit a:hover{opacity:.75}
+@media(max-width:1000px){.skyframe-nav{grid-template-columns:minmax(0,1fr) auto;row-gap:4px}.skyframe-nav__availability{grid-column:1;grid-row:1}.skyframe-nav .mock-cta{grid-column:2;grid-row:1}.skyframe-nav .mock-links{grid-column:1/-1;grid-row:2;justify-self:stretch;justify-content:flex-start;flex-wrap:wrap}.skyframe-app{grid-template-columns:minmax(0,1.15fr) minmax(190px,.85fr)}}
+@media(max-width:760px){.design__meta{align-items:flex-start;flex-wrap:wrap}.design__meta p{order:3;width:100%}.skyframe-nav{gap:5px}.skyframe-nav .mock-links{padding:2px 4px}.skyframe-window-stack{min-height:0;margin-top:24px;padding-inline:8px}.skyframe-window--back{inset-block:7%;inset-inline:4%;transform:translate(12px,9px) rotate(1.5deg)}.skyframe-window--mid{inset-block:5% 8%;inset-inline:3% 4%;transform:translate(-8px,-4px) rotate(-1.2deg)}.skyframe-app{grid-template-columns:minmax(0,1fr);padding:clamp(18px,4vw,28px)}.skyframe-sidecard{min-height:0}}
+@media(max-width:520px){.design{padding:14px 10px 30px}.design__meta{font-size:var(--type-caption)}.skyframe-site{padding:14px 3px 20px}.skyframe-nav{grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;padding:7px 8px;border-radius:14px}.skyframe-nav__availability{gap:6px;padding-inline:8px;font-size:10px}.skyframe-nav .mock-cta{min-height:42px;padding-inline:10px;font-size:10px}.skyframe-nav .mock-links{justify-content:space-between}.skyframe-nav .mock-links a{padding-inline:10px;font-size:11px}.skyframe-hero{padding:48px 4px 0}.skyframe-hero h3{font-size:clamp(38px,10.8vw,56px);letter-spacing:-.055em;line-height:1}.skyframe-hero .body-copy{font-size:var(--type-small)}.skyframe-window-stack{margin-top:22px}.skyframe-window{border-radius:18px}.skyframe-window__bar{gap:5px;min-height:44px;padding-inline:10px;font-size:10px}.skyframe-window__preview{padding:5px 6px;font-size:9px}.skyframe-app{gap:14px;padding:14px 11px}.skyframe-task{align-items:flex-start;gap:7px;padding:9px}.skyframe-task__icon{width:25px;height:25px}.skyframe-task__state{max-width:74px;padding:5px 6px;font-size:9px;white-space:normal}.skyframe-sidecard{padding:15px}.skyframe-footnote{font-size:var(--type-caption)}}
+@media(max-width:360px){.skyframe-window__preview{display:none}.skyframe-task__state{max-width:66px}.skyframe-task b{font-size:12px}}
+@media(max-width:760px){.skyframe-cloud--one{inset-block-start:18%;inset-inline-start:-3%;width:clamp(145px,28vw,220px);opacity:.38}.skyframe-cloud--two{inset-block-start:27%;inset-inline-end:-5%;width:clamp(175px,32vw,250px);opacity:.35}.skyframe-cloud--three{inset-block-start:77%;inset-inline-start:6%;width:clamp(110px,20vw,160px);opacity:.25}}
+@media(max-width:520px){.skyframe-cloud--one{inset-block-start:17%;inset-inline-start:-14%;width:180px}.skyframe-cloud--two{inset-block-start:31%;inset-inline-end:-17%;width:215px}.skyframe-cloud--three{inset-block-start:80%;inset-inline-start:0;width:132px}}
+@media(pointer:coarse){.mock-links a,.skyframe-nav .mock-links a,.skyframe-nav .mock-cta,.skyframe-hero .mock-cta{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(forced-colors:active){.design,.mock-cta,.skyframe-window{border:1px solid CanvasText}.mock-cta{color:ButtonText;background:ButtonFace}:focus-visible{outline:3px solid Highlight;box-shadow:0 0 0 5px Canvas}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#skyframe">Skip to the concept</a>
+  <main id="main">
+    <h1 class="visually-hidden">06 / Skyframe — Relay concept</h1>
+    <section class="design design--skyframe" id="skyframe" aria-labelledby="label-skyframe">
+      <div class="design__inner skyframe-site">
+        <div class="skyframe-cloud-field" aria-hidden="true"><svg class="skyframe-cloud skyframe-cloud--one" viewBox="0 0 72 72" aria-hidden="true" focusable="false"><path d="M15.9345,30.2552c-0.0372,0.4242-0.3809,0.7675-0.8065,0.8131C9.9685,31.621,6,36.7013,6,42.8852c0,6.553,4.5445,11.8652,10.1505,11.8652h38.6977C61.0072,54.7504,66,49.1365,66,42.2114c0-6.6366-4.5855-12.069-10.3883-12.5101-0.4439-0.0337-0.804-0.3445-0.8887-0.7793-1.2963-6.6567-7.2763-11.659-14.3464-11.659-4.5948,0-8.6879,2.0802-11.3459,5.3894-0.2597,0.3234-0.6956,0.4715-1.079,0.3107-1.0228-0.4289-2.103-0.6365-3.3117-0.6365C20.0727,22.3266,16.3237,25.8122,15.9345,30.2552z"/></svg><svg class="skyframe-cloud skyframe-cloud--two" viewBox="0 0 72 72" aria-hidden="true" focusable="false"><path d="M15.9345,30.2552c-0.0372,0.4242-0.3809,0.7675-0.8065,0.8131C9.9685,31.621,6,36.7013,6,42.8852c0,6.553,4.5445,11.8652,10.1505,11.8652h38.6977C61.0072,54.7504,66,49.1365,66,42.2114c0-6.6366-4.5855-12.069-10.3883-12.5101-0.4439-0.0337-0.804-0.3445-0.8887-0.7793-1.2963-6.6567-7.2763-11.659-14.3464-11.659-4.5948,0-8.6879,2.0802-11.3459,5.3894-0.2597,0.3234-0.6956,0.4715-1.079,0.3107-1.0228-0.4289-2.103-0.6365-3.3117-0.6365C20.0727,22.3266,16.3237,25.8122,15.9345,30.2552z"/></svg><svg class="skyframe-cloud skyframe-cloud--three" viewBox="0 0 72 72" aria-hidden="true" focusable="false"><path d="M15.9345,30.2552c-0.0372,0.4242-0.3809,0.7675-0.8065,0.8131C9.9685,31.621,6,36.7013,6,42.8852c0,6.553,4.5445,11.8652,10.1505,11.8652h38.6977C61.0072,54.7504,66,49.1365,66,42.2114c0-6.6366-4.5855-12.069-10.3883-12.5101-0.4439-0.0337-0.804-0.3445-0.8887-0.7793-1.2963-6.6567-7.2763-11.659-14.3464-11.659-4.5948,0-8.6879,2.0802-11.3459,5.3894-0.2597,0.3234-0.6956,0.4715-1.079,0.3107-1.0228-0.4289-2.103-0.6365-3.3117-0.6365C20.0727,22.3266,16.3237,25.8122,15.9345,30.2552z"/></svg></div>
+        <div class="design__meta"><h2 id="label-skyframe">06 / Skyframe</h2><p>Daylight blue · layered workspace · clear human checkpoints</p></div>
+        <header class="mock-nav skyframe-nav"><span class="skyframe-nav__availability"><i aria-hidden="true"></i> Relay / concept preview</span><nav class="mock-links" aria-label="Skyframe navigation"><a href="#skyframe-flow">Workflow</a><a href="#skyframe-approach">Approach</a></nav><a class="mock-cta" href="#skyframe-approach">How Relay works <span class="arrow" aria-hidden="true">↗</span></a></header>
+        <div class="skyframe-hero"><p class="eyebrow">Business-first systems / Relay</p><h3>Make the handoff feel effortless.</h3><p class="body-copy">Bring automation, AI assistance, and existing tools into one clear workflow—with people in control of the important calls.</p><a class="mock-cta" href="#skyframe-flow">See an illustrative flow <span class="arrow" aria-hidden="true">↓</span></a></div>
+        <div class="skyframe-window-stack" id="skyframe-flow" role="group" aria-label="Illustrative workflow preview">
+          <div class="skyframe-window skyframe-window--back" aria-hidden="true"></div><div class="skyframe-window skyframe-window--mid" aria-hidden="true"></div>
+          <article class="skyframe-window skyframe-window--front"><div class="skyframe-window__bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>RELAY / WORKFLOW PREVIEW</span><span class="skyframe-window__preview">ILLUSTRATIVE</span></div><div class="skyframe-app"><div><h4 class="skyframe-app__title">A request, clearly routed.</h4><p class="skyframe-app__caption">Illustrative flow / no vendor integrations implied.</p><div class="skyframe-tasklist"><div class="skyframe-task"><span class="skyframe-task__icon" aria-hidden="true">01</span><div class="skyframe-task__copy"><b>Capture the request</b><span>Keep source and ownership visible</span></div><span class="skyframe-task__state">Received</span></div><div class="skyframe-task"><span class="skyframe-task__icon" aria-hidden="true">02</span><div class="skyframe-task__copy"><b>Prepare useful context</b><span>Approved knowledge, ready to review</span></div><span class="skyframe-task__state">Prepared</span></div><div class="skyframe-task"><span class="skyframe-task__icon" aria-hidden="true">03</span><div class="skyframe-task__copy"><b>Pause for a person</b><span>Confirm before the next handoff</span></div><span class="skyframe-task__state">Review</span></div></div></div><aside class="skyframe-sidecard"><span class="skyframe-sidecard__tag">HUMAN CHECKPOINT</span><h4>Ready for review</h4><p>The next action is clear. The decision still belongs to the person responsible.</p></aside></div></article>
+        </div>
+        <footer class="skyframe-footnote" id="skyframe-approach"><span>Relay / Skyframe direction</span><span>Illustrative workflow · no vendor integrations implied</span><small class="cloud-art-credit">Cloud artwork adapted from <a href="https://github.com/hfg-gmuend/openmoji/blob/15.1.0/color/svg/2601.svg" target="_blank" rel="noopener noreferrer">OpenMoji “Cloud”</a> (recolored and positioned), under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a>.</small></footer>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

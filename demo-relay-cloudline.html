@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Illustrative Relay Cloudline concept: business-first automation, AI assistants, connected systems, and human checkpoints.">
+  <title>Relay — Cloudline</title>
+  <style>
+
+:root{
+  color-scheme:light;
+  --ink:#171820;--paper:#f7f4ef;--lab:#11131a;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;
+  --radius-sm:9px;--radius-md:16px;--radius-lg:28px;--radius-pill:999px;
+  --font-sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+  --type-caption:11px;--type-micro:12px;--type-small:13px;--type-compact:14px;--type-body:15px;--type-card:16px;--type-section:20px;
+  --motion-fast:150ms;--ease:cubic-bezier(.2,.75,.2,1);
+  --color-white:#fff;--color-black:#111;--focus-ink:#293a86;--focus:3px solid var(--color-white);--focus-shadow:0 0 0 6px var(--color-black);
+  --cloudline-accent:#6c82d7;--cloudline-amber:#ffebaa;--cloudline-amber-ink:#503c08;--cloudline-blue:#26356f;--cloudline-body:#273660;--cloudline-deep:#1d2b61;--cloudline-ink:#1a2554;--cloudline-line:#d4d8e7;--cloudline-muted:#4c5575;--cloudline-paper:#f3f5fb;--cloudline-peri-deep:#98adfa;--cloudline-peri-soft:#a6b7f3;--cloudline-periwinkle:#a9b7ff;--cloudline-surface:#f6f8ff;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px;background:var(--lab)}
+body{min-width:320px;margin:0;color:var(--ink);background:var(--paper);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+svg{display:block;max-width:100%}
+:focus-visible{outline:var(--focus);outline-offset:3px;box-shadow:var(--focus-shadow)}
+::selection{color:var(--color-white);background:var(--focus-ink)}
+.skip-link{position:fixed;z-index:200;inset-block-start:8px;inset-inline-start:8px;padding:10px 14px;border-radius:var(--radius-pill);color:var(--color-black);background:var(--color-white);transform:translateY(-160%);transition:transform var(--motion-fast) var(--ease)}
+.skip-link:focus{transform:translateY(0)}
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+main{display:block}
+.design{position:relative;min-height:100vh;min-height:100svh;padding:clamp(18px,3vw,44px) clamp(14px,4vw,64px) clamp(34px,4vw,58px);scroll-margin-top:0}
+.design__inner{width:min(100%,1720px);margin-inline:auto}
+.design__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:30px;margin:0 auto 14px;font-family:var(--font-mono);font-size:var(--type-micro);letter-spacing:.02em}
+.design__meta h2{margin:0;color:inherit;font:inherit;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.design__meta p{margin:0;opacity:.8}
+.mock-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:60px}
+.mock-brand{display:inline-flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.035em}
+.mock-brand__symbol{display:grid;width:30px;height:30px;place-items:center;border:2px solid currentColor;border-radius:50%;font-size:var(--type-compact);font-weight:900}
+.mock-brand__name{font-size:var(--type-card)}
+.mock-links{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,28px);flex-wrap:wrap}
+.mock-links a{display:inline-flex;align-items:center;min-height:44px;font-size:var(--type-micro);font-weight:600}
+.mock-cta{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:9px var(--space-4);border:1px solid currentColor;border-radius:var(--radius-pill);font-size:var(--type-micro);font-weight:700;transition:transform var(--motion-fast) var(--ease),background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease),box-shadow var(--motion-fast) var(--ease)}
+.mock-cta:hover{transform:translateY(-2px)}
+.eyebrow{margin:0 0 var(--space-3);font-family:var(--font-mono);font-size:var(--type-micro);font-weight:600;letter-spacing:.11em;text-transform:uppercase}
+.body-copy{max-width:60ch;margin:0;font-size:var(--type-body);line-height:1.7}
+.arrow{display:inline-block;font-size:var(--type-card);line-height:1}
+[dir="rtl"] .arrow{transform:scaleX(-1)}
+[dir="rtl"] .design *{letter-spacing:normal}
+.design--cloudline{isolation:isolate;overflow:hidden;color:var(--cloudline-ink);background:linear-gradient(135deg,var(--cloudline-periwinkle) 0%,var(--cloudline-peri-deep) 48%,var(--cloudline-peri-soft) 100%)}
+.cloudline-site{position:relative;z-index:1;isolation:isolate;width:min(100%,1720px);padding:clamp(14px,2vw,28px) clamp(8px,2vw,28px) 32px}
+.cloudline-cloud-field{position:absolute;z-index:-1;inset:0;overflow:hidden;pointer-events:none}
+.cloudline-cloud{position:absolute;height:auto;filter:drop-shadow(0 14px 20px rgba(38,53,111,.12))}
+.cloudline-cloud path{fill:var(--cloudline-surface);stroke:var(--cloudline-accent);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.cloudline-cloud--one{inset-block-start:14%;inset-inline-start:1%;width:clamp(160px,20vw,290px);opacity:.52;transform:rotate(-5deg)}
+.cloudline-cloud--two{inset-block-start:31%;inset-inline-end:0;width:clamp(190px,24vw,350px);opacity:.42;transform:rotate(4deg)}
+.cloudline-cloud--three{inset-block-start:68%;inset-inline-start:13%;width:clamp(120px,15vw,210px);opacity:.34;transform:rotate(2deg)}
+.cloudline-nav{min-height:66px;padding:7px clamp(10px,1.5vw,18px);gap:clamp(10px,1.5vw,22px);border:1px solid rgba(255,255,255,.78);border-radius:18px;background:rgba(255,255,255,.38);backdrop-filter:blur(14px);box-shadow:0 12px 32px rgba(38,53,111,.1)}
+.cloudline-nav .mock-brand__symbol{border-color:transparent;color:var(--cloudline-ink);background:var(--color-white)}
+.cloudline-nav .mock-links{gap:4px}
+.cloudline-nav .mock-links a{min-height:42px;padding-inline:12px;border-radius:10px;transition:background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease)}
+.cloudline-nav .mock-links a:hover{color:var(--cloudline-deep);background:rgba(255,255,255,.5)}
+.cloudline-nav .mock-cta{min-height:44px;padding-inline:16px;border-color:var(--color-white);border-radius:12px;background:var(--color-white);box-shadow:0 5px 15px rgba(38,53,111,.08)}
+.cloudline-nav .mock-cta:hover{border-color:var(--cloudline-deep);color:var(--color-white);background:var(--cloudline-deep)}
+.cloudline-hero{max-width:1120px;margin:clamp(58px,8vw,100px) auto 0;text-align:center}
+.cloudline-hero .eyebrow{display:inline-flex;align-items:center;min-height:34px;padding:7px 11px;border:1px solid rgba(38,53,111,.18);border-radius:var(--radius-pill);color:var(--cloudline-blue);background:rgba(255,255,255,.25);letter-spacing:.09em}
+.cloudline-hero h3{max-width:960px;margin:0 auto;font-size:clamp(42px,7vw,84px);font-weight:760;letter-spacing:-.065em;line-height:.98;text-wrap:balance}
+.cloudline-hero .body-copy{max-width:66ch;margin:18px auto 0;color:var(--cloudline-body)}
+.cloudline-hero .mock-cta{min-height:48px;margin-top:var(--space-5);padding-inline:18px;border-color:var(--cloudline-deep);border-radius:13px;color:var(--color-white);background:var(--cloudline-deep);box-shadow:0 10px 24px rgba(29,43,97,.16)}
+.cloudline-product{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:clamp(28px,5vw,72px);width:min(100%,1240px);margin:clamp(38px,5vw,56px) auto 0;padding:clamp(22px,3.5vw,44px);border:1px solid rgba(255,255,255,.8);border-radius:28px;background:rgba(255,255,255,.36);backdrop-filter:blur(12px);box-shadow:0 24px 60px rgba(38,53,111,.1)}
+.cloudline-feature{min-width:0;padding:var(--space-2) 0}
+.cloudline-feature h4{max-width:15ch;margin:0;font-size:clamp(28px,3.8vw,44px);font-weight:720;letter-spacing:-.055em;line-height:1.05}
+.cloudline-feature p{max-width:48ch;margin:16px 0 0;color:var(--cloudline-body);font-size:var(--type-body);line-height:1.7}
+.cloudline-bullets{display:grid;gap:11px;margin:22px 0 0;padding:0;list-style:none}
+.cloudline-bullets li{display:flex;align-items:center;gap:10px;font-size:var(--type-compact);line-height:1.45}
+.cloudline-bullets li::before{display:grid;flex:0 0 auto;width:24px;height:24px;place-items:center;border:1px solid var(--cloudline-blue);border-radius:8px;color:var(--cloudline-deep);background:rgba(255,255,255,.52);content:"✓";font-size:var(--type-micro);font-weight:900}
+.cloudline-phone{width:min(100%,470px);justify-self:center;padding:12px;border:1px solid var(--cloudline-blue);border-radius:28px;background:var(--color-white);box-shadow:0 26px 58px rgba(31,53,117,.18)}
+.cloudline-phone__screen{padding:clamp(18px,2.6vw,28px);border-radius:20px;background:var(--cloudline-paper)}
+.cloudline-phone__status{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);color:var(--cloudline-muted);font-family:var(--font-mono);font-size:var(--type-caption);letter-spacing:.04em}
+.cloudline-phone h4{margin:28px 0 8px;font-size:22px;letter-spacing:-.035em}
+.cloudline-phone__lead{margin:0;color:var(--cloudline-muted);font-size:var(--type-small)}
+.cloudline-review{margin-top:18px;padding:16px;border:1px solid var(--cloudline-line);border-radius:16px;background:var(--color-white);box-shadow:0 4px 16px rgba(38,53,111,.045)}
+.cloudline-review__label{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--type-caption);letter-spacing:.04em}
+.cloudline-review__label b{padding:6px 9px;border-radius:8px;color:var(--cloudline-amber-ink);background:var(--cloudline-amber);font-weight:700}
+.cloudline-review p{margin:10px 0 0;font-size:var(--type-compact);line-height:1.6}
+.cloudline-phone__labels{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-top:16px}
+.cloudline-phone__labels span{display:inline-flex;align-items:center;min-height:32px;padding:6px 9px;border:1px solid var(--cloudline-blue);border-radius:9px;font-size:var(--type-micro);font-weight:600}
+.cloudline-phone__labels span:first-child{color:var(--color-white);background:var(--cloudline-blue)}
+.cloudline-flow{width:min(100%,1240px);margin:clamp(34px,5vw,58px) auto 0;padding:clamp(20px,3vw,34px);border:1px solid rgba(255,255,255,.62);border-radius:26px;background:rgba(255,255,255,.2)}
+.cloudline-flow__head{display:flex;align-items:end;justify-content:space-between;gap:24px}
+.cloudline-flow__head .eyebrow{margin-bottom:10px;color:var(--cloudline-blue)}
+.cloudline-flow__head h4{max-width:22ch;margin:0;font-size:clamp(24px,3.6vw,38px);font-weight:720;letter-spacing:-.05em;line-height:1.08}
+.cloudline-flow__head>p{max-width:42ch;margin:0;color:var(--cloudline-body);font-size:var(--type-small);line-height:1.6}
+.cloudline-flow__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:0;margin:24px 0 0;list-style:none}
+.cloudline-step{min-width:0;min-height:174px;padding:20px;border:1px solid rgba(38,53,111,.12);border-radius:17px;background:rgba(255,255,255,.54);box-shadow:0 6px 18px rgba(38,53,111,.045)}
+.cloudline-step__index{display:block;margin-bottom:16px;color:var(--cloudline-blue);font-family:var(--font-mono);font-size:var(--type-caption);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.cloudline-step h5{margin:0;font-size:var(--type-card);font-weight:700;letter-spacing:-.02em}
+.cloudline-step p{margin:8px 0 0;color:var(--cloudline-body);font-size:var(--type-small);line-height:1.55}
+.cloudline-footer{display:flex;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;width:min(100%,1240px);margin:24px auto 0;padding-top:16px;border-top:1px solid rgba(38,53,111,.18);color:var(--cloudline-body);font-family:var(--font-mono);font-size:var(--type-caption);letter-spacing:.03em}
+.cloud-art-credit{flex-basis:100%;font-size:10px;line-height:1.5;opacity:.8}
+.cloud-art-credit a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+.cloud-art-credit a:hover{opacity:.75}
+@media(max-width:1000px){.cloudline-product{gap:clamp(22px,4vw,44px)}}
+@media(max-width:760px){.design__meta{align-items:flex-start;flex-wrap:wrap}.design__meta p{order:3;width:100%}.cloudline-nav{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;padding:8px 10px}.cloudline-nav .mock-brand{grid-column:1;grid-row:1}.cloudline-nav .mock-cta{grid-column:2;grid-row:1;justify-self:end}.cloudline-nav .mock-links{grid-column:1/-1;grid-row:2;justify-content:flex-start;padding-inline:2px}.cloudline-hero{margin-top:52px}.cloudline-product{grid-template-columns:minmax(0,1fr);gap:24px;padding:clamp(18px,4vw,28px)}.cloudline-feature{text-align:start}.cloudline-feature h4{max-width:18ch}.cloudline-phone{justify-self:center}.cloudline-flow__head{align-items:flex-start;flex-direction:column}.cloudline-flow__grid{grid-template-columns:minmax(0,1fr);gap:9px}.cloudline-step{min-height:0;padding:17px}.cloudline-step__index{margin-bottom:10px}}
+@media(max-width:520px){.design{padding:14px 10px 30px}.design__meta{font-size:var(--type-caption)}.cloudline-site{padding:14px 3px 26px}.cloudline-nav .mock-cta{min-height:42px;padding-inline:10px;font-size:10px}.cloudline-nav .mock-links a{padding-inline:10px;font-size:11px}.cloudline-hero{margin-top:42px}.cloudline-hero h3{font-size:clamp(39px,11vw,58px);letter-spacing:-.055em}.cloudline-hero .body-copy{font-size:var(--type-compact)}.cloudline-product{margin-top:30px;padding:16px;border-radius:22px}.cloudline-phone{padding:9px;border-radius:24px}.cloudline-phone__screen{padding:15px;border-radius:17px}.cloudline-review{padding:13px}.cloudline-flow{margin-top:26px;padding:17px;border-radius:20px}.cloudline-flow__head h4{font-size:26px}.cloudline-footer{font-size:10px}}
+@media(max-width:760px){.cloudline-cloud--one{inset-block-start:16%;inset-inline-start:-4%;width:clamp(145px,28vw,220px);opacity:.38}.cloudline-cloud--two{inset-block-start:33%;inset-inline-end:-5%;width:clamp(170px,33vw,250px);opacity:.34}.cloudline-cloud--three{inset-block-start:77%;inset-inline-start:6%;width:clamp(110px,19vw,160px);opacity:.25}}
+@media(max-width:520px){.cloudline-cloud--one{inset-block-start:15%;inset-inline-start:-17%;width:190px}.cloudline-cloud--two{inset-block-start:33%;inset-inline-end:-18%;width:230px}.cloudline-cloud--three{inset-block-start:80%;inset-inline-start:0;width:135px}}
+@media(pointer:coarse){.cloudline-nav .mock-links a,.cloudline-nav .mock-cta,.cloudline-hero .mock-cta{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(forced-colors:active){.design,.mock-cta,.cloudline-phone,.cloudline-step{border:1px solid CanvasText}.mock-cta{color:ButtonText;background:ButtonFace}:focus-visible{outline:3px solid Highlight;box-shadow:0 0 0 5px Canvas}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#cloudline">Skip to the concept</a>
+  <main id="main">
+    <h1 class="visually-hidden">07 / Cloudline — Relay concept</h1>
+    <section class="design design--cloudline" id="cloudline" aria-labelledby="label-cloudline">
+      <div class="design__inner cloudline-site">
+        <div class="cloudline-cloud-field" aria-hidden="true"><svg class="cloudline-cloud cloudline-cloud--one" viewBox="0 0 72 72" aria-hidden="true" focusable="false"><path d="M15.9345,30.2552c-0.0372,0.4242-0.3809,0.7675-0.8065,0.8131C9.9685,31.621,6,36.7013,6,42.8852c0,6.553,4.5445,11.8652,10.1505,11.8652h38.6977C61.0072,54.7504,66,49.1365,66,42.2114c0-6.6366-4.5855-12.069-10.3883-12.5101-0.4439-0.0337-0.804-0.3445-0.8887-0.7793-1.2963-6.6567-7.2763-11.659-14.3464-11.659-4.5948,0-8.6879,2.0802-11.3459,5.3894-0.2597,0.3234-0.6956,0.4715-1.079,0.3107-1.0228-0.4289-2.103-0.6365-3.3117-0.6365C20.0727,22.3266,16.3237,25.8122,15.9345,30.2552z"/></svg><svg class="cloudline-cloud cloudline-cloud--two" viewBox="0 0 72 72" aria-hidden="true" focusable="false"><path d="M15.9345,30.2552c-0.0372,0.4242-0.3809,0.7675-0.8065,0.8131C9.9685,31.621,6,36.7013,6,42.8852c0,6.553,4.5445,11.8652,10.1505,11.8652h38.6977C61.0072,54.7504,66,49.1365,66,42.2114c0-6.6366-4.5855-12.069-10.3883-12.5101-0.4439-0.0337-0.804-0.3445-0.8887-0.7793-1.2963-6.6567-7.2763-11.659-14.3464-11.659-4.5948,0-8.6879,2.0802-11.3459,5.3894-0.2597,0.3234-0.6956,0.4715-1.079,0.3107-1.0228-0.4289-2.103-0.6365-3.3117-0.6365C20.0727,22.3266,16.3237,25.8122,15.9345,30.2552z"/></svg><svg class="cloudline-cloud cloudline-cloud--three" viewBox="0 0 72 72" aria-hidden="true" focusable="false"><path d="M15.9345,30.2552c-0.0372,0.4242-0.3809,0.7675-0.8065,0.8131C9.9685,31.621,6,36.7013,6,42.8852c0,6.553,4.5445,11.8652,10.1505,11.8652h38.6977C61.0072,54.7504,66,49.1365,66,42.2114c0-6.6366-4.5855-12.069-10.3883-12.5101-0.4439-0.0337-0.804-0.3445-0.8887-0.7793-1.2963-6.6567-7.2763-11.659-14.3464-11.659-4.5948,0-8.6879,2.0802-11.3459,5.3894-0.2597,0.3234-0.6956,0.4715-1.079,0.3107-1.0228-0.4289-2.103-0.6365-3.3117-0.6365C20.0727,22.3266,16.3237,25.8122,15.9345,30.2552z"/></svg></div>
+        <div class="design__meta"><h2 id="label-cloudline">07 / Cloudline</h2><p>Soft periwinkle · balanced cloud forms · human-review console</p></div>
+        <header class="mock-nav cloudline-nav"><a class="mock-brand" href="#cloudline" aria-label="Relay Cloudline, top"><span class="mock-brand__symbol" aria-hidden="true">R</span><span class="mock-brand__name">Relay</span></a><nav class="mock-links" aria-label="Cloudline navigation"><a href="#cloudline-preview">Preview</a><a href="#cloudline-approach">Human review</a></nav><a class="mock-cta" href="#cloudline-approach">Explore the approach <span class="arrow" aria-hidden="true">↗</span></a></header>
+        <div class="cloudline-hero"><p class="eyebrow">Work can move / people stay in charge</p><h3>Let the routine flow.<br>Keep the human thread.</h3><p class="body-copy">Relay brings AI assistance and connected systems into a reviewable business workflow, not a black box.</p><a class="mock-cta" href="#cloudline-preview">See the checkpoint <span class="arrow" aria-hidden="true">↓</span></a></div>
+        <div class="cloudline-product" id="cloudline-preview"><div class="cloudline-feature" id="cloudline-approach"><p class="eyebrow">A clear pause, in the right place</p><h4>Automation should make the decision visible.</h4><p>Let a workflow prepare the next step, show its context, and wait for the person responsible before it continues.</p><ul class="cloudline-bullets"><li>Show what happened</li><li>Keep source context close</li><li>Make approval a human action</li></ul></div><article class="cloudline-phone" aria-label="Illustrative Relay review screen"><div class="cloudline-phone__screen"><div class="cloudline-phone__status"><span>RELAY / REVIEW QUEUE</span><span aria-hidden="true">•••</span></div><h4>Needs your review</h4><p class="cloudline-phone__lead">Illustrative workflow · request 01</p><div class="cloudline-review"><div class="cloudline-review__label"><strong>Draft is ready</strong><b>HOLD</b></div><p>A person checks the suggested reply and source notes before the process continues.</p><div class="cloudline-phone__labels" role="group" aria-label="Review context"><span>Owner / review</span><span>Source / linked</span></div></div></div></article></div>
+        <section class="cloudline-flow" aria-labelledby="cloudline-flow-title"><div class="cloudline-flow__head"><div><p class="eyebrow">A clear sequence / no hidden handoffs</p><h4 id="cloudline-flow-title">Three small moves. One visible decision.</h4></div><p>Illustrative workflow only. The example shows how automation and AI assistance can prepare work while a person keeps the final call.</p></div><ol class="cloudline-flow__grid"><li class="cloudline-step"><span class="cloudline-step__index">01 / Capture</span><h5>Start from a clear trigger.</h5><p>Keep the request, source context, and responsible owner together.</p></li><li class="cloudline-step"><span class="cloudline-step__index">02 / Prepare</span><h5>Bring useful context forward.</h5><p>Automation organizes approved information; AI assistance can draft the next step.</p></li><li class="cloudline-step"><span class="cloudline-step__index">03 / Review</span><h5>Pause where judgment matters.</h5><p>A person checks the suggestion before the workflow continues.</p></li></ol></section>
+        <footer class="cloudline-footer" id="cloudline-footer"><span>Relay / Cloudline direction</span><span>Illustrative workflow only</span><small class="cloud-art-credit">Cloud artwork adapted from <a href="https://github.com/hfg-gmuend/openmoji/blob/15.1.0/color/svg/2601.svg" target="_blank" rel="noopener noreferrer">OpenMoji “Cloud”</a> (recolored and positioned), under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener noreferrer">CC BY-SA 4.0</a>.</small></footer>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
