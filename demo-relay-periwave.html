@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Relay makes room for good work with business-first automation, AI assistants, integrations, and clear human checkpoints.">
+  <meta name="theme-color" content="#8ca4fb">
+  <title>Relay — Periwave</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --periwave:#8ca4fb;
+      --blue:#4655dd;
+      --blue-dark:#4054d7;
+      --cream:#f5f1ed;
+      --cream-hi:#fffdfa;
+      --ink:#151514;
+      --white:#fffdfa;
+      --muted:#4858b7;
+      --line:rgba(21,21,20,.25);
+      --coral:#ff775d;
+      --teal:#56cbb7;
+      --pink:#f3a1c7;
+      --lilac:#d9b4ed;
+      --yellow:#ffe46f;
+      --frame-gap:clamp(12px,4vw,58px);
+      --shell-pad:clamp(8px,1.35vw,17px);
+      --radius:clamp(16px,2vw,25px);
+      --focus:3px solid #181918;
+      --ease:cubic-bezier(.2,.76,.2,1);
+      --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      --mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:20px;background:var(--periwave)}
+    body{min-width:320px;margin:0;padding:var(--frame-gap);overflow-x:hidden;color:var(--ink);background:var(--periwave);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    a{color:inherit;text-decoration:none}
+    button{color:inherit;font:inherit;cursor:pointer}
+    svg{display:block;max-width:100%}
+    :focus-visible{outline:var(--focus);outline-offset:4px}
+    ::selection{color:var(--cream);background:var(--ink)}
+    .skip-link{position:fixed;z-index:200;inset:12px auto auto 12px;padding:10px 14px;border-radius:99px;color:var(--cream);background:var(--ink);transform:translateY(-160%);transition:transform 150ms ease}
+    .skip-link:focus{transform:translateY(0)}
+    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+
+    .site-shell{display:flex;flex-direction:column;gap:var(--shell-pad);width:min(100%,1500px);min-height:calc(100svh - var(--frame-gap) - var(--frame-gap));margin-inline:auto;padding:var(--shell-pad);border:1px solid rgba(255,255,255,.72);border-radius:var(--radius);background:var(--cream);box-shadow:0 15px 45px rgba(37,48,93,.06)}
+    .site-header{position:relative;z-index:5;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:15px;min-height:45px;padding-inline:clamp(4px,1.6vw,18px)}
+    .brand{display:inline-flex;align-items:center;justify-self:start;gap:7px;min-height:36px}
+    .brand__burst{display:grid;width:22px;height:22px;place-items:center;color:var(--ink)}
+    .brand__burst svg{width:22px;height:22px}
+    .brand__name{font-size:14px;font-weight:820;letter-spacing:-.065em}
+    .brand__descriptor{margin-inline-start:2px;color:#565552;font-family:var(--mono);font-size:7px;letter-spacing:.08em;text-transform:uppercase}
+    .site-nav{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2.3vw,31px)}
+    .site-nav a{display:inline-flex;align-items:center;min-height:34px;color:#55534f;font-size:10px;font-weight:580;transition:color 140ms ease}
+    .site-nav a:hover,.site-nav a[aria-current="location"]{color:var(--ink)}
+    .site-nav a[aria-current="location"]::after{width:4px;height:4px;margin-inline-start:5px;border-radius:50%;background:var(--blue);content:""}
+    .header-cta{display:inline-flex;align-items:center;justify-self:end;gap:7px;min-height:31px;padding:6px 10px;border:1px solid rgba(21,21,20,.28);border-radius:99px;background:rgba(255,255,255,.48);font-size:8px;font-weight:680;transition:transform 150ms ease,background 150ms ease}
+    .header-cta:hover{transform:translateY(-1px);background:#fff}
+    .header-cta span{display:grid;width:17px;height:17px;place-items:center;border:1px solid rgba(21,21,20,.25);border-radius:50%;font-size:10px}
+    .menu-toggle{display:none;align-items:center;justify-content:center;gap:7px;min-width:66px;min-height:36px;padding:7px 10px;border:1px solid rgba(21,21,20,.28);border-radius:99px;background:rgba(255,255,255,.58);font-size:9px;font-weight:650}
+    .menu-toggle__icon{display:grid;gap:4px}
+    .menu-toggle__icon i{display:block;width:11px;height:1.5px;border-radius:2px;background:currentColor}
+
+    .blue-panel{position:relative;isolation:isolate;display:flex;flex:1;min-height:calc(100svh - var(--frame-gap) - var(--frame-gap) - 91px - var(--shell-pad) - var(--shell-pad) - var(--shell-pad) - var(--shell-pad));flex-direction:column;overflow:hidden;padding:clamp(18px,3vw,38px) clamp(20px,4vw,55px) clamp(200px,23vh,235px);border-radius:clamp(13px,1.55vw,20px);color:var(--white);background:var(--blue)}
+    .blue-panel__head{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .micro-pill{display:inline-flex;align-items:center;gap:6px;min-height:23px;padding:5px 9px;border:1px solid rgba(255,255,255,.58);border-radius:99px;color:var(--white);font-family:var(--mono);font-size:7px;letter-spacing:.11em;text-transform:uppercase}
+    .micro-pill::before{width:5px;height:5px;border-radius:50%;background:var(--yellow);content:""}
+    .blue-panel__edition{color:var(--white);font-family:var(--mono);font-size:7px;letter-spacing:.09em;text-transform:uppercase}
+    .intro{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(220px,.7fr);align-items:end;gap:clamp(20px,5vw,72px);width:min(100%,1150px);margin:clamp(22px,4vh,36px) auto 0}
+    .intro__title{max-width:none;margin:0;font-size:clamp(40px,5.3vw,68px);font-weight:700;letter-spacing:-.082em;line-height:.91}
+    .intro__title span{display:block;color:#dce2ff}
+    .intro__copy{max-width:39ch;margin:0 0 5px;color:#e1e5ff;font-size:clamp(11px,1.15vw,14px);line-height:1.65}
+    .service-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:min(100%,1150px);margin:clamp(25px,4vh,44px) auto 0;border-block:1px solid rgba(255,255,255,.39)}
+    .service-item{min-width:0;padding:13px clamp(12px,2.3vw,27px) 12px 0;border-inline-end:1px solid rgba(255,255,255,.39)}
+    .service-item:not(:first-child){padding-inline-start:clamp(12px,2.3vw,27px)}
+    .service-item:last-child{border-inline-end:0}
+    .service-item__label{display:flex;align-items:center;gap:7px;color:#dce2ff;font-family:var(--mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase}
+    .service-item__num{color:rgba(255,255,255,.68)}
+    .service-item h2{max-width:16ch;margin:12px 0 0;font-size:clamp(14px,1.55vw,18px);font-weight:660;letter-spacing:-.035em;line-height:1.1}
+    .service-item p{max-width:34ch;margin:7px 0 0;color:#e1e5ff;font-size:clamp(9px,.8vw,11px);line-height:1.5}
+    .panel-contact{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:18px;width:min(100%,1150px);margin:clamp(18px,2.8vh,30px) auto 0;padding-block-start:14px;border-block-start:1px solid rgba(255,255,255,.38)}
+    .panel-contact__copy{max-width:43ch}
+    .panel-contact__action{display:grid;justify-items:end;gap:6px}
+    .panel-contact__eyebrow{margin:0 0 6px;color:#dce2ff;font-family:var(--mono);font-size:8px;letter-spacing:.11em;text-transform:uppercase}
+    .panel-contact__text{margin:0;color:var(--white);font-size:12px;font-weight:620;line-height:1.45}
+    .button{position:relative;z-index:3;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:10px 14px;border:1px solid transparent;border-radius:99px;font-size:10px;font-weight:680;transition:transform 160ms ease,background 160ms ease,color 160ms ease,border-color 160ms ease}
+    .button:hover{transform:translateY(-2px)}
+    .button--light{color:var(--ink);background:var(--cream-hi)}
+    .button--light:hover{background:var(--yellow)}
+    .button__arrow{display:grid;width:19px;height:19px;place-items:center;border-radius:50%;color:var(--white);background:var(--blue);font-size:11px}
+    .contact-placeholder{max-width:34ch;margin:0;color:var(--white);font-family:var(--mono);font-size:8px;line-height:1.5;text-align:right}
+
+    .wave-art{position:absolute;z-index:1;right:0;bottom:0;left:0;line-height:0;pointer-events:none}
+    .wave-art svg{width:100%;height:auto}
+    .wave-art__wide{display:block}
+    .wave-art__compact{display:none}
+    .wave-fill{fill:var(--cream)}
+    .wave-ink{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+    .wave-route{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-dasharray:5 9;stroke-linecap:round;animation:wave-route 16s linear infinite}
+    .wave-sticker{animation:sticker-breathe 5.2s ease-in-out infinite}
+    .wave-sticker:nth-of-type(2n){animation-delay:-2.1s}
+    .site-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:28px;padding:0 4px;color:#686560;font-family:var(--mono);font-size:8px;letter-spacing:.04em}
+    .site-footer p{margin:0}
+    .site-footer__right{display:flex;align-items:center;gap:16px}
+    .site-footer a{display:inline-flex;align-items:center;min-height:28px;color:var(--ink)}
+    .site-footer a:hover{text-decoration:underline;text-underline-offset:3px}
+
+    .reveal{opacity:1;transform:none;transition:opacity 480ms var(--ease),transform 480ms var(--ease)}
+    .js .reveal{opacity:0;transform:translateY(12px)}
+    .js .reveal.is-visible{opacity:1;transform:translateY(0)}
+    @keyframes wave-route{to{stroke-dashoffset:-168}}
+    @keyframes sticker-breathe{0%,100%{opacity:1}50%{opacity:.86}}
+
+    @media(max-width:900px){
+      :root{--frame-gap:clamp(12px,4.4vw,36px)}
+      .site-header{grid-template-columns:minmax(0,1fr) auto;min-height:43px}
+      .brand__descriptor{display:none}
+      .menu-toggle{display:none}
+      .site-nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;flex-wrap:wrap;gap:3px 15px}
+      .header-cta{grid-column:1/-1;grid-row:3;justify-self:start}
+      .js .menu-toggle{display:inline-flex;grid-column:2;grid-row:1}
+      .js .site-nav{display:none}
+      .js .header-cta{display:none}
+      .js .site-nav.is-open{display:flex;grid-column:1/-1;grid-row:2;gap:3px 8px;width:100%;padding:7px;border:1px solid rgba(21,21,20,.18);border-radius:12px;background:rgba(255,255,255,.7)}
+      .js .site-nav.is-open a{min-height:38px;padding-inline:9px;border-radius:8px}
+      .js .site-nav.is-open a:hover{background:rgba(255,255,255,.7)}
+      .blue-panel{min-height:calc(100svh - var(--frame-gap) - var(--frame-gap) - 89px - var(--shell-pad) - var(--shell-pad) - var(--shell-pad) - var(--shell-pad));padding:23px 24px 175px}
+      .intro{grid-template-columns:minmax(0,1fr);gap:13px;margin-block-start:clamp(22px,4vh,34px)}
+      .intro__title{max-width:none;font-size:clamp(39px,7.4vw,65px)}
+      .intro__copy{max-width:50ch;font-size:11px}
+      .service-grid{margin-block-start:clamp(24px,4vh,38px)}
+      .panel-contact{margin-block-start:clamp(18px,3vh,27px)}
+      .panel-contact__action{justify-items:start}
+    }
+    @media(max-width:700px){
+      :root{--frame-gap:clamp(11px,3.7vw,21px);--shell-pad:9px}
+      .blue-panel{min-height:calc(100svh - var(--frame-gap) - var(--frame-gap) - 89px - var(--shell-pad) - var(--shell-pad) - var(--shell-pad) - var(--shell-pad));padding:19px 18px 200px}
+      .wave-art__wide{display:none}
+      .wave-art__compact{display:block}
+      .contact-placeholder{max-width:24ch;font-size:7px}
+      .blue-panel__edition{font-size:6px}
+      .intro{margin-block-start:28px}
+      .service-item{padding:14px 10px 13px 0}
+      .service-item:not(:first-child){padding-inline-start:10px}
+      .service-item h2{font-size:14px}
+      .service-item p{font-size:9px}
+      .panel-contact__text{font-size:11px}
+    }
+    @media(max-width:520px){
+      :root{--frame-gap:12px}
+      .site-shell{gap:8px}
+      .site-header{min-height:39px;padding-inline:2px}
+      .brand__burst{width:19px;height:19px}
+      .brand__name{font-size:12px}
+      .menu-toggle{min-width:62px;min-height:36px;padding:7px 9px;font-size:9px}
+      .js .site-nav.is-open{gap:0;padding:5px}
+      .js .site-nav.is-open a{justify-content:flex-start;width:100%;min-height:39px;padding-inline:9px;border-block-end:1px solid rgba(21,21,20,.12);border-radius:0}
+      .js .site-nav.is-open a:last-child{border-block-end:0}
+      .blue-panel{min-height:calc(100svh - var(--frame-gap) - var(--frame-gap) - 99px - var(--shell-pad) - var(--shell-pad) - var(--shell-pad) - var(--shell-pad));padding:16px 14px 125px;border-radius:13px}
+      .micro-pill{min-height:21px;padding:4px 7px;font-size:6px;letter-spacing:.08em}
+      .blue-panel__edition{max-width:12ch;text-align:right;line-height:1.4}
+      .intro{gap:11px;margin-block-start:24px}
+      .intro__title{max-width:11ch;font-size:clamp(36px,11vw,50px)}
+      .intro__copy{font-size:11px}
+      .service-grid{grid-template-columns:minmax(0,1fr);margin-block-start:19px}
+      .service-item,.service-item:not(:first-child){display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;padding:11px 0;border-inline-end:0;border-block-end:1px solid rgba(255,255,255,.34)}
+      .service-item:last-child{border-block-end:0}
+      .service-item__label{grid-column:1/-1;font-size:6.5px}
+      .service-item h2{grid-column:1;font-size:14px}
+      .service-item p{grid-column:1;max-width:43ch;margin-top:3px;font-size:9px}
+      .panel-contact{align-items:flex-start;flex-direction:column;gap:10px;margin-block-start:14px;padding-block-start:11px}
+      .panel-contact__action{justify-items:start}
+      .panel-contact__eyebrow{font-size:7px}
+      .panel-contact__text{font-size:10px}
+      .button{min-height:42px;padding:9px 11px;font-size:9px}
+      .contact-placeholder{max-width:22ch;font-size:7px;text-align:left}
+      .site-footer{align-items:flex-start;flex-direction:column;gap:4px;padding:2px 3px 0;font-size:7px}
+      .site-footer__right{width:100%;justify-content:space-between;gap:8px}
+      .site-footer a{min-height:24px}
+    }
+    @media(pointer:coarse){.site-nav a,.header-cta,.menu-toggle,.button,.site-footer a{min-height:44px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+    :root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+    :root[data-motion="off"] .reveal{opacity:1;transform:none}
+    @media(forced-colors:active){.site-shell,.blue-panel{border:1px solid CanvasText}.blue-panel{background:Canvas;color:CanvasText}.button--light{border:1px solid CanvasText}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-shell" id="top">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Relay Periwave concept, back to top"><span class="brand__burst" aria-hidden="true"><svg viewBox="0 0 30 30"><path d="M14 2 17 9 25 7l-3 8 6 4-8 3-1 7-6-5-7 3 1-8-6-4 8-3z" fill="#ff775d" stroke="#151514" stroke-width="1.7" stroke-linejoin="round"/><path d="M11 14h8m-4-4v8" stroke="#151514" stroke-width="1.6" stroke-linecap="round"/></svg></span><span class="brand__name">Relay</span><span class="brand__descriptor">work systems</span></a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span>Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a href="#services" data-nav="services">What Relay does</a><a href="#approach" data-nav="approach">How it works</a><a href="#contact" data-nav="contact">Start here</a></nav>
+      <a class="header-cta" href="#contact">One workflow <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="main">
+      <section class="blue-panel" aria-labelledby="hero-title">
+        <div class="blue-panel__head"><span class="micro-pill">Business-first / human-owned</span><span class="blue-panel__edition">Periwave / Relay concept</span></div>
+        <div class="intro" id="approach" data-chapter><h1 class="intro__title" id="hero-title">Less busywork.<span>More good work.</span></h1><p class="intro__copy">Relay brings automation, AI assistants, and integrations into clear business workflows—with people at the important decisions, not watching from the sidelines.</p></div>
+        <section class="service-grid" id="services" data-chapter aria-label="Relay service approach">
+          <article class="service-item"><span class="service-item__label"><span class="service-item__num">01 /</span> Automate</span><h2>Move repeatable steps.</h2><p>Use clear rules for routine work; pause when an exception needs judgment.</p></article>
+          <article class="service-item"><span class="service-item__label"><span class="service-item__num">02 /</span> Assist and connect</span><h2>Carry useful context.</h2><p>Bring approved knowledge and existing systems into the next step.</p></article>
+          <article class="service-item"><span class="service-item__label"><span class="service-item__num">03 /</span> Keep people in</span><h2>Make decisions visible.</h2><p>Keep ownership, review, and human checkpoints easy to find.</p></article>
+        </section>
+        <div class="panel-contact" id="contact" data-chapter><div class="panel-contact__copy"><p class="panel-contact__eyebrow">Start with one workflow</p><p class="panel-contact__text">Bring the process that feels heavier than it should.</p></div><div class="panel-contact__action"><a class="button button--light" href="mailto:hello@relayworks.example?subject=Start%20with%20one%20workflow">Talk through a workflow <span class="button__arrow" aria-hidden="true">↗</span></a><p class="contact-placeholder">Sample inbox / hello@relayworks.example — illustrative placeholder</p></div></div>
+        <div class="wave-art" aria-hidden="true">
+          <svg class="wave-art__wide" viewBox="0 0 1440 250" preserveAspectRatio="xMidYMax meet">
+            <path class="wave-fill" d="M0 105c73-2 90 20 157 19 79-2 97-54 174-47 72 6 100 46 172 44 70-2 83-47 161-51 83-5 102 45 176 44 70-1 89-53 166-50 85 2 99 55 179 57 76 2 106-42 255-32v161H0z"/>
+            <path class="wave-ink" d="M0 105c73-2 90 20 157 19 79-2 97-54 174-47 72 6 100 46 172 44 70-2 83-47 161-51 83-5 102 45 176 44 70-1 89-53 166-50 85 2 99 55 179 57 76 2 106-42 255-32"/>
+            <path class="wave-route" d="M36 145c109-39 166 51 258 8s157-8 248 7 162 1 249-24 163-6 236 28 145 22 234-8"/>
+            <g class="wave-sticker" transform="translate(70 98) rotate(-8 50 46)"><path d="M12 24 50 4l39 20v48L50 92 12 72z" fill="#ff775d" stroke="#151514" stroke-width="4" stroke-linejoin="round"/><path d="m34 48 11 11 22-26" fill="none" stroke="#151514" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="m22 18 5-11 5 11 11 4-11 4-5 11-5-11-11-4z" fill="#ffe46f" stroke="#151514" stroke-width="2"/></g>
+            <g class="wave-sticker" transform="translate(509 112) rotate(7 47 43)"><path d="M44 4 53 28 80 19 69 44 92 59 65 65 62 91 42 75 19 88 22 61 0 48 25 38 25 12z" fill="#d9b4ed" stroke="#151514" stroke-width="4" stroke-linejoin="round"/><path d="M31 45h32M47 31v31" stroke="#151514" stroke-width="4" stroke-linecap="round"/><circle cx="47" cy="47" r="5" fill="#fffdfa" stroke="#151514" stroke-width="2"/></g>
+            <g class="wave-sticker" transform="translate(886 102) rotate(-5 49 45)"><rect x="7" y="10" width="85" height="70" rx="17" fill="#56cbb7" stroke="#151514" stroke-width="4"/><path d="M21 25h57M21 37h39" stroke="#151514" stroke-width="3" stroke-linecap="round"/><path d="M26 58h13m8 0h25" stroke="#151514" stroke-width="4" stroke-linecap="round"/><circle cx="22" cy="58" r="5" fill="#ffe46f" stroke="#151514" stroke-width="2"/></g>
+            <g class="wave-sticker" transform="translate(1192 77) rotate(7 65 54)"><path d="M19 33q2-22 24-22h43q22 0 24 22v36q-2 18-22 18H42q-22 0-23-18z" fill="#fffdfa" stroke="#151514" stroke-width="4"/><circle cx="52" cy="50" r="18" fill="#d9b4ed" stroke="#151514" stroke-width="3"/><circle cx="52" cy="50" r="9" fill="#151514"/><circle cx="90" cy="37" r="4" fill="#ff775d" stroke="#151514" stroke-width="2"/><path d="M25 85 13 99m87-14 12 14" stroke="#151514" stroke-width="4" stroke-linecap="round"/></g>
+            <g fill="#151514"><path d="M345 73l5 11 12 4-12 4-5 12-4-12-12-4 12-4z"/><path d="M776 72l4 9 10 4-10 3-4 10-4-10-10-3 10-4z"/><path d="M1113 82l4 9 9 3-9 3-4 9-3-9-9-3 9-3z"/></g>
+          </svg>
+          <svg class="wave-art__compact" viewBox="0 0 390 160" preserveAspectRatio="xMidYMax meet">
+            <path class="wave-fill" d="M0 72c44-4 49 12 90 12 40 0 48-31 88-29 42 3 48 26 89 25 39-1 44-28 83-27 17 0 26 8 40 12v95H0z"/>
+            <path class="wave-ink" d="M0 72c44-4 49 12 90 12 40 0 48-31 88-29 42 3 48 26 89 25 39-1 44-28 83-27 17 0 26 8 40 12"/>
+            <path class="wave-route" d="M10 112c45-20 67 28 115 6s80-3 116 7 77-18 139-6"/>
+            <g class="wave-sticker" transform="translate(30 65) rotate(-7 28 27)"><path d="M5 17 28 4l24 13v28L28 58 5 45z" fill="#ff775d" stroke="#151514" stroke-width="3" stroke-linejoin="round"/><path d="m19 31 7 7 13-15" fill="none" stroke="#151514" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+            <g class="wave-sticker" transform="translate(172 68) rotate(6 27 26)"><path d="M26 2 32 17 48 12 42 28 56 37 40 41 38 57 26 47 12 55 14 39 1 31 16 25 16 9z" fill="#d9b4ed" stroke="#151514" stroke-width="3" stroke-linejoin="round"/><path d="M19 30h15m-8-8v16" stroke="#151514" stroke-width="3" stroke-linecap="round"/></g>
+            <g class="wave-sticker" transform="translate(310 54) rotate(6 30 31)"><path d="M5 18q2-13 15-13h26q13 0 15 13v27q-1 12-15 12H20Q6 57 5 45z" fill="#fffdfa" stroke="#151514" stroke-width="3"/><circle cx="28" cy="32" r="14" fill="#56cbb7" stroke="#151514" stroke-width="2.5"/><circle cx="28" cy="32" r="7" fill="#151514"/><circle cx="49" cy="23" r="3" fill="#ff775d" stroke="#151514" stroke-width="1.5"/></g>
+          </svg>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Relay / Periwave visual direction</p><div class="site-footer__right"><span>Illustrative workflows / no client claims</span><a href="#top">Back to top ↑</a></div></footer>
+  </div>
+  <script>
+    (()=>{
+      const root=document.documentElement;root.classList.add("js");
+      const toggle=document.getElementById("menu-toggle"),nav=document.getElementById("site-nav");
+      const closeMenu=()=>{toggle.setAttribute("aria-expanded","false");nav.classList.remove("is-open")};
+      toggle.addEventListener("click",()=>{const open=toggle.getAttribute("aria-expanded")!=="true";toggle.setAttribute("aria-expanded",String(open));nav.classList.toggle("is-open",open)});
+      nav.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMenu));
+      document.addEventListener("keydown",event=>{if(event.key==="Escape"&&toggle.getAttribute("aria-expanded")==="true"){closeMenu();toggle.focus()}});
+      if("IntersectionObserver" in window){
+        const links=Array.from(document.querySelectorAll("[data-nav]"));
+        const sections=Array.from(document.querySelectorAll("[data-chapter]"));
+        const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting)return;links.forEach(link=>{if(link.dataset.nav===entry.target.id)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current")})}),{rootMargin:"-25% 0px -62% 0px",threshold:0});
+        sections.forEach(section=>observer.observe(section));
+      }
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.motion="off";
+    })();
+  </script>
+</body>
+</html>
