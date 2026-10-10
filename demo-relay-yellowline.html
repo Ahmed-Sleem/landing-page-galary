@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Relay builds business-first automation, AI assistants, and integrations—with people kept in the loop.">
+  <meta name="theme-color" content="#ffe34d">
+  <title>Relay — Yellowline</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --yellow:#ffe34d;
+      --yellow-soft:#fff0a1;
+      --ink:#171613;
+      --paper:#fff8df;
+      --white:#fffdf5;
+      --muted:#39362d;
+      --line:#2b2922;
+      --mint:#67d0be;
+      --blue:#78c8ed;
+      --lilac:#cfa7e7;
+      --coral:#f2815c;
+      --gutter:clamp(14px,3.2vw,46px);
+      --focus:3px solid #455a9d;
+      --ease:cubic-bezier(.2,.76,.2,1);
+      --display:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif;
+      --serif:Georgia,"Times New Roman",serif;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:56px;background:var(--yellow)}
+    body{min-width:320px;margin:0;overflow-x:hidden;color:var(--ink);background:var(--yellow);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    button{color:inherit;font:inherit;cursor:pointer}
+    svg{display:block;max-width:100%}
+    :focus-visible{outline:var(--focus);outline-offset:4px}
+    ::selection{color:var(--yellow);background:var(--ink)}
+    .skip-link{position:fixed;z-index:200;inset:12px auto auto 12px;padding:11px 14px;color:var(--yellow);background:var(--ink);transform:translateY(-160%)}
+    .skip-link:focus{transform:translateY(0)}
+    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+    .scroll-progress{position:fixed;z-index:170;inset:0 0 auto;height:3px;pointer-events:none}
+    .scroll-progress span{display:block;width:100%;height:100%;background:var(--ink);transform:scaleX(var(--progress,0));transform-origin:left}
+
+    /* Yellowline: a full-width, hand-drawn editorial direction with a full-viewport first frame. */
+    .hero{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:100vh;min-height:100svh;width:100%;padding:10px var(--gutter) 16px;background:var(--yellow)}
+    .hero-header{position:relative;z-index:2;display:grid;grid-template-rows:auto auto;align-content:start}
+    .masthead{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px;min-height:43px;border-block-end:2px solid var(--ink)}
+    .masthead__marks{display:flex;align-items:center;gap:6px}
+    .mark-chip{display:grid;width:22px;height:22px;place-items:center;border:1.5px solid var(--ink);border-radius:50%;font-size:9px;font-weight:900;transition:transform 160ms ease,background 160ms ease}
+    .mark-chip:hover{transform:rotate(-12deg);background:var(--coral)}
+    .masthead__title{display:grid;justify-items:center;gap:0;font-family:var(--display);font-size:clamp(18px,2.4vw,28px);letter-spacing:-.02em;line-height:.84;text-align:center;text-transform:uppercase}
+    .masthead__title small{font-family:Arial,Helvetica,sans-serif;font-size:6px;letter-spacing:.11em}
+    .masthead__cta{justify-self:end;display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:6px 11px;border:1.5px solid var(--ink);border-radius:99px;background:var(--yellow-soft);font-size:8px;font-weight:900;letter-spacing:.04em;transition:transform 140ms ease,background 140ms ease}
+    .masthead__cta:hover{transform:rotate(-2deg) translateY(-1px);background:var(--white)}
+    .masthead__cta span{font-size:12px}
+    .main-nav{display:flex;align-items:center;justify-content:center;gap:clamp(16px,3vw,42px);min-height:31px;border-block-end:1px solid var(--ink)}
+    .main-nav a{display:inline-flex;align-items:center;min-height:29px;font-family:var(--display);font-size:10px;letter-spacing:.03em;text-transform:uppercase}
+    .main-nav a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+    .menu-trigger{display:none;justify-self:end;align-items:center;justify-content:center;gap:6px;min-width:59px;min-height:31px;padding:5px 7px;border:1px solid var(--ink);border-radius:99px;background:transparent;font-size:7px;font-weight:900;text-transform:uppercase}
+    .menu-trigger:hover,.menu-trigger[aria-expanded=true]{color:var(--yellow);background:var(--ink)}
+    .menu-trigger__icon{display:grid;gap:3px}
+    .menu-trigger__icon i{display:block;width:10px;height:1px;background:currentColor}
+
+    .hero-main{display:grid;grid-template-rows:auto auto auto minmax(0,1fr);align-content:start;justify-items:center;width:100%;max-width:1660px;min-width:0;margin-inline:auto;padding-block:clamp(18px,3.3vh,35px) 0;text-align:center}
+    .hero-kicker{display:flex;align-items:center;gap:7px;margin:0 0 9px;font-size:7px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+    .hero-kicker::before{width:7px;height:7px;border:1.5px solid var(--ink);border-radius:50%;background:var(--coral);content:""}
+    .hero h1{max-width:15ch;margin:0;font-family:var(--display);font-size:clamp(44px,7.5vw,100px);font-weight:500;font-style:italic;letter-spacing:.005em;line-height:.86;text-transform:uppercase}
+    .hero h1 span{display:block}
+    .hero-lead{max-width:54ch;margin:11px 16px 0;font-size:clamp(10px,1.05vw,13px);font-weight:600;line-height:1.45}
+    .hero-cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:37px;margin-block-start:14px;padding:6px 12px;border:1px solid var(--ink);border-radius:99px;color:var(--yellow);background:var(--ink);font-size:8px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;transition:transform 140ms ease,background 140ms ease,color 140ms ease}
+    .hero-cta:hover{transform:rotate(-2deg) translateY(-2px);color:var(--ink);background:var(--white)}
+    .hero-cta__icon{display:grid;width:20px;height:20px;place-items:center;border-radius:50%;color:var(--ink);background:var(--coral);font-size:12px}
+    .hero-art{position:relative;align-self:end;width:calc(100% + 2 * var(--gutter));max-width:none;margin-block-start:clamp(14px,2.8vh,29px);margin-inline:calc(-1 * var(--gutter));overflow:hidden;border-block-end:2px solid var(--ink)}
+    .hero-art svg{width:100%;height:auto}
+    .hero-art__wide{display:block}
+    .hero-art__compact{display:none}
+    .hero-art__caption{position:absolute;right:var(--gutter);bottom:8px;padding:5px 8px;border:1px solid var(--ink);border-radius:99px;background:var(--yellow);font-family:Consolas,"Courier New",monospace;font-size:6px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+    .hero-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:27px;padding-block-start:5px;font-size:6px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .hero-foot span:first-child{display:flex;flex-wrap:wrap;gap:5px 13px}
+    .hero-foot span:first-child b::before{content:"/ "}
+    .hero-foot a{display:inline-flex;align-items:center;gap:6px;min-height:23px;white-space:nowrap}
+    .hero-foot a span{font-size:12px}
+
+    .section-nav{position:sticky;z-index:90;top:0;display:flex;align-items:center;justify-content:space-between;gap:15px;width:100%;min-height:52px;padding-inline:var(--gutter);border-block:2px solid var(--ink);background:var(--yellow)}
+    .section-nav__brand{display:inline-flex;align-items:center;gap:7px;min-height:40px;flex:0 0 auto;font-family:var(--display);font-size:11px;letter-spacing:.01em;text-transform:uppercase}
+    .section-nav__mark{display:grid;width:21px;height:21px;place-items:center;border:1.5px solid var(--ink);border-radius:50%;font-family:Arial,sans-serif;font-size:8px;font-weight:900}
+    .section-nav__links{display:flex;align-items:center;gap:clamp(12px,2.4vw,32px)}
+    .section-nav__links a{display:inline-flex;align-items:center;min-height:39px;font-family:var(--display);font-size:9px;letter-spacing:.04em;text-transform:uppercase}
+    .section-nav__links a:hover,.section-nav__links a[aria-current=location]{text-decoration:underline;text-underline-offset:4px}
+    .section-nav__cta{display:inline-flex;align-items:center;gap:7px;min-height:31px;padding:6px 10px;border:1px solid var(--ink);border-radius:99px;background:var(--yellow-soft);font-size:7px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+    .section-nav__cta:hover{background:var(--white)}
+
+    .intro-section{width:100%;padding:clamp(44px,6.5vw,86px) var(--gutter);background:var(--yellow)}
+    .section-wrap{width:min(100%,1450px);margin-inline:auto}
+    .two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);align-items:center;gap:clamp(20px,5vw,70px)}
+    .section-label{display:flex;align-items:center;gap:7px;margin:0 0 10px;font-size:7px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+    .section-label::before{width:7px;height:7px;border:1px solid var(--ink);border-radius:50%;background:var(--mint);content:""}
+    .section-title{max-width:13ch;margin:0;font-family:var(--display);font-size:clamp(33px,5vw,67px);font-weight:500;font-style:italic;letter-spacing:.005em;line-height:.91;text-transform:uppercase}
+    .section-copy{max-width:52ch;margin:13px 0 0;font-size:11px;font-weight:600;line-height:1.55}
+    .story-illustration{position:relative;display:grid;min-height:236px;place-items:center;overflow:hidden;border:1.5px solid var(--ink);background:var(--mint)}
+    .story-illustration svg{width:min(100%,520px);height:auto}
+    .story-illustration__note{position:absolute;right:8px;bottom:8px;padding:5px 7px;border:1px solid var(--ink);background:var(--yellow);font-family:Consolas,"Courier New",monospace;font-size:6px;text-transform:uppercase}
+    .value-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-block-start:clamp(25px,4vw,44px);border-block:1.5px solid var(--ink)}
+    .value-item{display:grid;grid-template-columns:25px minmax(0,1fr);gap:8px;padding:12px clamp(10px,2vw,22px);border-inline-end:1px solid var(--ink)}
+    .value-item:first-child{padding-inline-start:0}
+    .value-item:last-child{border-inline-end:0}
+    .value-item__icon{display:grid;width:19px;height:19px;place-items:center;border:1px solid var(--ink);border-radius:50%;font-size:9px;font-weight:900}
+    .value-item h3{margin:0;font-family:var(--display);font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase}
+    .value-item p{max-width:30ch;margin:5px 0 0;font-size:8px;line-height:1.4}
+
+    .services-section{width:100%;padding:clamp(50px,7vw,100px) var(--gutter);border-block:1.5px solid var(--ink);background:var(--yellow-soft)}
+    .section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,.7fr);align-items:end;gap:22px;margin-block-end:clamp(24px,4vw,43px)}
+    .section-head__copy{max-width:48ch;margin:0 0 3px;font-size:11px;font-weight:600;line-height:1.5}
+    .service-explorer{display:grid;grid-template-columns:minmax(180px,.52fr) minmax(0,1.48fr);gap:clamp(15px,3vw,42px);padding-block-start:13px;border-block-start:1.5px solid var(--ink)}
+    .service-tabs{display:grid;align-content:start}
+    .service-tab{display:grid;grid-template-columns:25px minmax(0,1fr) 14px;align-items:center;gap:8px;min-height:48px;padding:7px 0;border:0;border-block-end:1px solid rgba(23,22,19,.55);text-align:left;background:transparent}
+    .service-tab__num{font-family:Consolas,"Courier New",monospace;font-size:7px}
+    .service-tab__name{font-family:var(--display);font-size:clamp(13px,1.7vw,19px);font-weight:500;letter-spacing:.03em;text-transform:uppercase}
+    .service-tab__arrow{justify-self:end;font-size:14px;transition:transform 150ms ease}
+    .service-tab:hover .service-tab__arrow,.service-tab[aria-selected=true] .service-tab__arrow{transform:translateX(3px)}
+    .service-tab[aria-selected=true] .service-tab__name{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+    .service-panel{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);min-height:300px;border:1.5px solid var(--ink);background:var(--paper)}
+    .service-panel__visual{position:relative;display:grid;min-height:250px;place-items:center;overflow:hidden;border-inline-end:1.5px solid var(--ink);background:var(--lilac)}
+    .service-panel__visual svg{width:min(100%,390px);height:auto}
+    .service-panel__visual-note{position:absolute;top:7px;left:8px;padding:4px 6px;border:1px solid var(--ink);background:var(--white);font-family:Consolas,"Courier New",monospace;font-size:6px;text-transform:uppercase}
+    .service-panel__content{display:flex;min-width:0;flex-direction:column;padding:clamp(17px,3vw,33px)}
+    .service-panel__kicker{margin:0;font-size:7px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+    .service-panel__content h3{max-width:12ch;margin:16px 0 8px;font-family:var(--display);font-size:clamp(22px,3vw,37px);font-weight:500;font-style:italic;letter-spacing:.01em;line-height:.93;text-transform:uppercase}
+    .service-panel__copy{max-width:43ch;margin:0;font-size:9px;line-height:1.5}
+    .service-steps{display:grid;margin:auto 0 0;padding:12px 0 0;border-block-start:1px solid var(--ink);list-style:none}
+    .service-steps li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:7px;padding:5px 0;font-size:8px;line-height:1.35}
+    .service-steps__num{font-family:Consolas,"Courier New",monospace;font-size:7px}
+    .service-check{margin:9px 0 0;padding:8px 9px;border:1px solid var(--ink);background:var(--mint);font-size:8px;font-weight:700;line-height:1.4}
+
+    .roadmap-section{width:100%;padding:clamp(53px,7.4vw,104px) var(--gutter);background:var(--yellow)}
+    .roadmap-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-block-start:27px;border-block:1.5px solid var(--ink)}
+    .roadmap-card{min-width:0;min-height:232px;padding:13px clamp(10px,1.7vw,21px) 17px 0;border-inline-end:1px solid var(--ink)}
+    .roadmap-card:not(:first-child){padding-inline-start:clamp(10px,1.7vw,21px)}
+    .roadmap-card:last-child{border-inline-end:0}
+    .roadmap-card__num{display:flex;align-items:center;gap:7px;font-family:Consolas,"Courier New",monospace;font-size:7px}
+    .roadmap-card__num::before{width:15px;height:15px;display:grid;place-items:center;border:1.3px solid var(--ink);border-radius:50%;content:"✓";font-family:Arial,sans-serif;font-size:8px}
+    .roadmap-card__art{display:grid;height:76px;place-items:center;margin-block:10px 8px}
+    .roadmap-card__art svg{width:min(100%,170px);height:100%}
+    .roadmap-card h3{margin:0;font-family:var(--display);font-size:clamp(14px,1.8vw,21px);font-weight:500;font-style:italic;letter-spacing:.02em;text-transform:uppercase}
+    .roadmap-card p{max-width:31ch;margin:5px 0 0;font-size:8px;line-height:1.45}
+    .why-section{width:100%;padding:clamp(54px,7.3vw,103px) var(--gutter);border-block-start:1.5px solid var(--ink);background:var(--yellow-soft)}
+    .why-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(22px,5vw,68px)}
+    .why-list{display:grid;border-block-start:1.5px solid var(--ink)}
+    .why-item{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:10px;padding:10px 0;border-block-end:1px solid var(--ink)}
+    .why-item__icon{display:grid;width:37px;height:37px;place-items:center;border:1.3px solid var(--ink);border-radius:7px;background:var(--white)}
+    .why-item__icon svg{width:25px;height:25px}
+    .why-item h3{margin:0;font-family:var(--display);font-size:17px;font-weight:500;font-style:italic;letter-spacing:.03em;text-transform:uppercase}
+    .why-item p{margin:3px 0 0;font-size:8px;line-height:1.4}
+    .cta-section{display:block;width:100%;padding:clamp(52px,7.2vw,98px) var(--gutter);border-block-start:1.5px solid var(--ink);background:var(--yellow)}
+    .cta-layout{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:14px 22px}
+    .cta-layout>div{grid-column:1;grid-row:1 / span 2}
+    .cta-layout>.cta-button{grid-column:2;grid-row:1;justify-self:end}
+    .cta-layout>small{grid-column:2;grid-row:2;max-width:28ch;font-size:7px;line-height:1.4}
+    .cta-section h2{max-width:12ch;margin:0;font-family:var(--display);font-size:clamp(36px,6vw,78px);font-weight:500;font-style:italic;letter-spacing:.005em;line-height:.88;text-transform:uppercase}
+    .cta-section p{max-width:46ch;margin:12px 0 0;font-size:10px;font-weight:600;line-height:1.5}
+    .cta-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:41px;padding:9px 13px;border:1px solid var(--ink);border-radius:99px;color:var(--yellow);background:var(--ink);font-size:8px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;transition:transform 140ms ease,color 140ms ease,background 140ms ease}
+    .cta-button:hover{transform:rotate(-2deg) translateY(-2px);color:var(--ink);background:transparent}
+    .footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;min-height:49px;padding:10px var(--gutter);color:var(--yellow);background:var(--ink);font-size:6px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+    .footer p{margin:0}
+    .footer a{display:inline-flex;align-items:center;min-height:33px}
+    .footer a:hover{text-decoration:underline;text-underline-offset:4px}
+
+    .reveal{opacity:1;transform:none;transition:opacity 550ms var(--ease),transform 550ms var(--ease)}
+    .js .reveal{opacity:0;transform:translateY(15px)}
+    .js .reveal.is-visible{opacity:1;transform:translateY(0)}
+
+    @media(max-width:960px){
+      .hero h1{font-size:clamp(43px,8vw,76px)}
+      .hero-art{margin-block-start:22px}
+      .section-head{grid-template-columns:minmax(0,1fr);gap:12px}
+      .roadmap-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:16px}
+      .roadmap-card:nth-child(2){border-inline-end:0}
+      .roadmap-card:nth-child(3){padding-inline-start:0}
+    }
+    @media(max-width:720px){
+      :root{--gutter:17px}
+      .hero{padding-block:7px 11px}
+      .masthead{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);min-height:39px}
+      .masthead__marks{gap:4px}
+      .mark-chip{width:19px;height:19px;font-size:7px}
+      .masthead__title{font-size:20px}
+      .masthead__cta{min-height:28px;padding:5px 8px;font-size:7px}
+      .main-nav{position:relative;display:flex;flex-wrap:wrap;justify-content:flex-start;gap:3px 16px;min-height:0;border-block-end:0}
+      .menu-trigger{display:none}
+      .js .masthead__cta{display:none}
+      .js .menu-trigger{display:inline-flex;position:absolute;z-index:32;right:0;top:5px}
+      .js .main-nav{display:none}
+      .js .main-nav.is-open{display:flex;position:relative;z-index:auto;top:auto;right:auto;left:auto;flex-direction:column;align-items:stretch;gap:0;margin-block-start:5px;padding:6px 11px;border:1px solid var(--ink);background:var(--yellow)}
+      .js .main-nav.is-open a{min-height:34px;border-block-end:1px solid rgba(23,22,19,.4);font-size:11px}
+      .main-nav.is-open a:last-child{border-block-end:0}
+      .hero-main{padding-block:17px 0}
+      .hero h1{font-size:clamp(41px,9vw,68px)}
+      .hero-lead{max-width:44ch;font-size:10px}
+      .hero-art{width:calc(100% + 2 * var(--gutter));margin-inline:calc(-1 * var(--gutter));margin-block-start:18px}
+      .hero-art__wide{display:none}
+      .hero-art__compact{display:block}
+      .hero-art__caption{position:static;display:block;width:max-content;max-width:calc(100% - 16px);margin:0 auto 6px;white-space:normal;text-align:center}
+      .hero-foot{align-items:flex-start;gap:6px;font-size:5px}
+      .hero-foot span:first-child{gap:4px 8px}
+      .section-nav{gap:8px;min-height:48px;padding-inline:10px}
+      .section-nav__brand{gap:5px;font-size:8px}
+      .section-nav__mark{width:18px;height:18px;font-size:7px}
+      .section-nav__links{min-width:0;gap:9px;overflow-x:auto;scrollbar-width:none}
+      .section-nav__links::-webkit-scrollbar{display:none}
+      .section-nav__links a{min-height:39px;flex:0 0 auto;font-size:6px;white-space:nowrap}
+      .section-nav__cta{gap:4px;min-height:29px;padding:5px 7px;font-size:6px;white-space:nowrap}
+      .two-col,.why-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+      .story-illustration{min-height:200px}
+      .value-band{grid-template-columns:minmax(0,1fr)}
+      .value-item{padding:10px 0;border-inline-end:0;border-block-end:1px solid var(--ink)}
+      .value-item:last-child{border-block-end:0}
+      .service-explorer{grid-template-columns:minmax(0,1fr);gap:12px}
+      .service-tabs{grid-template-columns:repeat(3,minmax(0,1fr));border-block-start:1px solid var(--ink)}
+      .service-tab{grid-template-columns:1fr;gap:3px;min-height:52px;padding:7px;border-inline-end:1px solid var(--ink)}
+      .service-tab:last-child{border-inline-end:0}
+      .service-tab__arrow{display:none}
+      .service-tab__name{font-size:10px}
+      .service-panel{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);min-height:280px}
+      .service-panel__visual{min-height:230px}
+      .service-panel__content{padding:17px}
+      .service-panel__content h3{font-size:clamp(22px,4vw,31px)}
+      .roadmap-card{min-height:218px}
+      .cta-layout{grid-template-columns:minmax(0,1fr);gap:14px}
+      .cta-layout>div,.cta-layout>.cta-button,.cta-layout>small{grid-column:1;grid-row:auto}
+      .cta-button{justify-self:start}
+    }
+    @media(max-width:520px){
+      :root{--gutter:12px}
+      .masthead__title{font-size:18px}
+      .masthead__marks .mark-chip:nth-child(3){display:none}
+      .masthead__cta{gap:4px;font-size:6px}
+      .hero h1{font-size:clamp(38px,11vw,58px)}
+      .hero-lead{max-width:36ch;font-size:9px}
+      .hero-cta{min-height:34px;font-size:7px}
+      .hero-art__caption{right:8px;bottom:5px;font-size:5px}
+      .hero-foot{flex-direction:column;justify-content:center}
+      .hero-foot a{min-height:19px}
+      .intro-section,.services-section,.roadmap-section,.why-section{padding-block:52px}
+      .section-title{font-size:clamp(34px,11vw,53px)}
+      .section-copy{font-size:10px}
+      .story-illustration{min-height:165px}
+      .service-panel{grid-template-columns:minmax(0,1fr)}
+      .service-panel__visual{min-height:168px;border-inline-end:0;border-block-end:1px solid var(--ink)}
+      .service-panel__visual svg{width:min(100%,270px)}
+      .service-panel__content{padding:15px}
+      .service-panel__content h3{font-size:28px}
+      .service-panel__copy{font-size:9px}
+      .service-steps{margin-block-start:14px}
+      .roadmap-grid{grid-template-columns:minmax(0,1fr);row-gap:0;margin-block-start:22px}
+      .roadmap-card{display:grid;grid-template-columns:29px 88px minmax(0,1fr);align-items:center;gap:8px;min-height:104px;padding:10px 0;border-inline-end:0;border-block-end:1px solid var(--ink)}
+      .roadmap-card:not(:first-child){padding-inline-start:0}
+      .roadmap-card:nth-child(2){border-inline-end:0}
+      .roadmap-card:nth-child(3){padding-inline-start:0}
+      .roadmap-card:last-child{border-block-end:0}
+      .roadmap-card__num{align-self:start;padding-block-start:4px;font-size:6px}
+      .roadmap-card__num::before{width:14px;height:14px}
+      .roadmap-card__art{height:60px;margin:0}
+      .roadmap-card h3{font-size:15px}
+      .roadmap-card p{grid-column:3;margin-block-start:-17px;padding-block-start:21px;font-size:7px}
+      .why-item{grid-template-columns:39px minmax(0,1fr)}
+      .why-item__icon{width:33px;height:33px}
+      .why-item h3{font-size:15px}
+      .why-item p{font-size:7px}
+      .cta-section{padding-block:54px}
+      .cta-section h2{font-size:clamp(38px,12vw,61px)}
+      .cta-section p{font-size:9px}
+      .footer{align-items:flex-start;flex-direction:column;padding-block:12px}
+    }
+    @media(max-height:690px) and (min-width:721px){
+      .hero{padding-block:6px 9px}
+      .masthead{min-height:38px}
+      .main-nav{min-height:27px}
+      .hero-main{padding-block-start:12px}
+      .hero h1{font-size:clamp(40px,6.2vw,76px)}
+      .hero-lead{margin-block-start:7px}
+      .hero-cta{min-height:33px;margin-block-start:9px}
+      .hero-art{margin-block-start:15px}
+      .hero-foot{min-height:22px}
+    }
+    @media(pointer:coarse){.mark-chip,.masthead__cta,.main-nav a,.menu-trigger,.hero-cta,.section-nav__links a,.section-nav__cta,.service-tab,.service-link,.work-filters button,.cta-button{min-height:44px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+    :root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+    :root[data-motion="off"] .reveal{opacity:1;transform:none}
+    @media(forced-colors:active){.hero,.story-illustration,.service-panel,.roadmap-card,.why-item__icon{border:1px solid CanvasText}.hero{background:Canvas}.hero-art{filter:grayscale(1)}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><span id="progress"></span></div>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-header">
+        <div class="masthead"><div class="masthead__marks" aria-hidden="true"><span class="mark-chip" title="Automation">A</span><span class="mark-chip" title="AI assistants">✳</span><span class="mark-chip" title="Integrations">↔</span></div><a class="masthead__title" href="#top" aria-label="Relay Yellowline concept"><small>RELAY /</small><span>YELLOWLINE</span></a><a class="masthead__cta" href="#contact">Talk through a workflow <span aria-hidden="true">↗</span></a></div>
+        <button class="menu-trigger" id="menu-trigger" type="button" aria-expanded="false" aria-controls="main-nav"><span class="menu-trigger__icon" aria-hidden="true"><i></i><i></i></span>Menu</button>
+        <nav class="main-nav" id="main-nav" aria-label="Main navigation"><a href="#services">Services</a><a href="#roadmap">Roadmap</a><a href="#principles">Why Relay</a><a href="#contact">Contact</a></nav>
+      </div>
+      <div class="hero-main">
+        <p class="hero-kicker">Business-first systems / built with people</p>
+        <h1 id="hero-title">Less busywork.<br><span>More good work.</span></h1>
+        <p class="hero-lead">Automation, AI assistants, and integrations that move the routine forward—without moving people out of the decisions.</p>
+        <a class="hero-cta" href="#services"><span class="hero-cta__icon" aria-hidden="true">↘</span>See what Relay can do</a>
+        <div class="hero-art" role="img" aria-label="Illustrative still life of a mint camera, a coral compact car, headphones, and a review-ready phone connected by a clear workflow route">
+          <svg class="hero-art__wide" viewBox="0 0 1440 330" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <rect width="1440" height="330" fill="#ffe34d"/>
+            <path d="M0 288h1440" stroke="#171613" stroke-width="4"/>
+            <path d="M20 239c101-47 168 54 267 12s151-43 241-5 165 30 269-16 164-19 251 16 138 23 172-7" fill="none" stroke="#171613" stroke-width="3" stroke-dasharray="3 11" stroke-linecap="round" opacity=".72"/>
+            <g fill="#171613">
+              <path d="M401 59l5 12 13 5-13 4-5 13-4-13-13-4 13-5z"/>
+              <path d="M853 60l4 9 10 4-10 3-4 10-3-10-10-3 10-4z"/>
+              <path d="M1081 40l4 9 10 4-10 3-4 10-3-10-10-3 10-4z"/>
+              <path d="M1382 105l3 7 8 3-8 3-3 8-3-8-8-3 8-3z"/>
+            </g>
+            <g fill="#d8bd3f" stroke="none">
+              <ellipse cx="217" cy="276" rx="160" ry="8"/>
+              <ellipse cx="633" cy="279" rx="215" ry="8"/>
+              <ellipse cx="949" cy="279" rx="83" ry="7"/>
+              <ellipse cx="1171" cy="279" rx="99" ry="7"/>
+              <ellipse cx="1326" cy="279" rx="73" ry="7"/>
+            </g>
+            <g transform="translate(78 61) rotate(-4 146 96)" stroke="#171613" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M25 67h47l15-28h58l14 28h105q21 0 21 21v86q0 21-21 21H25Q6 195 6 176V88q0-21 19-21Z" fill="#67d0be"/>
+              <path d="M80 65 94 34h67l15 31" fill="#fffdf5"/>
+              <rect x="97" y="34" width="49" height="31" rx="6" fill="#78c8ed"/>
+              <path d="M100 42h42" stroke-width="2"/>
+              <rect x="30" y="96" width="43" height="49" rx="6" fill="#fff8df"/>
+              <path d="M38 108h26m-26 9h21m-21 9h24" stroke-width="3"/>
+              <circle cx="55" cy="162" r="5" fill="#f2815c"/>
+              <circle cx="238" cy="77" r="8" fill="#f2815c"/>
+              <rect x="207" y="91" width="42" height="21" rx="4" fill="#fffdf5"/>
+              <path d="M215 101h26" stroke-width="2"/>
+              <circle cx="156" cy="128" r="63" fill="#f2815c"/>
+              <circle cx="156" cy="128" r="51" fill="#171613"/>
+              <circle cx="156" cy="128" r="39" fill="#78c8ed"/>
+              <circle cx="156" cy="128" r="25" fill="#2a5962"/>
+              <circle cx="156" cy="128" r="11" fill="#cfa7e7"/>
+              <path d="M144 113q8-8 16-8" fill="none" stroke="#fffdf5" stroke-width="4"/>
+              <path d="M282 108q37 7 37 40v18q0 10-10 10h-15" fill="none" stroke="#171613" stroke-width="8"/>
+              <path d="M10 155q-15 21-6 46m284-54q13 17 7 36" fill="none" stroke="#171613" stroke-width="3"/>
+            </g>
+            <g transform="translate(402 104) rotate(1 205 93)" stroke="#171613" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M25 121q-3-13 13-18l37-8 38-43q9-10 24-10h130q18 0 30 15l33 39 54 8q18 3 19 20l-3 26H26z" fill="#f2815c"/>
+              <path d="m91 96 30-39q5-7 15-7h47v46z" fill="#78c8ed"/>
+              <path d="M193 96V50h73q12 0 19 11l26 35z" fill="#78c8ed"/>
+              <path d="M190 51v47m-99 1h211" fill="none" stroke-width="3"/>
+              <path d="M51 117h338" fill="none" stroke="#d85b43" stroke-width="3"/>
+              <path d="M232 102v42m-55-40v39m-74-26h22m165-11h29" fill="none" stroke-width="3"/>
+              <path d="M31 124h17m340 0h16" fill="none" stroke="#fffdf5" stroke-width="5"/>
+              <path d="M398 116h14v18h-15" fill="#f0d969"/>
+              <path d="M17 119H7v16h13" fill="#67d0be"/>
+              <circle cx="104" cy="148" r="34" fill="#171613"/>
+              <circle cx="104" cy="148" r="18" fill="#fffdf5"/>
+              <circle cx="104" cy="148" r="8" fill="#78c8ed"/>
+              <path d="M96 148h16m-8-8v16" stroke-width="2"/>
+              <circle cx="320" cy="148" r="34" fill="#171613"/>
+              <circle cx="320" cy="148" r="18" fill="#fffdf5"/>
+              <circle cx="320" cy="148" r="8" fill="#f0d969"/>
+              <path d="M312 148h16m-8-8v16" stroke-width="2"/>
+              <rect x="225" y="110" width="50" height="17" rx="8" fill="#fff8df"/>
+              <path d="M236 118h28" stroke-width="2"/>
+            </g>
+            <g transform="translate(876 45) rotate(5 72 105)" stroke="#171613" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="3" width="126" height="218" rx="24" fill="#171613"/>
+              <rect x="19" y="15" width="106" height="194" rx="17" fill="#fffdf5"/>
+              <path d="M54 15h48q0 13-12 13H66q-12 0-12-13Z" fill="#171613" stroke="none"/>
+              <circle cx="38" cy="48" r="8" fill="#f2815c" stroke-width="2"/>
+              <path d="M55 46h47m-47 8h33" stroke-width="3"/>
+              <rect x="31" y="73" width="82" height="44" rx="7" fill="#cfa7e7"/>
+              <path d="M42 86h54m-54 11h40" stroke-width="3"/>
+              <rect x="31" y="128" width="82" height="54" rx="7" fill="#fff0a1"/>
+              <circle cx="48" cy="146" r="8" fill="#67d0be" stroke-width="2"/>
+              <path d="m44 146 3 3 6-7" fill="none" stroke-width="2.5"/>
+              <path d="M63 143h38m-38 10h30" stroke-width="3"/>
+              <rect x="46" y="189" width="48" height="4" rx="2" fill="#171613" stroke="none"/>
+            </g>
+            <g transform="translate(1043 83) rotate(-4 89 92)" stroke="#171613" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M27 116V81a62 62 0 0 1 124 0v35" fill="none" stroke="#171613" stroke-width="22"/>
+              <path d="M27 116V81a62 62 0 0 1 124 0v35" fill="none" stroke="#cfa7e7" stroke-width="13"/>
+              <rect x="7" y="101" width="43" height="77" rx="18" fill="#67d0be"/>
+              <rect x="128" y="101" width="43" height="77" rx="18" fill="#f2815c"/>
+              <path d="M17 117v43m18-43v43m104-43v43m18-43v43" stroke-width="2.5"/>
+              <path d="M149 178q-3 31-36 34" fill="none" stroke-width="3"/>
+              <circle cx="109" cy="211" r="5" fill="#171613"/>
+            </g>
+            <g transform="translate(1260 164) rotate(-3 65 55)" stroke="#171613" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 29 55-25 59 25v78H9z" fill="#f0d969"/>
+              <path d="M9 29 64 59l59-30M64 59v48" fill="none"/>
+              <path d="m44 13 59 30" fill="none" stroke="#f2815c" stroke-width="11"/>
+              <rect x="37" y="58" width="53" height="31" rx="3" fill="#fffdf5"/>
+              <path d="M47 68h31m-31 9h19" stroke-width="2.5"/>
+              <path d="m102 87 10 5-10 5" fill="none" stroke-width="3"/>
+            </g>
+            <g font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="900" letter-spacing="1.2" text-anchor="middle">
+              <rect x="108" y="27" width="82" height="20" rx="10" fill="#fffdf5" stroke="#171613" stroke-width="1.5"/>
+              <text x="149" y="40" fill="#171613">CAPTURE</text>
+              <rect x="572" y="54" width="77" height="20" rx="10" fill="#fffdf5" stroke="#171613" stroke-width="1.5"/>
+              <text x="610" y="67" fill="#171613">ROUTE</text>
+              <rect x="915" y="22" width="77" height="20" rx="10" fill="#fffdf5" stroke="#171613" stroke-width="1.5"/>
+              <text x="953" y="35" fill="#171613">REVIEW</text>
+            </g>
+          </svg><svg class="hero-art__compact" viewBox="0 0 520 210" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <rect width="520" height="210" fill="#ffe34d"/>
+            <path d="M0 184h520" stroke="#171613" stroke-width="3"/>
+            <path d="M8 157c52-24 84 18 139 0s73-18 115 0 83 18 121-2 75-16 129 1" fill="none" stroke="#171613" stroke-width="2.5" stroke-dasharray="3 9" stroke-linecap="round" opacity=".72"/>
+            <g fill="#d8bd3f" stroke="none"><ellipse cx="88" cy="177" rx="70" ry="5"/><ellipse cx="255" cy="179" rx="111" ry="5"/><ellipse cx="432" cy="178" rx="43" ry="5"/></g>
+            <g font-family="Arial,Helvetica,sans-serif" font-size="7" font-weight="900" letter-spacing="1" text-anchor="middle">
+              <rect x="20" y="38" width="73" height="18" rx="9" fill="#fffdf5" stroke="#171613" stroke-width="1.4"/><text x="56" y="50" fill="#171613">CAPTURE</text>
+              <rect x="205" y="56" width="57" height="18" rx="9" fill="#fffdf5" stroke="#171613" stroke-width="1.4"/><text x="233" y="68" fill="#171613">ROUTE</text>
+              <rect x="391" y="20" width="60" height="18" rx="9" fill="#fffdf5" stroke="#171613" stroke-width="1.4"/><text x="421" y="32" fill="#171613">REVIEW</text>
+            </g>
+            <g transform="translate(20 65) rotate(-4 65 65)" stroke="#171613" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 30h21l9-18h39l9 18h24q10 0 10 11v48q0 11-10 11H14Q4 100 4 90V40q0-10 10-10Z" fill="#67d0be"/>
+              <path d="M36 30 45 16h29l9 14" fill="#fffdf5"/>
+              <rect x="47" y="18" width="24" height="12" rx="3" fill="#78c8ed"/>
+              <rect x="13" y="43" width="23" height="28" rx="3" fill="#fff8df"/>
+              <path d="M18 51h13m-13 6h11m-11 6h12" stroke-width="2"/>
+              <circle cx="91" cy="39" r="4.5" fill="#f2815c"/>
+              <circle cx="68" cy="66" r="30" fill="#f2815c"/>
+              <circle cx="68" cy="66" r="23" fill="#171613"/>
+              <circle cx="68" cy="66" r="16" fill="#78c8ed"/>
+              <circle cx="68" cy="66" r="7" fill="#cfa7e7"/>
+              <path d="M63 60q4-4 8-4" fill="none" stroke="#fffdf5" stroke-width="2.5"/>
+            </g>
+            <g transform="translate(146 78) rotate(1 106 50)" stroke="#171613" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 70q-2-9 9-12l19-4 20-23q5-6 14-6h66q10 0 16 8l20 21 26 5q10 2 11 11l-2 15H12z" fill="#f2815c"/>
+              <path d="m50 53 16-22q3-4 9-4h22v26z" fill="#78c8ed"/>
+              <path d="M103 27v28h43l-16-21q-4-7-11-7z" fill="#78c8ed"/>
+              <path d="M101 28v28m-52 1h108" fill="none" stroke-width="2.4"/>
+              <path d="M26 67h9m153 0h11" stroke="#fffdf5" stroke-width="4"/>
+              <path d="M68 57v25m46-24v23" fill="none" stroke-width="2.2"/>
+              <circle cx="57" cy="82" r="19" fill="#171613"/><circle cx="57" cy="82" r="10" fill="#fffdf5"/><circle cx="57" cy="82" r="4.5" fill="#78c8ed"/>
+              <circle cx="154" cy="82" r="19" fill="#171613"/><circle cx="154" cy="82" r="10" fill="#fffdf5"/><circle cx="154" cy="82" r="4.5" fill="#f0d969"/>
+            </g>
+            <g transform="translate(391 42) rotate(4 39 67)" stroke="#171613" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="1" width="73" height="132" rx="15" fill="#171613"/>
+              <rect x="10" y="9" width="61" height="116" rx="11" fill="#fffdf5"/>
+              <path d="M29 9h26q0 9-7 9H36q-7 0-7-9Z" fill="#171613" stroke="none"/>
+              <circle cx="23" cy="35" r="5" fill="#f2815c" stroke-width="1.5"/>
+              <path d="M34 34h27m-27 7h20" stroke-width="2.2"/>
+              <rect x="17" y="51" width="47" height="28" rx="5" fill="#cfa7e7"/>
+              <path d="M24 61h32m-32 8h22" stroke-width="2.2"/>
+              <rect x="17" y="85" width="47" height="28" rx="5" fill="#fff0a1"/>
+              <circle cx="27" cy="99" r="6" fill="#67d0be" stroke-width="1.5"/>
+              <path d="m24 99 2 2 4-5" fill="none" stroke-width="1.7"/>
+              <path d="M38 97h19m-19 6h14" stroke-width="2.2"/>
+            </g>
+          </svg><span class="hero-art__caption">Illustrative / tools in motion</span></div>
+      </div>
+      <div class="hero-foot"><span><b>Automation</b><b>AI assistants</b><b>Integrations</b><b>Human checkpoints</b></span><a href="#about">See how the pieces fit <span aria-hidden="true">↓</span></a></div>
+    </section>
+
+    <nav class="section-nav" aria-label="Page sections"><a class="section-nav__brand" href="#top"><span class="section-nav__mark" aria-hidden="true">R</span><span>Relay / Yellowline</span></a><div class="section-nav__links"><a href="#about" data-nav="about">The idea</a><a href="#services" data-nav="services">Services</a><a href="#roadmap" data-nav="roadmap">Roadmap</a><a href="#principles" data-nav="principles">Why Relay</a></div><a class="section-nav__cta" href="#contact">Start with the work <span aria-hidden="true">↗</span></a></nav>
+
+    <section class="intro-section" id="about" data-chapter aria-labelledby="about-title"><div class="section-wrap"><div class="two-col reveal"><div><p class="section-label">01 / A more human system</p><h2 class="section-title" id="about-title">Meet the crew behind the calm.</h2><p class="section-copy">Business workflows can be tangled. Relay helps teams untangle the routine, connect the right tools, and make every important handoff easier to see.</p></div><figure class="story-illustration"><svg viewBox="0 0 520 300" role="img" aria-label="Illustration of scattered requests flowing through a connected routing hub into a clear review-ready checklist"><rect width="520" height="300" fill="#67d0be"/><path d="M0 257h520" stroke="#171613" stroke-width="3"/><path d="M147 150h45c20 0 19-34 43-34h77c21 0 20 47 43 47h20" fill="none" stroke="#171613" stroke-width="3" stroke-dasharray="5 7" stroke-linecap="round"/><path d="m365 156 9 7-9 7" fill="none" stroke="#171613" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><g stroke="#171613" stroke-width="3" stroke-linejoin="round"><g transform="rotate(-7 94 157)"><rect x="31" y="88" width="105" height="143" rx="8" fill="#f0d969"/><rect x="42" y="75" width="105" height="143" rx="8" fill="#fffdf5"/><rect x="54" y="90" width="80" height="27" rx="4" fill="#f2815c"/><circle cx="67" cy="103" r="5" fill="#fffdf5"/><path d="M79 101h45m-45 7h33" stroke-width="2.5"/><path d="M56 132h73m-73 13h62m-62 13h68" stroke-width="3" stroke-linecap="round"/><rect x="57" y="177" width="44" height="24" rx="4" fill="#78c8ed"/><path d="M65 189h28" stroke-width="2.5"/></g><g><rect x="201" y="79" width="111" height="150" rx="14" fill="#fff8df"/><rect x="213" y="91" width="87" height="24" rx="6" fill="#171613"/><text x="256" y="107" fill="#ffe34d" font-family="Arial,sans-serif" font-size="9" font-weight="700" text-anchor="middle" stroke="none">ROUTE</text><path d="M256 128v18m0 0-23 17m23-17 23 17" fill="none" stroke-width="3"/><circle cx="256" cy="125" r="8" fill="#f2815c"/><circle cx="233" cy="166" r="8" fill="#78c8ed"/><circle cx="279" cy="166" r="8" fill="#cfa7e7"/><rect x="219" y="187" width="74" height="25" rx="5" fill="#67d0be"/><path d="M231 199h49" stroke-width="3"/></g><g><rect x="363" y="75" width="127" height="155" rx="9" fill="#fffdf5"/><path d="M363 100h127"/><rect x="376" y="84" width="12" height="7" rx="2" fill="#f2815c"/><path d="M396 87h73" stroke-width="2.5"/><circle cx="383" cy="120" r="7" fill="#67d0be"/><path d="m380 120 2 2 4-5" fill="none" stroke-width="2"/><path d="M398 118h73m-73 8h55" stroke-width="2.5" stroke-linecap="round"/><circle cx="383" cy="151" r="7" fill="#67d0be"/><path d="m380 151 2 2 4-5" fill="none" stroke-width="2"/><path d="M398 149h73m-73 8h45" stroke-width="2.5" stroke-linecap="round"/><rect x="376" y="177" width="101" height="34" rx="5" fill="#fff0a1"/><path d="M389 189h66m-66 9h44" stroke-width="2.5" stroke-linecap="round"/></g><path d="M154 123h34m-9-7 9 7-9 7m128 19h34m-9-7 9 7-9 7" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M29 48h103m22 0h129m28 0h173" stroke="#171613" stroke-width="1.5" stroke-dasharray="2 6"/><circle cx="31" cy="48" r="4" fill="#f2815c"/><circle cx="291" cy="48" r="4" fill="#cfa7e7"/><circle cx="490" cy="48" r="4" fill="#f0d969"/><path d="M174 77l4 8 8 3-8 3-4 8-3-8-8-3 8-3z" fill="#fffdf5"/><path d="M333 204l4 8 8 3-8 3-4 8-3-8-8-3 8-3z" fill="#f2815c"/></g></svg><figcaption class="story-illustration__note">One clear route. Fewer loose ends.</figcaption></figure></div><div class="value-band reveal"><article class="value-item"><span class="value-item__icon" aria-hidden="true">↗</span><div><h3>Outcome first</h3><p>Start with what better means for the business.</p></div></article><article class="value-item"><span class="value-item__icon" aria-hidden="true">◎</span><div><h3>People stay in it</h3><p>Review and decision ownership are part of the route.</p></div></article><article class="value-item"><span class="value-item__icon" aria-hidden="true">↔</span><div><h3>Tools work together</h3><p>Carry context through the systems your team uses.</p></div></article></div></div></section>
+
+    <section class="services-section" id="services" data-chapter aria-labelledby="services-title"><div class="section-wrap"><div class="section-head reveal"><div><p class="section-label">02 / Give technology a job</p><h2 class="section-title" id="services-title">A little less busy.<br>A lot more useful.</h2></div><p class="section-head__copy">Pick a starting point and see a practical example. Each service is built around a business need and a clear human checkpoint.</p></div><div class="service-explorer reveal delay-1"><div class="service-tabs" role="tablist" aria-label="Select a Relay service"><button class="service-tab" type="button" id="service-tab-automation" role="tab" aria-selected="true" aria-controls="service-panel" tabindex="0" data-service="automation"><span class="service-tab__num">01 /</span><span class="service-tab__name">Automation</span><span class="service-tab__arrow" aria-hidden="true">↗</span></button><button class="service-tab" type="button" id="service-tab-assistant" role="tab" aria-selected="false" aria-controls="service-panel" tabindex="-1" data-service="assistant"><span class="service-tab__num">02 /</span><span class="service-tab__name">AI assistants</span><span class="service-tab__arrow" aria-hidden="true">↗</span></button><button class="service-tab" type="button" id="service-tab-integrations" role="tab" aria-selected="false" aria-controls="service-panel" tabindex="-1" data-service="integrations"><span class="service-tab__num">03 /</span><span class="service-tab__name">Integrations</span><span class="service-tab__arrow" aria-hidden="true">↗</span></button></div><div class="service-panel" id="service-panel" role="tabpanel" aria-labelledby="service-tab-automation" tabindex="0" aria-live="polite"><div class="service-panel__visual"><span class="service-panel__visual-note" id="service-visual-note">Illustrative / 01</span><svg id="service-art" viewBox="0 0 380 245" role="img" aria-label="Illustrative workflow automation route"><rect width="380" height="245" fill="#cfa7e7"/><rect x="37" y="51" width="95" height="142" rx="15" fill="#fffdf5" stroke="#171613" stroke-width="3"/><path d="M55 77h58M55 92h45M55 107h52" stroke="#171613" stroke-width="4" stroke-linecap="round"/><rect x="54" y="128" width="59" height="43" rx="7" fill="#ffe34d" stroke="#171613" stroke-width="2"/><path d="M67 147h34m-34 10h25" stroke="#171613" stroke-width="3" stroke-linecap="round"/><path d="M132 122h64v53h58V75h62" fill="none" stroke="#171613" stroke-width="3" stroke-dasharray="6 7"/><circle cx="132" cy="122" r="8" fill="#f2815c" stroke="#171613" stroke-width="2"/><circle cx="196" cy="122" r="8" fill="#fffdf5" stroke="#171613" stroke-width="2"/><circle cx="254" cy="175" r="8" fill="#ffe34d" stroke="#171613" stroke-width="2"/><circle cx="316" cy="75" r="8" fill="#fffdf5" stroke="#171613" stroke-width="2"/><path d="M279 104h74" stroke="#171613" stroke-width="2"/><text x="281" y="96" fill="#171613" font-family="Arial,sans-serif" font-size="8" font-weight="700">REVIEW POINT</text></svg></div><div class="service-panel__content"><p class="service-panel__kicker" id="service-kicker">SYSTEM ROLE / AUTOMATION</p><h3 id="service-title">Move the repeatable work forward.</h3><p class="service-panel__copy" id="service-copy">Route routine intake and approvals with clear rules, a named owner, and a stop condition for exceptions.</p><ol class="service-steps" aria-label="Illustrative service steps"><li><span class="service-steps__num">01</span><span id="service-step-0">Capture the request and its context.</span></li><li><span class="service-steps__num">02</span><span id="service-step-1">Route the routine step using clear rules.</span></li><li><span class="service-steps__num">03</span><span id="service-step-2">A person reviews exceptions and approves.</span></li></ol><p class="service-check" id="service-check">Human checkpoint / A person confirms before the work moves on.</p></div></div></div></div></section>
+
+    <section class="roadmap-section" id="roadmap" data-chapter aria-labelledby="roadmap-title"><div class="section-wrap"><div class="section-head reveal"><div><p class="section-label">03 / The Relay roadmap</p><h2 class="section-title" id="roadmap-title">Start with the work. Make the path clear.</h2></div><p class="section-head__copy">No tool-first pitch. A practical route from first conversation to a system that fits—built around a real business need.</p></div><div class="roadmap-grid reveal delay-1"><article class="roadmap-card"><span class="roadmap-card__num">01 / Listen</span><div class="roadmap-card__art"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse cx="90" cy="69" rx="56" ry="6" fill="#e4c94f"/><path d="M47 28q-10 12 0 24m9-20q-6 8 0 16m77-20q10 12 0 24m-9-20q6 8 0 16" fill="none" stroke="#171613" stroke-width="3" stroke-linecap="round"/><rect x="73" y="9" width="34" height="46" rx="17" fill="#f2815c" stroke="#171613" stroke-width="3"/><path d="M81 22h18m-18 8h18m-18 8h18" stroke="#171613" stroke-width="2.5" stroke-linecap="round"/><path d="M62 36v4a28 28 0 0 0 56 0v-4m-28 28V52m-16 12h32" fill="none" stroke="#171613" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M86 55v7" stroke="#78c8ed" stroke-width="3" stroke-linecap="round"/></svg></div><h3>Listen first.</h3><p>Agree on the outcome before choosing technology.</p></article><article class="roadmap-card"><span class="roadmap-card__num">02 / Map</span><div class="roadmap-card__art"><svg viewBox="0 0 180 80" aria-hidden="true"><path d="M21 59h137" stroke="#171613" stroke-width="3"/><rect x="32" y="28" width="45" height="31" rx="5" fill="#78c8ed" stroke="#171613" stroke-width="3"/><rect x="93" y="17" width="49" height="42" rx="5" fill="#cfa7e7" stroke="#171613" stroke-width="3"/><path d="M44 39h20m-20 8h15M105 30h25m-25 9h20m-20 9h28" stroke="#171613" stroke-width="3" stroke-linecap="round"/><path d="M77 43h14" stroke="#171613" stroke-width="2" stroke-dasharray="3 4"/></svg></div><h3>Map the handoffs.</h3><p>See where context, decisions, and repeat work live.</p></article><article class="roadmap-card"><span class="roadmap-card__num">03 / Build</span><div class="roadmap-card__art"><svg viewBox="0 0 180 80" aria-hidden="true"><rect x="61" y="15" width="58" height="48" rx="12" fill="#fffdf5" stroke="#171613" stroke-width="3"/><path d="M73 31h34m-34 10h26" stroke="#171613" stroke-width="3" stroke-linecap="round"/><circle cx="55" cy="46" r="12" fill="#67d0be" stroke="#171613" stroke-width="3"/><circle cx="125" cy="32" r="12" fill="#f2815c" stroke="#171613" stroke-width="3"/><path d="M51 46h8m62-14h8" stroke="#171613" stroke-width="2"/></svg></div><h3>Fit the right assist.</h3><p>Use automation, an assistant, or an integration where it earns its place.</p></article><article class="roadmap-card"><span class="roadmap-card__num">04 / Own</span><div class="roadmap-card__art"><svg viewBox="0 0 180 80" aria-hidden="true"><path d="M21 67h138" stroke="#171613" stroke-width="3"/><rect x="47" y="13" width="86" height="52" rx="9" fill="#fffdf5" stroke="#171613" stroke-width="3"/><rect x="57" y="22" width="28" height="33" rx="5" fill="#f0d969" stroke="#171613" stroke-width="2"/><circle cx="71" cy="38" r="8" fill="#67d0be" stroke="#171613" stroke-width="2"/><path d="m67 38 3 3 6-7" fill="none" stroke="#171613" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M94 28h27m-27 9h22m-22 9h26" stroke="#171613" stroke-width="2.5" stroke-linecap="round"/><path d="M69 66v8m43-8v8" stroke="#171613" stroke-width="3"/><path d="m140 19 7 7 13-15" fill="none" stroke="#f2815c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Keep a person in.</h3><p>Make responsibility and the checkpoint easy to find.</p></article></div></div></section>
+
+    <section class="why-section" id="principles" data-chapter aria-labelledby="why-title"><div class="section-wrap why-grid"><div class="reveal"><p class="section-label">04 / Why Relay</p><h2 class="section-title" id="why-title">Good systems leave people more capable.</h2><p class="section-copy">Relay is built around the business, not the buzzword. We make the technology legible, bounded, and ready to work alongside the people who know the context.</p></div><div class="why-list reveal delay-1"><article class="why-item"><span class="why-item__icon" aria-hidden="true"><svg viewBox="0 0 30 30"><path d="M5 16h18M16 8l8 8-8 8" fill="none" stroke="#171613" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h3>Clarity over cleverness</h3><p>Show what the system is doing and what happens next.</p></div></article><article class="why-item"><span class="why-item__icon" aria-hidden="true"><svg viewBox="0 0 30 30"><path d="M15 4 24 8v7c0 6-4 10-9 12-5-2-9-6-9-12V8z" fill="#78c8ed" stroke="#171613" stroke-width="2"/><path d="m10 15 3 3 7-7" fill="none" stroke="#171613" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h3>Boundaries you can see</h3><p>Exceptions and checkpoints are part of the design.</p></div></article><article class="why-item"><span class="why-item__icon" aria-hidden="true"><svg viewBox="0 0 30 30"><circle cx="10" cy="10" r="4" fill="#f2815c" stroke="#171613" stroke-width="2"/><circle cx="21" cy="20" r="4" fill="#67d0be" stroke="#171613" stroke-width="2"/><path d="M13 12 18 18M7 22h5m6-15h5" stroke="#171613" stroke-width="2" stroke-linecap="round"/></svg></span><div><h3>Business-first choices</h3><p>Every tool earns its role by serving a real outcome.</p></div></article></div></div></section>
+
+    <section class="cta-section" id="contact" aria-labelledby="cta-title"><div class="section-wrap cta-layout"><div><p class="section-label">Start with one workflow</p><h2 id="cta-title">Make room for the work that matters.</h2><p>Bring the process that feels heavier than it should. We can start with the outcome and find the right next step.</p></div><a class="cta-button" href="mailto:hello@relayworks.example?subject=Start%20with%20one%20workflow">Talk through a workflow <span aria-hidden="true">↗</span></a><small>Sample inbox / hello@relayworks.example — illustrative placeholder</small></div></section>
+  </main>
+  <footer class="footer"><p>Relay / Yellowline visual direction</p><p>Illustrative workflows / no client claims</p><a href="#top">Back to the top ↑</a></footer>
+
+  <script>
+    (()=>{
+      const root=document.documentElement;root.classList.add("js");
+      const menu=document.getElementById("menu-trigger"),nav=document.getElementById("main-nav");
+      menu.addEventListener("click",()=>{const open=menu.getAttribute("aria-expanded")!=="true";menu.setAttribute("aria-expanded",String(open));nav.classList.toggle("is-open",open)});
+      nav.querySelectorAll("a").forEach(link=>link.addEventListener("click",()=>{menu.setAttribute("aria-expanded","false");nav.classList.remove("is-open")}));
+      document.addEventListener("keydown",event=>{if(event.key==="Escape"&&menu.getAttribute("aria-expanded")==="true"){menu.setAttribute("aria-expanded","false");nav.classList.remove("is-open");menu.focus()}});
+      const content={
+        automation:{title:"Move the repeatable work forward.",kicker:"SYSTEM ROLE / AUTOMATION",copy:"Route routine intake and approvals with clear rules, a named owner, and a stop condition for exceptions.",steps:["Capture the request and its context.","Route the routine step using clear rules.","A person reviews exceptions and approves."],check:"Human checkpoint / A person confirms before the work moves on.",note:"Illustrative / 01",bg:"#cfa7e7",aria:"Illustrative workflow automation route",art:'<rect width="380" height="245" fill="#cfa7e7"/><rect x="37" y="51" width="95" height="142" rx="15" fill="#fffdf5" stroke="#171613" stroke-width="3"/><path d="M55 77h58M55 92h45M55 107h52" stroke="#171613" stroke-width="4" stroke-linecap="round"/><rect x="54" y="128" width="59" height="43" rx="7" fill="#ffe34d" stroke="#171613" stroke-width="2"/><path d="M67 147h34m-34 10h25" stroke="#171613" stroke-width="3" stroke-linecap="round"/><path d="M132 122h64v53h58V75h62" fill="none" stroke="#171613" stroke-width="3" stroke-dasharray="6 7"/><circle cx="132" cy="122" r="8" fill="#f2815c" stroke="#171613" stroke-width="2"/><circle cx="196" cy="122" r="8" fill="#fffdf5" stroke="#171613" stroke-width="2"/><circle cx="254" cy="175" r="8" fill="#ffe34d" stroke="#171613" stroke-width="2"/><circle cx="316" cy="75" r="8" fill="#fffdf5" stroke="#171613" stroke-width="2"/><path d="M279 104h74" stroke="#171613" stroke-width="2"/><text x="281" y="96" fill="#171613" font-family="Arial,sans-serif" font-size="8" font-weight="700">REVIEW POINT</text>'},
+        assistant:{title:"Find a useful answer—with context.",kicker:"SYSTEM ROLE / AI ASSISTANT",copy:"Search approved knowledge, prepare a source-linked draft, and let a person decide what to share.",steps:["Search connected, approved sources.","Prepare a first pass with references.","A teammate checks before sharing."],check:"Human checkpoint / Sources and wording are reviewed before use.",note:"Illustrative / 02",bg:"#78c8ed",aria:"Illustrative knowledge assistant response with a human review point",art:'<rect width="380" height="245" fill="#78c8ed"/><rect x="33" y="39" width="314" height="167" rx="16" fill="#fffdf5" stroke="#171613" stroke-width="3"/><rect x="33" y="39" width="314" height="35" rx="14" fill="#f0d969" stroke="#171613" stroke-width="3"/><circle cx="53" cy="57" r="5" fill="#f2815c" stroke="#171613" stroke-width="2"/><circle cx="69" cy="57" r="5" fill="#fffdf5" stroke="#171613" stroke-width="2"/><circle cx="85" cy="57" r="5" fill="#67d0be" stroke="#171613" stroke-width="2"/><rect x="51" y="94" width="86" height="90" rx="9" fill="#e8dcef" stroke="#171613" stroke-width="2"/><path d="M66 111h55M66 123h44M66 135h49M66 159h33" stroke="#171613" stroke-width="3" stroke-linecap="round"/><rect x="157" y="96" width="166" height="8" rx="4" fill="#171613"/><path d="M157 118h147M157 130h132M157 142h153" stroke="#a19d93" stroke-width="4" stroke-linecap="round"/><rect x="157" y="159" width="146" height="27" rx="7" fill="#d9efae" stroke="#171613" stroke-width="2"/><text x="230" y="176" fill="#171613" font-family="Arial,sans-serif" font-size="8" font-weight="700" text-anchor="middle">CHECK SOURCES</text>'},
+        integrations:{title:"Keep the handoff moving.",kicker:"SYSTEM ROLE / INTEGRATIONS",copy:"Connect the tools that hold the work so useful context reaches the next person without a manual re-copy.",steps:["Carry decisions into shared tools.","Suggest owners and next steps.","A person confirms before assignment."],check:"Human checkpoint / A teammate confirms the owner and action.",note:"Illustrative / 03",bg:"#67d0be",aria:"Illustrative integrations passing context through a human-owned handoff",art:'<rect width="380" height="245" fill="#67d0be"/><rect x="36" y="64" width="84" height="112" rx="15" fill="#fffdf5" stroke="#171613" stroke-width="3"/><rect x="148" y="38" width="84" height="112" rx="15" fill="#fffdf5" stroke="#171613" stroke-width="3"/><rect x="260" y="89" width="84" height="112" rx="15" fill="#fffdf5" stroke="#171613" stroke-width="3"/><circle cx="78" cy="99" r="17" fill="#f2815c" stroke="#171613" stroke-width="2"/><circle cx="190" cy="73" r="17" fill="#cfa7e7" stroke="#171613" stroke-width="2"/><circle cx="302" cy="124" r="17" fill="#f0d969" stroke="#171613" stroke-width="2"/><path d="M71 99h14m-7-7v14M183 73h14m-7-7v14M295 124h14m-7-7v14" stroke="#171613" stroke-width="2"/><path d="M120 117h27m-7-6 7 6-7 6m85-59h27m-7-6 7 6-7 6" fill="none" stroke="#171613" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M54 140h48m61-33h48m61 68h48" stroke="#8b897a" stroke-width="4" stroke-linecap="round"/>'}
+      };
+      const tabs=Array.from(document.querySelectorAll("[data-service]"));
+      const panel=document.getElementById("service-panel"),title=document.getElementById("service-title"),kicker=document.getElementById("service-kicker"),copy=document.getElementById("service-copy"),check=document.getElementById("service-check"),note=document.getElementById("service-visual-note"),art=document.getElementById("service-art"),steps=[0,1,2].map(i=>document.getElementById(`service-step-${i}`));
+      const choose=(key,moveFocus=false)=>{const info=content[key],tab=tabs.find(item=>item.dataset.service===key);if(!info||!tab)return;tabs.forEach(item=>{const active=item===tab;item.setAttribute("aria-selected",String(active));item.tabIndex=active?0:-1});panel.setAttribute("aria-labelledby",tab.id);title.textContent=info.title;kicker.textContent=info.kicker;copy.textContent=info.copy;check.textContent=info.check;note.textContent=info.note;art.setAttribute("aria-label",info.aria);art.style.background=info.bg;art.innerHTML=info.art;steps.forEach((item,i)=>item.textContent=info.steps[i]);if(moveFocus)tab.focus()};
+      tabs.forEach((tab,index)=>{tab.addEventListener("click",()=>choose(tab.dataset.service));tab.addEventListener("keydown",event=>{let next=index;if(event.key==="ArrowRight"||event.key==="ArrowDown")next=(index+1)%tabs.length;else if(event.key==="ArrowLeft"||event.key==="ArrowUp")next=(index-1+tabs.length)%tabs.length;else if(event.key==="Home")next=0;else if(event.key==="End")next=tabs.length-1;else return;event.preventDefault();choose(tabs[next].dataset.service,true)})});
+      const progress=document.getElementById("progress");
+      const updateProgress=()=>{const max=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);root.style.setProperty("--progress",String(Math.max(0,Math.min(1,window.scrollY/max))))};
+      window.addEventListener("scroll",updateProgress,{passive:true});window.addEventListener("resize",updateProgress,{passive:true});updateProgress();
+      if("IntersectionObserver" in window){const revealObserver=new IntersectionObserver((entries,observer)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target)}}),{threshold:.1});document.querySelectorAll(".reveal").forEach(item=>revealObserver.observe(item));const navLinks=Array.from(document.querySelectorAll("[data-nav]"));const navObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting)return;navLinks.forEach(link=>{if(link.dataset.nav===entry.target.id)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current")})}),{rootMargin:"-25% 0px -58% 0px",threshold:0});document.querySelectorAll("[data-chapter]").forEach(section=>navObserver.observe(section))}else document.querySelectorAll(".reveal").forEach(item=>item.classList.add("is-visible"));
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.motion="off";
+    })();
+  </script>
+</body>
+</html>

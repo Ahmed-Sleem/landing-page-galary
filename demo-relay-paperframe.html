@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Relay makes room for better work with business-first automation, AI assistants, integrations, and clear human checkpoints.">
+  <meta name="theme-color" content="#d6d5d2">
+  <title>Relay — Paperframe</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --canvas:#d7d6d3;
+      --paper:#f5f4f1;
+      --paper-hi:#fbfaf8;
+      --paper-dim:#efeeeb;
+      --ink:#242423;
+      --muted:#666663;
+      --faint:#8a8985;
+      --line:#d7d6d1;
+      --line-strong:#bdbcb7;
+      --white:#fffefd;
+      --frame-inset:clamp(10px,4.4vw,68px);
+      --gutter:clamp(22px,5.4vw,82px);
+      --radius:clamp(26px,5vw,68px);
+      --focus:3px solid #454544;
+      --ease:cubic-bezier(.2,.76,.2,1);
+      --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      --mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:24px;background:var(--canvas)}
+    body{min-width:320px;margin:0;padding:var(--frame-inset);overflow-x:hidden;color:var(--ink);background:var(--canvas);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;cursor:pointer}
+    svg{display:block;max-width:100%}
+    :focus-visible{outline:var(--focus);outline-offset:4px}
+    ::selection{color:var(--paper);background:var(--ink)}
+    .skip-link{position:fixed;z-index:200;inset:12px auto auto 12px;padding:11px 14px;border-radius:999px;color:var(--paper);background:var(--ink);transform:translateY(-160%);transition:transform 160ms ease}
+    .skip-link:focus{transform:translateY(0)}
+    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+
+    .paper-frame{position:relative;isolation:isolate;width:min(100%,1580px);min-height:calc(100svh - 2 * var(--frame-inset));margin-inline:auto;overflow:hidden;border:1px solid rgba(255,255,255,.74);border-radius:var(--radius);background:var(--paper);box-shadow:0 18px 58px rgba(39,39,36,.055)}
+    .paper-frame::before{position:absolute;z-index:5;inset:0;pointer-events:none;border-radius:inherit;background-image:radial-gradient(rgba(35,35,32,.19) .42px,transparent .72px);background-size:7px 7px;opacity:.17;content:"";mix-blend-mode:multiply}
+    .page-content{position:relative;z-index:1}
+    .hero{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:calc(100svh - 2 * var(--frame-inset));padding:clamp(19px,4.2vw,62px) var(--gutter) clamp(18px,3vw,34px);border-radius:var(--radius);background:linear-gradient(145deg,rgba(255,255,255,.64),rgba(245,244,241,.78) 48%,rgba(239,238,235,.64));}
+    .hero::after{position:absolute;right:var(--gutter);bottom:0;left:var(--gutter);height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);content:""}
+    .site-header{position:relative;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:38px}
+    .brand{display:inline-flex;align-items:center;gap:10px;min-height:38px}
+    .brand__mark{display:grid;width:27px;height:27px;place-items:center;border:1px solid var(--ink);border-radius:50%;background:rgba(255,255,255,.54)}
+    .brand__mark svg{width:17px;height:17px}
+    .brand__word{display:grid;gap:2px;font-size:12px;font-weight:760;letter-spacing:.12em;line-height:1;text-transform:uppercase}
+    .brand__word small{color:var(--muted);font-family:var(--mono);font-size:7px;font-weight:500;letter-spacing:.1em}
+    .site-header__right{display:flex;align-items:center;gap:clamp(15px,2.4vw,34px)}
+    .site-nav{display:flex;align-items:center;gap:clamp(16px,2.4vw,34px)}
+    .site-nav a{display:inline-flex;align-items:center;min-height:36px;color:var(--muted);font-size:10px;font-weight:560;transition:color 160ms ease}
+    .site-nav a:hover,.site-nav a[aria-current="location"]{color:var(--ink)}
+    .site-nav a[aria-current="location"]::after{width:4px;height:4px;margin-inline-start:6px;border-radius:50%;background:var(--ink);content:""}
+    .header-cta{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:8px 13px;border:1px solid rgba(36,36,35,.13);border-radius:99px;background:rgba(255,255,255,.72);font-size:9px;font-weight:650;transition:transform 160ms ease,background 160ms ease}
+    .header-cta:hover{transform:translateY(-2px);background:var(--white)}
+    .header-cta span{font-size:13px}
+    .menu-toggle{display:none;align-items:center;justify-content:center;gap:8px;min-width:72px;min-height:38px;padding:8px 12px;border:1px solid var(--line-strong);border-radius:99px;background:rgba(255,255,255,.74);font-size:10px;font-weight:650}
+    .menu-toggle__icon{display:grid;gap:4px}
+    .menu-toggle__icon i{display:block;width:12px;height:1.5px;border-radius:2px;background:currentColor}
+
+    .hero-center{display:grid;align-content:center;justify-items:center;width:min(100%,900px);margin-inline:auto;padding-block:clamp(42px,8vh,93px) clamp(34px,6vh,68px);text-align:center}
+    .hero-emblem{position:relative;display:grid;width:86px;height:86px;place-items:center;margin-block-end:24px;border:1px solid rgba(36,36,35,.15);border-radius:50%;background:rgba(255,255,255,.48);box-shadow:inset 0 0 0 7px rgba(255,255,255,.36)}
+    .hero-emblem svg{width:58px;height:58px;overflow:visible}
+    .hero-emblem__orbit{transform-origin:48px 48px;animation:relay-orbit 22s linear infinite}
+    .hero-emblem__float{animation:relay-float 4.6s ease-in-out infinite}
+    .hero-emblem__tag{position:absolute;right:-69px;bottom:7px;display:inline-flex;align-items:center;gap:6px;min-height:26px;padding:6px 10px;border:1px solid rgba(36,36,35,.12);border-radius:99px;background:var(--paper-hi);box-shadow:0 4px 12px rgba(36,36,35,.035);color:var(--muted);font-family:var(--mono);font-size:7px;letter-spacing:.035em;white-space:nowrap}
+    .hero-emblem__tag::before{width:5px;height:5px;border-radius:50%;background:#666663;content:""}
+    .eyebrow{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 15px;color:var(--muted);font-family:var(--mono);font-size:9px;font-weight:540;letter-spacing:.13em;text-transform:uppercase}
+    .eyebrow::before,.eyebrow::after{width:22px;height:1px;background:var(--line-strong);content:""}
+    .hero h1{max-width:12ch;margin:0;font-size:clamp(46px,7.1vw,96px);font-weight:660;letter-spacing:-.078em;line-height:.94}
+    .hero h1 span{display:block;color:#656561}
+    .hero-lead{max-width:51ch;margin:20px 15px 0;color:var(--muted);font-size:clamp(13px,1.25vw,16px);font-weight:420;line-height:1.65}
+    .hero-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin-block-start:25px}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:11px 17px;border:1px solid transparent;border-radius:99px;font-size:10px;font-weight:650;letter-spacing:.01em;transition:transform 170ms ease,background 170ms ease,color 170ms ease,border-color 170ms ease}
+    .button:hover{transform:translateY(-2px)}
+    .button--dark{color:var(--paper-hi);background:var(--ink)}
+    .button--dark:hover{background:#41413f}
+    .button--light{border-color:rgba(36,36,35,.13);background:rgba(255,255,255,.68)}
+    .button--light:hover{border-color:var(--line-strong);background:var(--white)}
+    .button__arrow{display:grid;width:19px;height:19px;place-items:center;border-radius:50%;background:rgba(255,255,255,.16);font-size:12px;line-height:1}
+    .button--light .button__arrow{background:var(--paper-dim)}
+    .hero-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;color:var(--muted);font-family:var(--mono);font-size:8px;letter-spacing:.09em;text-transform:uppercase}
+    .hero-foot__note{display:inline-flex;align-items:center;gap:8px}
+    .hero-foot__note::before{width:5px;height:5px;border-radius:50%;background:var(--ink);content:""}
+    .hero-foot__scroll{display:inline-flex;align-items:center;gap:8px;min-height:30px}
+    .hero-foot__scroll span{display:grid;width:20px;height:20px;place-items:center;border:1px solid var(--line-strong);border-radius:50%;font-family:var(--sans);font-size:12px;transition:transform 160ms ease}
+    .hero-foot__scroll:hover span{transform:translateY(3px)}
+
+    .capability-strip{display:grid;grid-template-columns:minmax(170px,.75fr) minmax(0,2.25fr);align-items:center;gap:28px;padding:clamp(25px,4vw,45px) var(--gutter);border-block-end:1px solid var(--line)}
+    .capability-strip__label{max-width:20ch;margin:0;color:var(--muted);font-family:var(--mono);font-size:8px;letter-spacing:.1em;line-height:1.6;text-transform:uppercase}
+    .capability-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;padding:0;list-style:none}
+    .capability-list li{display:flex;align-items:center;gap:10px;min-height:34px;padding:3px 12px;border-inline-start:1px solid var(--line);font-size:clamp(9px,.95vw,12px);font-weight:590;line-height:1.35}
+    .capability-list__num{color:var(--faint);font-family:var(--mono);font-size:8px;font-weight:450}
+
+    .section{padding:clamp(59px,8vw,112px) var(--gutter)}
+    .section-head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);align-items:end;gap:28px;margin-block-end:clamp(30px,5vw,59px)}
+    .section-index{margin:0 0 12px;color:var(--faint);font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase}
+    .section-title{max-width:15ch;margin:0;font-size:clamp(31px,4.4vw,58px);font-weight:630;letter-spacing:-.065em;line-height:1.02}
+    .section-description{max-width:43ch;margin:0 0 4px;color:var(--muted);font-size:12px;line-height:1.7}
+    .services-section{border-block-end:1px solid var(--line)}
+    .service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block-start:1px solid var(--line-strong)}
+    .service-card{position:relative;display:flex;min-width:0;min-height:236px;flex-direction:column;padding:22px clamp(13px,2vw,25px) 18px 0;border-inline-end:1px solid var(--line)}
+    .service-card:not(:first-child){padding-inline-start:clamp(13px,2vw,25px)}
+    .service-card:last-child{border-inline-end:0}
+    .service-card__top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-block-end:28px}
+    .service-card__num{color:var(--faint);font-family:var(--mono);font-size:8px}
+    .service-icon{display:grid;width:42px;height:42px;place-items:center;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.67);transition:transform 220ms var(--ease),background 220ms ease}
+    .service-icon svg{width:23px;height:23px}
+    .service-card:hover .service-icon{transform:translateY(-3px) rotate(-3deg);background:var(--white)}
+    .service-card h3{margin:0;font-size:clamp(14px,1.4vw,17px);font-weight:630;letter-spacing:-.035em}
+    .service-card p{max-width:31ch;margin:9px 0 0;color:var(--muted);font-size:10px;line-height:1.65}
+    .service-card__rule{width:30px;height:1px;margin-block-start:auto;padding-block-start:20px;border-block-end:1px solid var(--line-strong);transition:width 180ms ease}
+    .service-card:hover .service-card__rule{width:52px}
+    .services-note{display:flex;align-items:center;gap:11px;margin:28px 0 0;padding:13px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.46);color:var(--muted);font-size:9px;line-height:1.55}
+    .services-note__mark{display:grid;width:22px;height:22px;flex:0 0 22px;place-items:center;border:1px solid var(--line-strong);border-radius:50%;color:var(--ink);font-size:11px}
+
+    .approach-section{padding-top:clamp(58px,7.5vw,105px);padding-bottom:clamp(66px,8vw,116px)}
+    .approach-card{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(26px,6vw,82px);padding:clamp(25px,4.4vw,58px);border:1px solid rgba(255,255,255,.88);border-radius:clamp(24px,4vw,46px);background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(246,245,242,.66));box-shadow:0 12px 36px rgba(36,36,35,.025)}
+    .approach-card__intro{display:flex;flex-direction:column;align-items:flex-start}
+    .approach-card__intro .section-title{max-width:12ch}
+    .approach-card__intro p:last-of-type{max-width:42ch;margin:15px 0 20px;color:var(--muted);font-size:11px;line-height:1.7}
+    .checkpoint-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid var(--line);border-radius:99px;background:rgba(255,255,255,.7);color:var(--muted);font-family:var(--mono);font-size:7px;letter-spacing:.06em;text-transform:uppercase}
+    .checkpoint-pill::before{width:6px;height:6px;border-radius:50%;background:var(--ink);content:""}
+    .steps{position:relative;display:grid;align-content:center;gap:0;margin:0;padding:0;list-style:none}
+    .steps::before{position:absolute;top:24px;bottom:24px;left:16px;width:1px;background:var(--line-strong);content:""}
+    .step{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr);gap:14px;padding:12px 0}
+    .step__num{position:relative;z-index:1;display:grid;width:33px;height:33px;place-items:center;border:1px solid var(--line-strong);border-radius:50%;background:var(--paper);color:var(--muted);font-family:var(--mono);font-size:8px}
+    .step h3{margin:1px 0 0;font-size:12px;font-weight:650;letter-spacing:-.015em}
+    .step p{max-width:40ch;margin:5px 0 0;color:var(--muted);font-size:9px;line-height:1.6}
+
+    .contact-section{padding:0 var(--gutter) clamp(23px,3.2vw,39px)}
+    .contact-card{position:relative;display:grid;justify-items:center;overflow:hidden;padding:clamp(45px,7vw,83px) 22px clamp(41px,6.2vw,70px);border:1px solid rgba(255,255,255,.92);border-radius:clamp(27px,4.5vw,52px);background:linear-gradient(145deg,#fbfaf8,#f0efec);text-align:center}
+    .contact-card::before,.contact-card::after{position:absolute;width:clamp(180px,25vw,340px);height:clamp(180px,25vw,340px);border:1px solid rgba(36,36,35,.065);border-radius:50%;content:"";pointer-events:none}
+    .contact-card::before{top:-65%;left:-8%}
+    .contact-card::after{right:-7%;bottom:-78%}
+    .contact-mark{position:relative;z-index:1;display:grid;width:54px;height:54px;place-items:center;margin-block-end:18px;border:1px solid var(--line-strong);border-radius:50%;background:rgba(255,255,255,.78)}
+    .contact-mark svg{width:27px;height:27px}
+    .contact-card__eyebrow{position:relative;z-index:1;margin:0 0 11px;color:var(--muted);font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase}
+    .contact-card h2{position:relative;z-index:1;max-width:14ch;margin:0;font-size:clamp(31px,5vw,61px);font-weight:640;letter-spacing:-.065em;line-height:1.01}
+    .contact-card__copy{position:relative;z-index:1;max-width:45ch;margin:14px 10px 0;color:var(--muted);font-size:11px;line-height:1.65}
+    .contact-card .button{position:relative;z-index:1;margin-block-start:23px}
+    .contact-card__placeholder{position:relative;z-index:1;margin:14px 0 0;color:var(--faint);font-family:var(--mono);font-size:7px;letter-spacing:.035em;line-height:1.5}
+
+    .site-footer{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px var(--gutter) 21px;color:var(--muted);font-family:var(--mono);font-size:7px;letter-spacing:.04em}
+    .site-footer p{margin:0;line-height:1.5}
+    .site-footer__right{display:flex;align-items:center;gap:18px}
+    .site-footer a{display:inline-flex;align-items:center;min-height:30px;color:var(--ink)}
+    .site-footer a:hover{text-decoration:underline;text-underline-offset:3px}
+
+    .reveal{opacity:1;transform:none;transition:opacity 520ms var(--ease),transform 520ms var(--ease)}
+    .js .reveal{opacity:0;transform:translateY(14px)}
+    .js .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .js .reveal.delay-1{transition-delay:90ms}
+    @keyframes relay-orbit{to{transform:rotate(360deg)}}
+    @keyframes relay-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+
+    @media(max-width:1050px){
+      .capability-strip{grid-template-columns:minmax(0,1fr);gap:15px}
+      .capability-strip__label{max-width:none}
+      .capability-list li:first-child{border-inline-start:0;padding-inline-start:0}
+      .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .service-card:nth-child(2){border-inline-end:0}
+      .service-card:nth-child(3){padding-inline-start:0}
+      .service-card:nth-child(3),.service-card:nth-child(4){border-block-start:1px solid var(--line)}
+    }
+    @media(max-width:760px){
+      :root{--frame-inset:10px;--gutter:clamp(17px,5.4vw,34px);--radius:30px}
+      .hero{padding:17px var(--gutter) 17px}
+      .site-header{flex-wrap:wrap;gap:9px 12px}
+      .brand{margin-inline-end:auto}
+      .menu-toggle{display:none}
+      .site-header__right{gap:10px}
+      .header-cta{min-height:34px;padding:7px 10px;font-size:9px}
+      .site-nav{gap:14px}
+      .site-nav a{font-size:9px}
+      .js .header-cta{display:none}
+      .js .menu-toggle{display:inline-flex}
+      .js .site-header__right{display:contents}
+      .js .site-nav{display:none}
+      .js .site-nav.is-open{display:grid;order:3;width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin-block-start:5px;padding:7px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.73)}
+      .js .site-nav.is-open a{justify-content:center;min-height:39px;border-radius:10px}
+      .js .site-nav.is-open a:hover{background:var(--paper-dim)}
+      .hero-center{padding-block:52px 47px}
+      .hero-emblem{width:78px;height:78px;margin-block-end:22px}
+      .hero-emblem__tag{right:-61px;bottom:5px;font-size:6px}
+      .hero h1{font-size:clamp(43px,9.5vw,74px)}
+      .hero-lead{max-width:44ch;font-size:13px}
+      .capability-strip{padding-block:24px}
+      .capability-list{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:10px}
+      .capability-list li:nth-child(odd){border-inline-start:0;padding-inline-start:0}
+      .capability-list li{font-size:10px}
+      .section-head{grid-template-columns:minmax(0,1fr);gap:13px}
+      .section-description{font-size:11px}
+      .approach-card{grid-template-columns:minmax(0,1fr);gap:27px;padding:clamp(23px,5vw,38px)}
+      .approach-card__intro p:last-of-type{margin-block-end:17px}
+      .steps::before{top:22px;bottom:22px}
+      .contact-section{padding-inline:var(--gutter)}
+      .site-footer{align-items:flex-start;flex-direction:column;gap:10px}
+      .site-footer__right{width:100%;justify-content:space-between}
+    }
+    @media(max-width:520px){
+      :root{--gutter:17px;--radius:24px}
+      .hero{min-height:calc(100svh - 2 * var(--frame-inset));padding:13px var(--gutter) 14px}
+      .site-header{gap:8px}
+      .brand__word{font-size:11px}
+      .brand__word small{font-size:6px}
+      .menu-toggle{min-width:67px;min-height:36px;padding:7px 10px;font-size:9px}
+      .js .site-nav.is-open{grid-template-columns:minmax(0,1fr);gap:0;padding:5px}
+      .js .site-nav.is-open a{justify-content:flex-start;padding-inline:10px;border-block-end:1px solid var(--line);border-radius:0}
+      .js .site-nav.is-open a:last-child{border-block-end:0}
+      .hero-center{padding-block:clamp(45px,8vh,72px) 44px}
+      .hero-emblem{width:70px;height:70px;margin-block-end:20px}
+      .hero-emblem svg{width:51px;height:51px}
+      .hero-emblem__tag{right:-53px;bottom:2px;min-height:23px;padding:5px 8px;font-size:5.5px}
+      .eyebrow{font-size:7px;letter-spacing:.1em}
+      .eyebrow::before,.eyebrow::after{width:14px}
+      .hero h1{font-size:clamp(39px,11.3vw,58px);letter-spacing:-.075em}
+      .hero-lead{max-width:35ch;margin-block-start:15px;font-size:12px}
+      .hero-actions{gap:8px;margin-block-start:20px}
+      .button{min-height:44px;padding:10px 13px;font-size:9px}
+      .hero-foot{font-size:6px}
+      .hero-foot__note{gap:6px}
+      .capability-list li{gap:7px;padding-inline:8px;font-size:9px}
+      .section{padding-block:54px}
+      .section-title{font-size:clamp(30px,9vw,45px)}
+      .service-grid{grid-template-columns:minmax(0,1fr)}
+      .service-card,.service-card:not(:first-child){min-height:0;padding:17px 0 18px;border-inline-end:0;border-block-start:1px solid var(--line)}
+      .service-card__top{margin-block-end:14px}
+      .service-card p{max-width:44ch;font-size:10px}
+      .service-card__rule{margin-block-start:15px;padding-block-start:0}
+      .services-note{align-items:flex-start;padding:12px;font-size:9px}
+      .approach-card{gap:22px;padding:23px 18px}
+      .step{grid-template-columns:31px minmax(0,1fr);gap:11px}
+      .step__num{width:30px;height:30px}
+      .steps::before{left:15px}
+      .contact-section{padding:0 12px 20px}
+      .contact-card{padding:43px 17px 39px;border-radius:22px}
+      .contact-card h2{font-size:clamp(30px,9vw,42px)}
+      .contact-card__copy{font-size:10px}
+      .contact-card__placeholder{max-width:31ch;font-size:6px}
+      .site-footer{padding:16px var(--gutter) 18px;font-size:6px}
+    }
+    @media(pointer:coarse){.site-nav a,.header-cta,.menu-toggle,.button,.site-footer a{min-height:44px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+    :root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+    :root[data-motion="off"] .reveal{opacity:1;transform:none}
+    @media(forced-colors:active){.paper-frame,.hero,.approach-card,.contact-card,.service-icon{border:1px solid CanvasText}.hero{background:Canvas}.button--dark{color:Canvas;background:CanvasText}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="paper-frame" id="top">
+    <div class="page-content">
+      <main id="content">
+        <section class="hero" aria-labelledby="hero-title">
+          <header class="site-header">
+            <a class="brand" href="#top" aria-label="Relay Paperframe concept, back to top">
+              <span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="7" cy="12" r="3" fill="none" stroke="#242423" stroke-width="1.5"/><circle cx="17" cy="7" r="2" fill="#242423"/><circle cx="17" cy="17" r="2" fill="#242423"/><path d="M10 11 15 8m-5 5 5 3" fill="none" stroke="#242423" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              <span class="brand__word">Relay<small>Business systems</small></span>
+            </a>
+            <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span>Menu</button>
+            <div class="site-header__right">
+              <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a href="#services" data-nav="services">Services</a><a href="#approach" data-nav="approach">Approach</a><a href="#contact" data-nav="contact">Contact</a></nav>
+              <a class="header-cta" href="#contact">Start with the work <span aria-hidden="true">↗</span></a>
+            </div>
+          </header>
+          <div class="hero-center">
+            <div class="hero-emblem" aria-hidden="true">
+              <svg viewBox="0 0 96 96">
+                <circle cx="48" cy="48" r="35" fill="none" stroke="#d0cfca" stroke-width="1.2"/>
+                <path d="M25 49c8-18 38-22 48-3M24 54c12 17 38 15 49-2" fill="none" stroke="#777773" stroke-width="1.5" stroke-linecap="round"/>
+                <g class="hero-emblem__orbit"><circle cx="48" cy="13" r="3.5" fill="#242423"/><path d="M48 18v16" stroke="#242423" stroke-width="1.3" stroke-linecap="round"/></g>
+                <circle cx="28" cy="50" r="5" fill="#242423"/>
+                <circle cx="68" cy="49" r="5" fill="#777773"/>
+                <circle cx="48" cy="51" r="3" fill="#242423"/>
+                <path d="M24 73h48" stroke="#d0cfca" stroke-width="1" stroke-linecap="round"/>
+              </svg>
+              <span class="hero-emblem__tag">Human checkpoints</span>
+            </div>
+            <p class="eyebrow">Business-first automation / built with people</p>
+            <h1 id="hero-title">More room <span>for good work.</span></h1>
+            <p class="hero-lead">Relay connects automation, AI assistants, and the tools your team already uses—so routine work moves forward, with people still in the important decisions.</p>
+            <div class="hero-actions"><a class="button button--dark" href="#services">Explore what Relay does <span class="button__arrow" aria-hidden="true">↘</span></a><a class="button button--light" href="#approach">How it works <span class="button__arrow" aria-hidden="true">↓</span></a></div>
+          </div>
+          <div class="hero-foot"><span class="hero-foot__note">Outcome first / humans in the loop</span><a class="hero-foot__scroll" href="#capabilities">Scroll to explore <span aria-hidden="true">↓</span></a></div>
+        </section>
+
+        <section class="capability-strip" id="capabilities" aria-label="Relay capability overview">
+          <p class="capability-strip__label">A connected system, built from useful parts</p>
+          <ul class="capability-list"><li><span class="capability-list__num">01</span>Automation</li><li><span class="capability-list__num">02</span>AI assistants</li><li><span class="capability-list__num">03</span>Integrations</li><li><span class="capability-list__num">04</span>Human checkpoints</li></ul>
+        </section>
+
+        <section class="section services-section" id="services" data-chapter aria-labelledby="services-title">
+          <div class="section-head reveal"><div><p class="section-index">01 / Useful by design</p><h2 class="section-title" id="services-title">Less repeat work.<br>More room to think.</h2></div><p class="section-description">Start with a business need. Then choose the smallest, clearest system that can move it forward—without hiding responsibility behind technology.</p></div>
+          <div class="service-grid reveal delay-1">
+            <article class="service-card"><div class="service-card__top"><span class="service-card__num">01</span><span class="service-icon" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M5 9.5A9 9 0 0 1 21 7l2 2M23 18.5A9 9 0 0 1 7 21l-2-2" fill="none" stroke="#242423" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 4.5 23 9l-5 .5M9 23.5 5 19l5-.5" fill="none" stroke="#242423" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><h3>Automation</h3><p>Route repeatable steps with clear rules, owners, and a stop for exceptions that need judgment.</p><span class="service-card__rule" aria-hidden="true"></span></article>
+            <article class="service-card"><div class="service-card__top"><span class="service-card__num">02</span><span class="service-icon" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M7 4.5h10l5 5v14H7z" fill="none" stroke="#242423" stroke-width="1.5" stroke-linejoin="round"/><path d="M17 4.5v5h5M10 14h9m-9 3h6" fill="none" stroke="#242423" stroke-width="1.5" stroke-linecap="round"/><path d="m20 14 1.4-2.5 1.4 2.5 2.5 1.4-2.5 1.4-1.4 2.5-1.4-2.5-2.5-1.4z" fill="#777773"/></svg></span></div><h3>AI assistants</h3><p>Search approved knowledge and prepare useful first drafts for a teammate to check before sharing.</p><span class="service-card__rule" aria-hidden="true"></span></article>
+            <article class="service-card"><div class="service-card__top"><span class="service-card__num">03</span><span class="service-icon" aria-hidden="true"><svg viewBox="0 0 28 28"><circle cx="7" cy="14" r="3" fill="none" stroke="#242423" stroke-width="1.5"/><circle cx="21" cy="7" r="3" fill="none" stroke="#242423" stroke-width="1.5"/><circle cx="21" cy="21" r="3" fill="none" stroke="#242423" stroke-width="1.5"/><path d="m10 13 8-5m-8 7 8 5" fill="none" stroke="#242423" stroke-width="1.5" stroke-linecap="round"/><circle cx="14" cy="14" r="1.6" fill="#777773"/></svg></span></div><h3>Integrations</h3><p>Carry useful context between the systems a team already relies on, instead of copying it by hand.</p><span class="service-card__rule" aria-hidden="true"></span></article>
+            <article class="service-card"><div class="service-card__top"><span class="service-card__num">04</span><span class="service-icon" aria-hidden="true"><svg viewBox="0 0 28 28"><rect x="5.5" y="4.5" width="17" height="19" rx="3" fill="none" stroke="#242423" stroke-width="1.5"/><path d="M10 10h8m-8 4h4m1 5 2 2 4-5" fill="none" stroke="#242423" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><h3>Human checkpoints</h3><p>Keep a named reviewer in the loop wherever risk, nuance, or a real decision calls for one.</p><span class="service-card__rule" aria-hidden="true"></span></article>
+          </div>
+          <p class="services-note reveal"><span class="services-note__mark" aria-hidden="true">i</span><span>These are illustrative workflow patterns, not client results or a promise that every process should be automated.</span></p>
+        </section>
+
+        <section class="section approach-section" id="approach" data-chapter aria-labelledby="approach-title">
+          <div class="approach-card reveal"><div class="approach-card__intro"><p class="section-index">02 / A considered route</p><h2 class="section-title" id="approach-title">Technology should earn its place.</h2><p>Relay begins with the business outcome, maps the people and handoffs around it, then makes the technology legible and accountable.</p><span class="checkpoint-pill">Clear owners / clear checkpoints</span></div>
+            <ol class="steps"><li class="step"><span class="step__num">01</span><div><h3>Listen for the real outcome.</h3><p>Agree what should get easier before reaching for a tool.</p></div></li><li class="step"><span class="step__num">02</span><div><h3>Map the work and the handoffs.</h3><p>See where information moves, where it stalls, and where judgment belongs.</p></div></li><li class="step"><span class="step__num">03</span><div><h3>Build, review, and keep ownership.</h3><p>Start with a bounded workflow, test the exception paths, and keep the next step visible.</p></div></li></ol>
+          </div>
+        </section>
+
+        <section class="contact-section" id="contact" data-chapter aria-labelledby="contact-title">
+          <div class="contact-card reveal"><span class="contact-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 8.5h22v14H5z" fill="none" stroke="#242423" stroke-width="1.5" stroke-linejoin="round"/><path d="m6 10 10 8 10-8" fill="none" stroke="#242423" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="22" r="5" fill="#f5f4f1" stroke="#242423" stroke-width="1.5"/><path d="M24 19.5v5m-2.5-2.5h5" stroke="#242423" stroke-width="1.3" stroke-linecap="round"/></svg></span><p class="contact-card__eyebrow">Start with one workflow</p><h2 id="contact-title">Make room for the work that matters.</h2><p class="contact-card__copy">Bring the process that feels heavier than it should. Start with the outcome, then find the right next step.</p><a class="button button--dark" href="mailto:hello@relayworks.example?subject=Start%20with%20one%20workflow">Talk through a workflow <span class="button__arrow" aria-hidden="true">↗</span></a><p class="contact-card__placeholder">Sample inbox / hello@relayworks.example — illustrative placeholder</p></div>
+        </section>
+      </main>
+      <footer class="site-footer"><p>Relay / Paperframe visual direction<br>Illustrative workflows / no client claims</p><div class="site-footer__right"><span>Business first / people in the loop</span><a href="#top">Back to top ↑</a></div></footer>
+    </div>
+  </div>
+
+  <script>
+    (()=>{
+      const root=document.documentElement;
+      root.classList.add("js");
+      const toggle=document.getElementById("menu-toggle");
+      const nav=document.getElementById("site-nav");
+      const closeMenu=()=>{toggle.setAttribute("aria-expanded","false");nav.classList.remove("is-open")};
+      toggle.addEventListener("click",()=>{const open=toggle.getAttribute("aria-expanded")!=="true";toggle.setAttribute("aria-expanded",String(open));nav.classList.toggle("is-open",open)});
+      nav.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMenu));
+      document.addEventListener("keydown",event=>{if(event.key==="Escape"&&toggle.getAttribute("aria-expanded")==="true"){closeMenu();toggle.focus()}});
+      if("IntersectionObserver" in window){
+        const revealObserver=new IntersectionObserver((entries,observer)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target)}}),{threshold:.12});
+        document.querySelectorAll(".reveal").forEach(item=>revealObserver.observe(item));
+        const navLinks=Array.from(document.querySelectorAll("[data-nav]"));
+        const sectionObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting)return;navLinks.forEach(link=>{if(link.dataset.nav===entry.target.id)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current")})}),{rootMargin:"-28% 0px -58% 0px",threshold:0});
+        document.querySelectorAll("[data-chapter]").forEach(section=>sectionObserver.observe(section));
+      }else document.querySelectorAll(".reveal").forEach(item=>item.classList.add("is-visible"));
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.motion="off";
+    })();
+  </script>
+</body>
+</html>

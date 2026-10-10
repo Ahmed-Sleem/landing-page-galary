@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Relay connects business-first automation, AI assistants, and integrations with people kept in the important decisions.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Relay — Limeprint</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --white:#ffffff;
+      --paper:#fbfbfa;
+      --mist:#f1f1ef;
+      --mist-2:#e8e8e5;
+      --ink:#121312;
+      --muted:#555652;
+      --faint:#81827e;
+      --line:#d9dad6;
+      --lime:#b2ff5a;
+      --lime-soft:#d2ff9d;
+      --gutter:clamp(17px,4.2vw,62px);
+      --page-max:1440px;
+      --radius:clamp(18px,2.4vw,29px);
+      --focus:3px solid #20211f;
+      --ease:cubic-bezier(.2,.76,.2,1);
+      --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      --mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:22px;background:var(--white)}
+    body{min-width:320px;margin:0;overflow-x:hidden;color:var(--ink);background:var(--white);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    a{color:inherit;text-decoration:none}
+    button{color:inherit;font:inherit;cursor:pointer}
+    svg{display:block;max-width:100%}
+    :focus-visible{outline:var(--focus);outline-offset:4px}
+    ::selection{color:var(--lime);background:var(--ink)}
+    .skip-link{position:fixed;z-index:200;inset:12px auto auto 12px;padding:11px 15px;border-radius:999px;color:var(--white);background:var(--ink);transform:translateY(-160%);transition:transform 160ms ease}
+    .skip-link:focus{transform:translateY(0)}
+    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+    .page-frame{width:min(100%,var(--page-max));margin-inline:auto;padding-inline:var(--gutter)}
+
+    .site-header{position:relative;z-index:5;display:grid;grid-template-columns:minmax(130px,1fr) auto minmax(130px,1fr);align-items:center;gap:18px;min-height:68px}
+    .brand{display:inline-flex;align-items:center;gap:8px;justify-self:start;min-height:40px}
+    .brand__mark{display:grid;width:22px;height:22px;place-items:center;border-radius:50%;color:var(--white);background:var(--ink)}
+    .brand__mark svg{width:14px;height:14px}
+    .brand__name{font-size:13px;font-weight:760;letter-spacing:-.04em}
+    .brand__edition{margin-inline-start:3px;color:var(--faint);font-family:var(--mono);font-size:7px;letter-spacing:.08em;text-transform:uppercase}
+    .site-nav{display:flex;align-items:center;justify-content:center;gap:clamp(16px,2.1vw,32px)}
+    .site-nav a{display:inline-flex;align-items:center;min-height:40px;color:var(--muted);font-size:9px;font-weight:570;transition:color 150ms ease}
+    .site-nav a:hover,.site-nav a[aria-current="location"]{color:var(--ink)}
+    .site-nav a[aria-current="location"]::after{width:4px;height:4px;margin-inline-start:5px;border-radius:50%;background:var(--lime);content:""}
+    .header-action{display:inline-flex;align-items:center;justify-self:end;gap:7px;min-height:34px;padding:7px 12px;border:1px solid var(--line);border-radius:99px;background:#fff;font-size:8px;font-weight:650;transition:background 150ms ease,border-color 150ms ease}
+    .header-action:hover{border-color:var(--ink);background:var(--lime)}
+    .header-action span{font-size:12px}
+    .menu-toggle{display:none;align-items:center;justify-content:center;gap:7px;min-width:72px;min-height:38px;padding:8px 11px;border:1px solid var(--line);border-radius:99px;background:var(--white);font-size:9px;font-weight:650}
+    .menu-toggle__icon{display:grid;gap:4px}
+    .menu-toggle__icon i{display:block;width:12px;height:1.5px;border-radius:2px;background:currentColor}
+
+    .hero-card{position:relative;display:flex;min-height:calc(100svh - 68px - 16px);flex-direction:column;justify-content:space-between;overflow:hidden;padding:clamp(21px,4vw,49px) clamp(18px,4vw,56px) 18px;border-radius:var(--radius);background:var(--lime)}
+    .hero-label{display:flex;align-items:center;gap:8px;color:rgba(18,19,18,.72);font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase}
+    .hero-label::before{width:6px;height:6px;border:1px solid var(--ink);border-radius:50%;background:var(--lime);content:""}
+    .hero-center{position:relative;z-index:2;display:grid;justify-items:center;width:min(100%,780px);margin-inline:auto;padding-block:clamp(26px,5vh,59px) clamp(17px,3vh,35px);text-align:center}
+    .hero-kicker{margin:0 0 12px;color:#34362e;font-family:var(--mono);font-size:8px;font-weight:560;letter-spacing:.13em;text-transform:uppercase}
+    .hero h1{max-width:14ch;margin:0;font-size:clamp(42px,6.7vw,83px);font-weight:690;letter-spacing:-.078em;line-height:.94}
+    .hero h1 span{display:block}
+    .hero-lead{max-width:57ch;margin:17px 10px 0;color:#34362e;font-size:clamp(12px,1.1vw,14px);font-weight:450;line-height:1.6}
+    .hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-block-start:22px}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:10px 15px;border:1px solid transparent;border-radius:99px;font-size:9px;font-weight:680;transition:transform 160ms ease,background 160ms ease,color 160ms ease,border-color 160ms ease}
+    .button:hover{transform:translateY(-2px)}
+    .button--dark{color:var(--white);background:var(--ink)}
+    .button--dark:hover{background:#30312f}
+    .button--light{border-color:rgba(18,19,18,.22);background:rgba(255,255,255,.5)}
+    .button--light:hover{border-color:var(--ink);background:var(--white)}
+    .button__arrow{display:grid;width:19px;height:19px;place-items:center;border-radius:50%;color:var(--ink);background:var(--lime);font-size:12px}
+    .hero-art{position:relative;z-index:1;width:min(100%,1110px);margin:0 auto}
+    .hero-art svg{width:100%;height:auto}
+    .hero-art__wide{display:block}
+    .hero-art__compact{display:none}
+    .hero-art__caption{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-block-start:9px;padding-block-start:9px;border-block-start:1px solid rgba(18,19,18,.25);color:rgba(18,19,18,.7);font-family:var(--mono);font-size:7px;letter-spacing:.08em;text-transform:uppercase}
+    .hero-art__caption span:last-child{display:inline-flex;align-items:center;gap:6px}
+    .hero-art__caption span:last-child::before{width:5px;height:5px;border-radius:50%;background:var(--ink);content:""}
+    .route-trace{stroke-dasharray:8 10;animation:route-run 14s linear infinite}
+    .route-node{transform-box:fill-box;transform-origin:center;animation:node-pulse 3.8s ease-in-out infinite}
+
+    .capability-panel{display:grid;grid-template-columns:minmax(210px,.8fr) minmax(0,1.6fr);align-items:center;gap:clamp(22px,4vw,55px);margin-block-start:clamp(38px,6vw,68px);padding:clamp(25px,4vw,44px);border:1px solid #ececea;border-radius:var(--radius);background:var(--mist)}
+    .section-index{margin:0 0 11px;color:var(--faint);font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase}
+    .capability-panel h2{max-width:12ch;margin:0;font-size:clamp(25px,3vw,39px);font-weight:660;letter-spacing:-.065em;line-height:1.04}
+    .capability-panel__copy{max-width:39ch;margin:11px 0 0;color:var(--muted);font-size:10px;line-height:1.6}
+    .capability-track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch;gap:8px;min-width:0}
+    .capability-node{position:relative;display:flex;min-width:0;min-height:101px;flex-direction:column;justify-content:space-between;padding:12px 11px;border:1px solid #e5e5e2;border-radius:13px;background:var(--white);box-shadow:0 3px 10px rgba(18,19,18,.025)}
+    .capability-node:not(:last-child)::after{position:absolute;top:50%;right:-9px;width:9px;border-block-start:1px dashed #9c9d98;content:""}
+    .capability-node__icon{display:grid;width:23px;height:23px;place-items:center;border-radius:50%;background:var(--lime)}
+    .capability-node__icon svg{width:13px;height:13px}
+    .capability-node small{color:var(--faint);font-family:var(--mono);font-size:6px;letter-spacing:.06em;text-transform:uppercase}
+    .capability-node strong{font-size:9px;font-weight:650;line-height:1.25}
+    .illustrative-note{display:flex;align-items:center;gap:8px;margin:13px 0 0;color:var(--faint);font-family:var(--mono);font-size:7px;letter-spacing:.035em;line-height:1.5}
+    .illustrative-note::before{width:5px;height:5px;flex:0 0 5px;border-radius:50%;background:var(--faint);content:""}
+
+    .section{padding:clamp(65px,9vw,121px) 0}
+    .statement-section{display:grid;justify-items:center;max-width:970px;margin-inline:auto;padding-inline:var(--gutter);text-align:center}
+    .statement-section h2{max-width:19ch;margin:0;font-size:clamp(28px,4.35vw,55px);font-weight:680;letter-spacing:-.07em;line-height:1.08}
+    .statement-section h2 .highlight{position:relative;z-index:0;white-space:nowrap}
+    .statement-section h2 .highlight::before{position:absolute;z-index:-1;right:-.08em;bottom:.03em;left:-.08em;height:.58em;border-radius:3px;background:var(--lime);content:"";transform:rotate(-1deg)}
+    .statement-section p:last-child{max-width:49ch;margin:17px 0 0;color:var(--muted);font-size:11px;line-height:1.65}
+
+    .patterns-section{padding:0 var(--gutter) clamp(68px,9vw,120px)}
+    .section-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(220px,.9fr);align-items:end;gap:26px;margin-block-end:clamp(25px,4vw,42px)}
+    .section-head h2{max-width:14ch;margin:0;font-size:clamp(30px,4.3vw,53px);font-weight:660;letter-spacing:-.07em;line-height:1.02}
+    .section-head__copy{max-width:44ch;margin:0 0 3px;color:var(--muted);font-size:11px;line-height:1.65}
+    .pattern-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .pattern-card{display:flex;min-width:0;min-height:310px;flex-direction:column;padding:clamp(18px,2.4vw,28px);border:1px solid #e8e8e5;border-radius:18px;background:var(--mist)}
+    .pattern-card--dark{color:var(--white);background:var(--ink);border-color:var(--ink)}
+    .pattern-card--lime{background:var(--lime);border-color:var(--lime)}
+    .pattern-card__label{display:flex;align-items:center;justify-content:space-between;gap:9px;font-family:var(--mono);font-size:7px;letter-spacing:.08em;text-transform:uppercase}
+    .pattern-card__label span:last-child{opacity:.6}
+    .pattern-art{display:grid;height:116px;place-items:center;margin:14px 0 18px}
+    .pattern-art svg{width:min(100%,245px);height:100%}
+    .pattern-card h3{max-width:16ch;margin:0;font-size:clamp(16px,1.65vw,20px);font-weight:650;letter-spacing:-.04em;line-height:1.1}
+    .pattern-card p{max-width:39ch;margin:9px 0 0;color:var(--muted);font-size:9px;line-height:1.55}
+    .pattern-card--dark p{color:#d3d3cf}
+    .pattern-card--lime p{color:#33362d}
+    .pattern-card__foot{display:flex;align-items:center;gap:7px;margin-block-start:auto;padding-block-start:14px;color:var(--faint);font-family:var(--mono);font-size:6px;letter-spacing:.06em;text-transform:uppercase}
+    .pattern-card--dark .pattern-card__foot{color:#c7c7c2}
+    .pattern-card--lime .pattern-card__foot{color:#45473f}
+    .pattern-card__foot::before{width:5px;height:5px;border:1px solid currentColor;border-radius:50%;content:""}
+
+    .reliability-section{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);align-items:center;gap:clamp(28px,6vw,78px);padding:clamp(50px,7vw,85px) var(--gutter);border-block:1px solid #ededeb;background:#fafaf9}
+    .reliability-section h2{max-width:12ch;margin:0;font-size:clamp(31px,4.4vw,55px);font-weight:660;letter-spacing:-.07em;line-height:1.02}
+    .reliability-section__copy{max-width:44ch;margin:14px 0 0;color:var(--muted);font-size:11px;line-height:1.65}
+    .reliability-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-block-start:25px}
+    .reliability-point{padding-block-start:11px;border-block-start:1px solid var(--line)}
+    .reliability-point__num{color:var(--faint);font-family:var(--mono);font-size:7px}
+    .reliability-point h3{margin:8px 0 0;font-size:11px;font-weight:650;letter-spacing:-.02em}
+    .reliability-point p{max-width:32ch;margin:6px 0 0;color:var(--muted);font-size:8px;line-height:1.55}
+    .reliability-art{display:grid;min-height:240px;place-items:center;overflow:hidden;border-radius:17px;background:var(--lime)}
+    .reliability-art svg{width:min(100%,580px);height:auto}
+
+    .principles-section{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:10px;padding:clamp(59px,8vw,105px) var(--gutter)}
+    .principle-main{position:relative;display:flex;min-height:264px;flex-direction:column;justify-content:space-between;overflow:hidden;padding:clamp(21px,3vw,34px);border-radius:18px;background:var(--lime)}
+    .principle-main::after{position:absolute;right:-27px;bottom:-72px;width:190px;height:190px;border:1px solid rgba(18,19,18,.24);border-radius:50%;content:""}
+    .principle-main__icon{display:grid;width:38px;height:38px;place-items:center;border:1px solid rgba(18,19,18,.4);border-radius:50%}
+    .principle-main__icon svg{width:21px;height:21px}
+    .principle-main h2{position:relative;z-index:1;max-width:14ch;margin:18px 0 0;font-size:clamp(23px,3.2vw,39px);font-weight:660;letter-spacing:-.065em;line-height:1.02}
+    .principle-main p{position:relative;z-index:1;max-width:40ch;margin:10px 0 0;color:#33362d;font-size:9px;line-height:1.6}
+    .principle-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:clamp(15px,2.5vw,24px);border:1px solid #e9e9e6;border-radius:18px;background:var(--mist)}
+    .principle-item{display:grid;align-content:start;justify-items:center;gap:8px;min-height:112px;padding:12px 8px;border-radius:14px;background:rgba(255,255,255,.74);text-align:center}
+    .principle-item__icon{display:grid;width:36px;height:36px;place-items:center;border:1px solid var(--line);border-radius:50%;background:#fff}
+    .principle-item__icon svg{width:19px;height:19px}
+    .principle-item span:last-child{font-size:8px;font-weight:620;line-height:1.3}
+
+    .contact-section{position:relative;overflow:hidden;padding:clamp(57px,8vw,98px) var(--gutter) clamp(48px,6vw,70px);border-block-start:1px solid #ececea;text-align:center}
+    .contact-section::before{position:absolute;top:18px;left:50%;width:min(80%,760px);height:52px;border-block-start:1px solid var(--line);border-radius:50%;content:"";transform:translateX(-50%)}
+    .contact-icon{position:relative;z-index:1;display:grid;width:54px;height:54px;place-items:center;margin:0 auto 16px;border:1px solid var(--line);border-radius:50%;background:var(--white)}
+    .contact-icon svg{width:27px;height:27px}
+    .contact-section h2{position:relative;z-index:1;max-width:16ch;margin:0 auto;font-size:clamp(32px,5.4vw,63px);font-weight:680;letter-spacing:-.07em;line-height:1.01}
+    .contact-section__copy{position:relative;z-index:1;max-width:49ch;margin:13px auto 0;color:var(--muted);font-size:11px;line-height:1.65}
+    .contact-section .button{position:relative;z-index:1;margin-block-start:21px}
+    .contact-section__placeholder{position:relative;z-index:1;margin:12px 0 0;color:var(--faint);font-family:var(--mono);font-size:7px;letter-spacing:.035em;line-height:1.5}
+    .contact-doodle{position:absolute;z-index:0;right:var(--gutter);bottom:18px;width:min(31vw,340px);height:auto;pointer-events:none;opacity:.9}
+
+    .site-footer{display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(150px,1fr);align-items:center;gap:20px;min-height:72px;padding:14px var(--gutter);color:var(--white);background:var(--ink)}
+    .footer-brand{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:680;letter-spacing:.02em}
+    .footer-brand__mark{display:grid;width:19px;height:19px;place-items:center;border:1px solid rgba(255,255,255,.68);border-radius:50%}
+    .footer-brand__mark svg{width:12px;height:12px}
+    .footer-nav{display:flex;align-items:center;gap:clamp(12px,2vw,24px)}
+    .footer-nav a{display:inline-flex;align-items:center;min-height:34px;color:#d7d7d3;font-size:7px}
+    .footer-nav a:hover{color:var(--lime)}
+    .footer-note{justify-self:end;color:#b7b8b3;font-family:var(--mono);font-size:6px;letter-spacing:.04em;text-align:right}
+
+    .reveal{opacity:1;transform:none;transition:opacity 500ms var(--ease),transform 500ms var(--ease)}
+    .js .reveal{opacity:0;transform:translateY(13px)}
+    .js .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .js .reveal.delay-1{transition-delay:85ms}
+    @keyframes route-run{to{stroke-dashoffset:-144}}
+    @keyframes node-pulse{0%,100%{opacity:.58}50%{opacity:1}}
+
+    @media(max-width:1080px){
+      .capability-panel{grid-template-columns:minmax(0,1fr);gap:22px}
+      .capability-panel h2{max-width:16ch}
+      .pattern-card{min-height:320px}
+      .reliability-section{grid-template-columns:minmax(0,1fr);gap:25px}
+      .reliability-art{min-height:220px}
+    }
+    @media(max-width:780px){
+      :root{--gutter:clamp(16px,4vw,30px)}
+      .site-header{grid-template-columns:minmax(0,1fr) auto;min-height:60px;gap:9px 12px}
+      .site-nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;flex-wrap:wrap}
+      .header-action{grid-column:1/-1;grid-row:3;justify-self:start}
+      .brand__edition{display:none}
+      .menu-toggle{display:none}
+      .header-action{min-height:36px}
+      .js .menu-toggle{display:inline-flex;grid-column:2;grid-row:1}
+      .js .site-nav{display:none}
+      .js .header-action{display:none}
+      .js .site-nav.is-open{display:flex;grid-column:1/-1;grid-row:2;justify-content:flex-start;flex-wrap:wrap;gap:5px;width:100%;padding:8px;border:1px solid var(--line);border-radius:13px;background:var(--white)}
+      .js .site-nav.is-open a{min-height:39px;padding:0 11px;border-radius:9px}
+      .js .site-nav.is-open a:hover{background:var(--mist)}
+      .site-nav{justify-content:flex-end;gap:13px}
+      .site-nav a{font-size:8px}
+      .hero-card{min-height:calc(100svh - 60px - 12px);padding:19px 20px 15px}
+      .hero-center{padding-block:30px 22px}
+      .hero h1{font-size:clamp(39px,8.3vw,64px)}
+      .hero-art__wide{display:none}
+      .hero-art__compact{display:block}
+      .hero-art__caption{margin-block-start:8px;padding-block-start:8px;font-size:6px}
+      .capability-panel{margin-block-start:28px;padding:23px}
+      .capability-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+      .capability-node{min-height:86px}
+      .capability-node:nth-child(2)::after{display:none}
+      .capability-node:nth-child(3)::after{position:absolute;top:-9px;right:50%;width:1px;height:9px;border-inline-start:1px dashed #9c9d98;border-block-start:0;content:""}
+      .statement-section{padding-block:63px}
+      .section-head{grid-template-columns:minmax(0,1fr);gap:13px}
+      .pattern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .pattern-card{min-height:300px}
+      .pattern-card:last-child{grid-column:1/-1;min-height:270px}
+      .principles-section{grid-template-columns:minmax(0,1fr)}
+      .principle-main{min-height:235px}
+      .principle-list{min-height:215px}
+      .contact-doodle{width:220px;opacity:.42}
+      .site-footer{grid-template-columns:minmax(0,1fr) auto;gap:10px}
+      .footer-brand{grid-column:1}
+      .footer-nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;flex-wrap:wrap}
+      .footer-note{grid-column:2;grid-row:1}
+    }
+    @media(max-width:540px){
+      :root{--gutter:15px}
+      .page-frame{padding-inline:var(--gutter)}
+      .site-header{min-height:54px}
+      .brand__mark{width:21px;height:21px}
+      .brand__name{font-size:12px}
+      .hero-card{min-height:calc(100svh - 54px - 10px);padding:15px 14px 13px;border-radius:19px}
+      .hero-label{font-size:7px;letter-spacing:.09em}
+      .hero-center{padding-block:clamp(23px,5vh,45px) 16px}
+      .hero-kicker{font-size:7px;letter-spacing:.09em}
+      .hero h1{font-size:clamp(36px,10.5vw,54px);letter-spacing:-.073em}
+      .hero-lead{max-width:37ch;margin-top:14px;font-size:11px}
+      .hero-actions{gap:7px;margin-block-start:18px}
+      .button{min-height:44px;padding:10px 12px;font-size:8px}
+      .hero-art__caption{font-size:5.5px}
+      .capability-panel{gap:18px;margin-block-start:20px;padding:19px 15px;border-radius:17px}
+      .capability-panel h2{max-width:15ch;font-size:26px}
+      .capability-panel__copy{font-size:9px}
+      .capability-track{gap:6px}
+      .capability-node{min-height:81px;padding:10px 9px}
+      .capability-node strong{font-size:8px}
+      .capability-node:not(:last-child)::after{right:-7px;width:7px}
+      .capability-node:nth-child(2)::after{display:none}
+      .capability-node:nth-child(3)::after{right:50%;width:1px;height:7px}
+      .section{padding-block:54px}
+      .statement-section{padding-inline:22px;padding-block:56px}
+      .statement-section h2{font-size:clamp(27px,8vw,39px)}
+      .statement-section p:last-child{font-size:10px}
+      .patterns-section{padding-inline:var(--gutter);padding-bottom:56px}
+      .section-head h2{font-size:clamp(29px,9vw,42px)}
+      .section-head__copy{font-size:10px}
+      .pattern-grid{grid-template-columns:minmax(0,1fr);gap:9px}
+      .pattern-card,.pattern-card:last-child{grid-column:auto;min-height:260px;padding:18px}
+      .pattern-art{height:98px;margin-block:10px 14px}
+      .pattern-card h3{font-size:18px}
+      .pattern-card p{font-size:9px}
+      .reliability-section{gap:20px;padding:48px var(--gutter)}
+      .reliability-section h2{font-size:clamp(31px,10vw,44px)}
+      .reliability-section__copy{font-size:10px}
+      .reliability-points{gap:8px;margin-block-start:20px}
+      .reliability-point h3{font-size:10px}
+      .reliability-point p{font-size:8px}
+      .reliability-art{min-height:160px}
+      .principles-section{gap:8px;padding:54px var(--gutter)}
+      .principle-main{min-height:225px;padding:20px}
+      .principle-main h2{font-size:27px}
+      .principle-list{gap:7px;padding:10px}
+      .principle-item{min-height:99px;padding:10px 5px}
+      .principle-item span:last-child{font-size:7px}
+      .contact-section{padding:55px var(--gutter) 45px}
+      .contact-section::before{top:15px;width:78%;height:36px}
+      .contact-section h2{font-size:clamp(29px,9vw,43px)}
+      .contact-section__copy{font-size:10px}
+      .contact-doodle{right:5px;bottom:8px;width:145px;opacity:.23}
+      .site-footer{grid-template-columns:minmax(0,1fr);padding:16px var(--gutter) 19px}
+      .footer-brand,.footer-nav,.footer-note{grid-column:1;grid-row:auto;justify-self:start}
+      .footer-nav{gap:14px}
+      .footer-note{text-align:left}
+    }
+    @media(pointer:coarse){.site-nav a,.header-action,.menu-toggle,.button,.footer-nav a{min-height:44px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+    :root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+    :root[data-motion="off"] .reveal{opacity:1;transform:none}
+    @media(forced-colors:active){.hero-card,.capability-panel,.pattern-card,.reliability-art,.principle-main,.principle-list{border:1px solid CanvasText}.hero-card,.principle-main{background:Canvas}.button--dark{color:Canvas;background:CanvasText}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page-frame">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Relay Limeprint concept, back to top"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="7" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="2" fill="#fff"/><circle cx="17" cy="17" r="2" fill="#fff"/><path d="m10 11 5-3m-5 5 5 3" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="brand__name">Relay</span><span class="brand__edition">Limeprint</span></a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span>Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a href="#services" data-nav="services">Services</a><a href="#examples" data-nav="examples">Illustrations</a><a href="#principles" data-nav="principles">Principles</a><a href="#contact" data-nav="contact">Get in touch</a></nav>
+      <a class="header-action" href="#contact">Start with a workflow <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="main">
+      <section class="hero-card" id="top" aria-labelledby="hero-title">
+        <div class="hero-label">Relay / business-first systems</div>
+        <div class="hero-center">
+          <p class="hero-kicker">Automation / AI assistants / integrations</p>
+          <h1 id="hero-title">Make the work flow.<span>Keep people in control.</span></h1>
+          <p class="hero-lead">Relay connects business-first automation, AI assistants, and the tools a team already uses—with clear human checkpoints where judgment matters.</p>
+          <div class="hero-actions"><a class="button button--dark" href="#services">See what Relay does <span class="button__arrow" aria-hidden="true">↘</span></a><a class="button button--light" href="#approach">How it works <span class="button__arrow" aria-hidden="true">↓</span></a></div>
+        </div>
+        <div class="hero-art" role="img" aria-label="Line illustration of a request moving through connected systems to a clear human review checkpoint">
+          <svg class="hero-art__wide" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <path d="M70 150c110 0 88-52 194-52h121c76 0 72 51 153 51h112c77 0 76-48 155-48h142" fill="none" stroke="#121312" stroke-width="2.2" stroke-dasharray="5 8" stroke-linecap="round" class="route-trace"/>
+            <g fill="#b2ff5a" stroke="#121312" stroke-width="2.1" stroke-linejoin="round">
+              <path d="M155 57h115l25 25v92H155z" fill="#fffefd"/><path d="M270 57v27h25" fill="none"/><path d="M176 101h72m-72 14h58m-58 14h67" fill="none" stroke-linecap="round"/><rect x="175" y="155" width="34" height="7" rx="3.5" fill="#b2ff5a" stroke="none"/>
+              <rect x="504" y="51" width="142" height="126" rx="12" fill="#fffefd"/><rect x="526" y="70" width="98" height="18" rx="5" fill="#f1f1ef"/><path d="M575 99v20m0 0-26 19m26-19 26 19" fill="none"/><circle cx="575" cy="98" r="8" class="route-node"/><circle cx="549" cy="141" r="8"/><circle cx="601" cy="141" r="8"/><path d="M530 161h90" fill="none" stroke-linecap="round"/>
+              <rect x="925" y="57" width="135" height="113" rx="11" fill="#fffefd"/><path d="M948 80h89m-89 14h56" fill="none" stroke-linecap="round"/><circle cx="960" cy="129" r="14" fill="#b2ff5a"/><path d="m954 129 4 4 8-9" fill="none"/><path d="M984 126h52m-52 11h43" fill="none" stroke-linecap="round"/>
+            </g>
+            <g fill="#121312"><circle cx="70" cy="150" r="5"/><circle cx="463" cy="149" r="5"/><circle cx="870" cy="107" r="5"/><path d="M349 35l4 9 10 4-10 3-4 10-3-10-9-3 9-4z"/><path d="M765 32l3 7 8 3-8 3-3 8-3-8-8-3 8-3z"/><path d="M1107 147l4 8 8 3-8 3-4 8-3-8-8-3 8-3z"/></g>
+            <g font-family="ui-monospace,monospace" font-size="8" font-weight="700" letter-spacing="1.2" text-anchor="middle" fill="#121312"><text x="215" y="193">REQUEST</text><text x="575" y="198">ROUTE</text><text x="992" y="193">REVIEW</text></g>
+          </svg>
+          <svg class="hero-art__compact" viewBox="0 0 390 160" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <path d="M21 111c49 0 37-33 86-33h49c36 0 31 36 71 36h44c33 0 32-31 69-31h32" fill="none" stroke="#121312" stroke-width="2" stroke-dasharray="4 7" stroke-linecap="round" class="route-trace"/>
+            <g stroke="#121312" stroke-width="2" stroke-linejoin="round" fill="#fffefd">
+              <path d="M30 42h58l13 13v57H30z"/><path d="M88 42v14h13" fill="none"/><path d="M41 72h38m-38 9h30m-30 9h35" fill="none" stroke-linecap="round"/>
+              <rect x="158" y="37" width="83" height="78" rx="8"/><rect x="172" y="49" width="55" height="10" rx="3" fill="#f1f1ef"/><path d="M199 64v14m0 0-13 12m13-12 13 12" fill="none"/><circle cx="199" cy="64" r="5" fill="#b2ff5a" class="route-node"/><circle cx="186" cy="93" r="5" fill="#b2ff5a"/><circle cx="212" cy="93" r="5" fill="#b2ff5a"/>
+              <rect x="298" y="42" width="63" height="70" rx="8"/><path d="M309 57h40m-40 8h25" fill="none" stroke-linecap="round"/><circle cx="316" cy="85" r="8" fill="#b2ff5a"/><path d="m312 85 3 3 5-6m7 0h20m-20 7h16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <g fill="#121312"><circle cx="21" cy="111" r="3.5"/><circle cx="143" cy="111" r="3.5"/><circle cx="277" cy="83" r="3.5"/><path d="M119 37l3 6 7 3-7 2-3 7-2-7-7-2 7-3z"/></g>
+          </svg>
+          <div class="hero-art__caption"><span>Illustrative route / no vendor logos</span><span>People stay in the loop</span></div>
+        </div>
+      </section>
+
+      <section class="capability-panel reveal" id="services" data-chapter aria-labelledby="capability-title">
+        <div><p class="section-index">01 / Connect the work</p><h2 id="capability-title">Useful systems, not tool theatre.</h2><p class="capability-panel__copy">A workflow can move between generic system roles—intake, shared context, an assistant, and review—without hiding who owns the next step.</p></div>
+        <div><div class="capability-track" role="group" aria-label="Illustrative workflow: incoming request, shared context, assistant, human review">
+          <div class="capability-node"><span class="capability-node__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 3h8l4 4v10H4zM12 3v4h4M7 11h6m-6 3h5" fill="none" stroke="#121312" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><small>01 / Intake</small><strong>Incoming request</strong></div>
+          <div class="capability-node"><span class="capability-node__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 6h12M4 10h8M4 14h10" fill="none" stroke="#121312" stroke-width="1.3" stroke-linecap="round"/><circle cx="15" cy="10" r="2" fill="none" stroke="#121312" stroke-width="1.2"/></svg></span><small>02 / Context</small><strong>Shared record</strong></div>
+          <div class="capability-node"><span class="capability-node__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 3h8l3 3v11H5zM13 3v3h3M8 10h5m-5 3h3" fill="none" stroke="#121312" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="m13.5 12.5 1.5 1.5 3-4" fill="none" stroke="#121312" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><small>03 / Assist</small><strong>Useful first pass</strong></div>
+          <div class="capability-node"><span class="capability-node__icon" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="none" stroke="#121312" stroke-width="1.2"/><path d="m7 10 2 2 4-5" fill="none" stroke="#121312" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><small>04 / Decide</small><strong>Human review</strong></div>
+        </div><p class="illustrative-note">Illustrative system roles only / not a list of named integrations.</p></div>
+      </section>
+
+      <section class="statement-section reveal" aria-labelledby="statement-title"><p class="section-index">The Relay point of view</p><h2 id="statement-title">We automate the repeatable, connect the systems, and keep <span class="highlight">judgment human.</span></h2><p>Good automation makes the next step clearer. It doesn't make accountability disappear.</p></section>
+
+      <section class="patterns-section" id="examples" data-chapter aria-labelledby="patterns-title">
+        <div class="section-head reveal"><div><p class="section-index">02 / Made legible</p><h2 id="patterns-title">Working patterns, not case studies.</h2></div><p class="section-head__copy">A few illustrative ways Relay's building blocks could work together. These are concept examples—not client projects, endorsements, or measured results.</p></div>
+        <div class="pattern-grid reveal delay-1">
+          <article class="pattern-card pattern-card--dark"><div class="pattern-card__label"><span>Illustrative / automation</span><span>01</span></div><div class="pattern-art" aria-hidden="true"><svg viewBox="0 0 260 120"><path d="M22 62h61m0 0h60m0 0h75" fill="none" stroke="#f4f4ef" stroke-width="1.5" stroke-dasharray="4 6"/><rect x="22" y="30" width="61" height="64" rx="8" fill="#222321" stroke="#fff" stroke-width="1.5"/><path d="M35 46h34m-34 8h26m-26 8h30" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><circle cx="83" cy="62" r="5" fill="#b2ff5a"/><rect x="108" y="39" width="52" height="46" rx="8" fill="#b2ff5a" stroke="#fff" stroke-width="1.5"/><path d="M120 52h28m-28 8h20m-20 8h26" stroke="#121312" stroke-width="1.4" stroke-linecap="round"/><circle cx="160" cy="62" r="5" fill="#b2ff5a"/><rect x="175" y="30" width="53" height="64" rx="8" fill="#222321" stroke="#fff" stroke-width="1.5"/><circle cx="190" cy="48" r="6" fill="#b2ff5a"/><path d="m187 48 2 2 4-5m8 3h15m-15 7h13" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Route the repeatable. Pause on exceptions.</h3><p>Capture a routine request, move it through clear steps, and make exceptions visible for a person to review.</p><span class="pattern-card__foot">Human approval / shown in the route</span></article>
+          <article class="pattern-card pattern-card--lime"><div class="pattern-card__label"><span>Illustrative / AI assistant</span><span>02</span></div><div class="pattern-art" aria-hidden="true"><svg viewBox="0 0 260 120"><rect x="29" y="23" width="84" height="75" rx="9" fill="#fffefd" stroke="#121312" stroke-width="1.6"/><path d="M42 41h50m-50 9h38m-38 9h46" stroke="#121312" stroke-width="1.5" stroke-linecap="round"/><path d="M113 60h39" stroke="#121312" stroke-width="1.6" stroke-dasharray="4 5"/><circle cx="132" cy="60" r="4" fill="#121312"/><rect x="153" y="23" width="78" height="75" rx="9" fill="#fffefd" stroke="#121312" stroke-width="1.6"/><rect x="166" y="36" width="52" height="10" rx="5" fill="#e7e7e3"/><path d="M166 57h43m-43 8h35" stroke="#121312" stroke-width="1.5" stroke-linecap="round"/><path d="m180 78 5 5 11-12" fill="none" stroke="#121312" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="42" cy="37" r="3" fill="#b2ff5a" stroke="#121312" stroke-width="1.3"/><path d="M46 37h38" stroke="#121312" stroke-width="1.2"/></svg></div><h3>Draft with context. Let a person decide.</h3><p>Search approved knowledge, prepare a source-linked first pass, and keep review before anything is shared.</p><span class="pattern-card__foot">Review before sharing / illustrative</span></article>
+          <article class="pattern-card"><div class="pattern-card__label"><span>Illustrative / integration</span><span>03</span></div><div class="pattern-art" aria-hidden="true"><svg viewBox="0 0 260 120"><path d="M47 62h56m50 0h57" fill="none" stroke="#121312" stroke-width="1.5" stroke-dasharray="4 6"/><rect x="20" y="31" width="59" height="61" rx="9" fill="#fffefd" stroke="#121312" stroke-width="1.5"/><rect x="101" y="31" width="59" height="61" rx="9" fill="#f1f1ef" stroke="#121312" stroke-width="1.5"/><rect x="182" y="31" width="59" height="61" rx="9" fill="#fffefd" stroke="#121312" stroke-width="1.5"/><circle cx="49" cy="52" r="8" fill="#b2ff5a" stroke="#121312" stroke-width="1.4"/><path d="M35 70h29m-29 7h21" stroke="#121312" stroke-width="1.4" stroke-linecap="round"/><circle cx="130" cy="52" r="8" fill="#fff" stroke="#121312" stroke-width="1.4"/><path d="M116 70h29m-29 7h21" stroke="#121312" stroke-width="1.4" stroke-linecap="round"/><circle cx="211" cy="52" r="8" fill="#b2ff5a" stroke="#121312" stroke-width="1.4"/><path d="M197 70h29m-29 7h21" stroke="#121312" stroke-width="1.4" stroke-linecap="round"/><path d="m83 58 6 4-6 4m75-8 6 4-6 4" fill="none" stroke="#121312" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Carry the context to the next step.</h3><p>Pass useful status between generic system roles so a teammate can see what's ready and what still needs a decision.</p><span class="pattern-card__foot">Generic system roles / no vendor claim</span></article>
+        </div>
+      </section>
+
+      <section class="reliability-section reveal" id="approach" data-chapter aria-labelledby="reliability-title">
+        <div><p class="section-index">03 / Built to be checked</p><h2 id="reliability-title">Reliability should be visible.</h2><p class="reliability-section__copy">A useful workflow shows where information goes, who owns the next step, and where the route stops for a person to decide.</p><div class="reliability-points"><article class="reliability-point"><span class="reliability-point__num">01 / TRACE</span><h3>See the handoffs.</h3><p>Make the path and its status understandable to the people using it.</p></article><article class="reliability-point"><span class="reliability-point__num">02 / REVIEW</span><h3>Keep judgment present.</h3><p>Set a clear checkpoint wherever context or accountability matters.</p></article></div></div>
+        <div class="reliability-art" role="img" aria-label="Illustrative monitoring diagram showing visible workflow stages and a human review gate"><svg viewBox="0 0 620 300" aria-hidden="true"><rect width="620" height="300" fill="#b2ff5a"/><path d="M56 206h506" stroke="#121312" stroke-width="2"/><path d="M76 177h122v29H76zm138-52h122v81H214zm138-37h122v126H352zm138-27h54v153h-54z" fill="#fffefd" stroke="#121312" stroke-width="2"/><path d="M94 188h85m-85 9h54m81-47h85m-85 10h65m-65 10h78m-78 10h47m-47 10h75m-75 10h59m-59 10h73m-73 10h43m-43 10h78" fill="none" stroke="#121312" stroke-width="1.6" stroke-linecap="round"/><path d="M373 105h79m-79 12h56m-56 12h68m-68 12h40m-40 12h72m-72 12h49m-49 12h62" fill="none" stroke="#121312" stroke-width="1.5" stroke-linecap="round"/><path d="M515 103h26m-26 13h26m-26 13h26m-26 13h26" stroke="#b2ff5a" stroke-width="4" stroke-linecap="round"/><path d="M198 190h16m122-47h16m122-30h16" stroke="#121312" stroke-width="2" stroke-dasharray="3 4"/><circle cx="198" cy="190" r="6" fill="#b2ff5a" stroke="#121312" stroke-width="2"/><circle cx="336" cy="143" r="6" fill="#b2ff5a" stroke="#121312" stroke-width="2"/><circle cx="474" cy="113" r="6" fill="#121312"/><path d="M480 113h28" stroke="#121312" stroke-width="2" stroke-dasharray="3 4"/><rect x="517" y="81" width="32" height="64" rx="8" fill="#fffefd" stroke="#121312" stroke-width="2"/><circle cx="533" cy="100" r="5" fill="#b2ff5a" stroke="#121312" stroke-width="1.5"/><path d="m530 100 2 2 4-5" fill="none" stroke="#121312" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M533 112v18m-8-9h16" stroke="#121312" stroke-width="1.5" stroke-linecap="round"/><g fill="#121312"><circle cx="102" cy="165" r="3"/><circle cx="250" cy="110" r="3"/><circle cx="389" cy="74" r="3"/><path d="M93 55l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g></svg></div>
+      </section>
+
+      <section class="principles-section" id="principles" data-chapter aria-labelledby="principles-title">
+        <article class="principle-main reveal"><span class="principle-main__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="#121312" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="12" r="2" fill="#b2ff5a" stroke="#121312" stroke-width="1.2"/></svg></span><div><p class="section-index">04 / People stay in the loop</p><h2 id="principles-title">Automate the route, not accountability.</h2><p>Keep ownership, review, and exception paths visible wherever a workflow reaches a meaningful decision.</p></div></article>
+        <div class="principle-list reveal delay-1" role="group" aria-label="Human-centered workflow design principles"><div class="principle-item"><span class="principle-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="#121312" stroke-width="1.4"/><path d="m8.5 12 2.2 2.3 4.8-5" fill="none" stroke="#121312" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Clear owner</span></div><div class="principle-item"><span class="principle-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM8 9h8m-8 3h8m-8 3h5" fill="none" stroke="#121312" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Useful context</span></div><div class="principle-item"><span class="principle-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h5l3-5 3 10 3-5h2" fill="none" stroke="#121312" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="12" r="1.5" fill="#b2ff5a" stroke="#121312" stroke-width="1"/><circle cx="21" cy="12" r="1.5" fill="#b2ff5a" stroke="#121312" stroke-width="1"/></svg></span><span>Exception path</span></div><div class="principle-item"><span class="principle-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6zM9 9h6m-6 3h3" fill="none" stroke="#121312" stroke-width="1.4" stroke-linecap="round"/><path d="m14 16 1.5 1.5 3-3" fill="none" stroke="#121312" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Human approval</span></div></div>
+      </section>
+
+      <section class="contact-section" id="contact" data-chapter aria-labelledby="contact-title"><span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 8h22v15H5z" fill="none" stroke="#121312" stroke-width="1.5" stroke-linejoin="round"/><path d="m6 10 10 8 10-8" fill="none" stroke="#121312" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="23" r="5" fill="#fff" stroke="#121312" stroke-width="1.4"/><path d="M24 20.5v5m-2.5-2.5h5" stroke="#121312" stroke-width="1.3" stroke-linecap="round"/></svg></span><p class="section-index">Start with one workflow</p><h2 id="contact-title">Make room for the work that matters.</h2><p class="contact-section__copy">Bring the process that feels heavier than it should. Start with the outcome, then find the right next step.</p><a class="button button--dark" href="mailto:hello@relayworks.example?subject=Start%20with%20one%20workflow">Talk through a workflow <span class="button__arrow" aria-hidden="true">↗</span></a><p class="contact-section__placeholder">Sample inbox / hello@relayworks.example — illustrative placeholder</p>
+        <svg class="contact-doodle" viewBox="0 0 360 96" aria-hidden="true"><path d="M10 57h41l20-30 22 60 28-44h55l18-19 23 58 30-28h102" fill="none" stroke="#121312" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M48 56h18m38-16h32m91-3h24m42 17h26" stroke="#b2ff5a" stroke-width="6" stroke-linecap="round"/><circle cx="10" cy="57" r="4" fill="#121312"/><circle cx="350" cy="57" r="4" fill="#121312"/><circle cx="177" cy="43" r="5" fill="#b2ff5a" stroke="#121312" stroke-width="1.5"/></svg>
+      </section>
+    </main>
+    <footer class="site-footer"><a class="footer-brand" href="#top"><span class="footer-brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="7" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="2" fill="#fff"/><circle cx="17" cy="17" r="2" fill="#fff"/><path d="m10 11 5-3m-5 5 5 3" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></span>Relay</a><nav class="footer-nav" aria-label="Footer navigation"><a href="#services">Services</a><a href="#examples">Illustrations</a><a href="#approach">Approach</a><a href="#contact">Contact</a></nav><span class="footer-note">Limeprint visual direction /<br>Illustrative workflows, no client claims</span></footer>
+  </div>
+
+  <script>
+    (()=>{
+      const root=document.documentElement;root.classList.add("js");
+      const toggle=document.getElementById("menu-toggle"),nav=document.getElementById("site-nav");
+      const closeMenu=()=>{toggle.setAttribute("aria-expanded","false");nav.classList.remove("is-open")};
+      toggle.addEventListener("click",()=>{const open=toggle.getAttribute("aria-expanded")!=="true";toggle.setAttribute("aria-expanded",String(open));nav.classList.toggle("is-open",open)});
+      nav.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMenu));
+      document.addEventListener("keydown",event=>{if(event.key==="Escape"&&toggle.getAttribute("aria-expanded")==="true"){closeMenu();toggle.focus()}});
+      if("IntersectionObserver" in window){
+        const revealObserver=new IntersectionObserver((entries,observer)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target)}}),{threshold:.1});
+        document.querySelectorAll(".reveal").forEach(item=>revealObserver.observe(item));
+        const links=Array.from(document.querySelectorAll("[data-nav]"));
+        const sectionObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting)return;links.forEach(link=>{if(link.dataset.nav===entry.target.id)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current")})}),{rootMargin:"-28% 0px -58% 0px",threshold:0});
+        document.querySelectorAll("[data-chapter]").forEach(section=>sectionObserver.observe(section));
+      }else document.querySelectorAll(".reveal").forEach(item=>item.classList.add("is-visible"));
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.motion="off";
+    })();
+  </script>
+</body>
+</html>

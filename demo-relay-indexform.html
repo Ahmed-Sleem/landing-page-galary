@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Relay brings business-first automation, AI assistants, integrations, and human checkpoints into clear, accountable workflows.">
+  <meta name="theme-color" content="#b5bab7">
+  <title>Relay — Indexform</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --board:#b5bab7;
+      --paper:#f8f9f7;
+      --white:#fff;
+      --mist:#edf0ee;
+      --sage:#dce6e1;
+      --sage-deep:#cbd8d2;
+      --ink:#151716;
+      --muted:#565a57;
+      --faint:#858a86;
+      --line:#d9ddda;
+      --line-dark:#aeb5b1;
+      --gutter:clamp(15px,4.2vw,62px);
+      --max:1500px;
+      --radius:clamp(9px,1.5vw,17px);
+      --focus:3px solid #202321;
+      --ease:cubic-bezier(.2,.75,.2,1);
+      --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      --mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:22px;background:var(--board)}
+    body{min-width:320px;margin:0;overflow-x:hidden;color:var(--ink);background:var(--board);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    a{color:inherit;text-decoration:none}
+    button{color:inherit;font:inherit;cursor:pointer}
+    svg{display:block;max-width:100%}
+    :focus-visible{outline:var(--focus);outline-offset:4px}
+    ::selection{color:var(--paper);background:var(--ink)}
+    .skip-link{position:fixed;z-index:200;inset:12px auto auto 12px;padding:10px 14px;border-radius:999px;color:var(--paper);background:var(--ink);transform:translateY(-160%);transition:transform 150ms ease}
+    .skip-link:focus{transform:translateY(0)}
+    .page-frame{width:min(100%,var(--max));margin-inline:auto;padding-inline:var(--gutter)}
+
+    .site-header{position:relative;z-index:5;display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(150px,1fr);align-items:center;gap:17px;min-height:68px}
+    .brand{display:inline-flex;align-items:center;justify-self:start;gap:8px;min-height:40px}
+    .brand__mark{display:grid;width:22px;height:22px;place-items:center;border-radius:50%;color:var(--paper);background:var(--ink)}
+    .brand__mark svg{width:14px;height:14px}
+    .brand__name{font-size:12px;font-weight:760;letter-spacing:-.035em}
+    .brand__direction{margin-inline-start:3px;color:var(--muted);font-family:var(--mono);font-size:7px;letter-spacing:.08em;text-transform:uppercase}
+    .site-nav{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2.3vw,34px)}
+    .site-nav a{display:inline-flex;align-items:center;min-height:39px;color:var(--muted);font-size:9px;font-weight:560;transition:color 150ms ease}
+    .site-nav a:hover,.site-nav a[aria-current="location"]{color:var(--ink)}
+    .site-nav a[aria-current="location"]::after{width:4px;height:4px;margin-inline-start:5px;border-radius:50%;background:var(--sage-deep);content:""}
+    .header-cta{display:inline-flex;align-items:center;justify-self:end;gap:7px;min-height:34px;padding:7px 12px;border:1px solid var(--line-dark);border-radius:99px;background:rgba(255,255,255,.72);font-size:8px;font-weight:650;transition:background 150ms ease,transform 150ms ease}
+    .header-cta:hover{transform:translateY(-1px);background:var(--white)}
+    .header-cta span{font-size:12px}
+    .menu-toggle{display:none;align-items:center;justify-content:center;gap:7px;min-width:70px;min-height:38px;padding:8px 11px;border:1px solid var(--line-dark);border-radius:99px;background:var(--white);font-size:9px;font-weight:650}
+    .menu-toggle__icon{display:grid;gap:4px}
+    .menu-toggle__icon i{display:block;width:12px;height:1.5px;border-radius:2px;background:currentColor}
+
+    .hero-panel{position:relative;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(250px,.94fr);align-items:center;gap:clamp(24px,5vw,68px);min-height:calc(100svh - 68px - 18px);padding:clamp(27px,5vw,72px);background:var(--paper)}
+    .hero-copy{position:relative;z-index:1;max-width:730px}
+    .pill{display:inline-flex;align-items:center;gap:7px;min-height:24px;padding:5px 10px;border:1px solid var(--line-dark);border-radius:99px;color:var(--muted);font-family:var(--mono);font-size:7px;letter-spacing:.09em;text-transform:uppercase}
+    .pill::before{width:5px;height:5px;border:1px solid currentColor;border-radius:50%;content:""}
+    .hero h1{max-width:11ch;margin:21px 0 0;font-size:clamp(43px,7.1vw,92px);font-weight:650;letter-spacing:-.083em;line-height:.91}
+    .hero h1 span{display:block;color:#737a76}
+    .hero-lead{max-width:49ch;margin:18px 0 0;color:var(--muted);font-size:clamp(12px,1.13vw,15px);line-height:1.65}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-block-start:24px}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:10px 14px;border:1px solid transparent;border-radius:99px;font-size:9px;font-weight:650;transition:transform 160ms ease,background 160ms ease,color 160ms ease,border-color 160ms ease}
+    .button:hover{transform:translateY(-2px)}
+    .button--dark{color:var(--paper);background:var(--ink)}
+    .button--dark:hover{background:#343835}
+    .button--light{border-color:var(--line-dark);background:transparent}
+    .button--light:hover{background:var(--white)}
+    .button__arrow{display:grid;width:19px;height:19px;place-items:center;border-radius:50%;color:var(--ink);background:var(--sage);font-size:12px}
+    .hero-art-wrap{position:relative;display:grid;align-content:center;min-height:300px}
+    .hero-art{display:grid;min-height:290px;place-items:center;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(135deg,#edf0ee,#f4f5f3)}
+    .hero-art svg{width:100%;height:auto}
+    .hero-art__caption{position:absolute;right:12px;bottom:12px;padding:6px 9px;border:1px solid var(--line);border-radius:99px;background:rgba(255,255,255,.91);color:var(--muted);font-family:var(--mono);font-size:6px;letter-spacing:.08em;text-transform:uppercase}
+    .hero-art__foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-block-start:9px;color:var(--faint);font-family:var(--mono);font-size:6px;letter-spacing:.07em;text-transform:uppercase}
+    .hero-art__foot span:last-child{display:inline-flex;align-items:center;gap:6px}
+    .hero-art__foot span:last-child::before{width:5px;height:5px;border-radius:50%;background:var(--ink);content:""}
+
+    .section{margin-block-start:16px}
+    .index-panel{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.68fr);align-items:end;gap:25px;min-height:330px;overflow:hidden;padding:clamp(22px,4vw,48px);color:var(--paper);background:var(--ink)}
+    .index-panel__main{position:relative;z-index:1}
+    .index-panel .pill{border-color:#4b504d;color:#d3d8d5;background:#242725}
+    .index-panel__num{position:absolute;top:8px;right:clamp(20px,4vw,50px);color:var(--sage);font-size:clamp(130px,21vw,270px);font-weight:420;letter-spacing:-.09em;line-height:.78;pointer-events:none}
+    .index-panel__bottom{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,.52fr);align-items:end;gap:24px;margin-block-start:88px}
+    .index-panel h2{max-width:8ch;margin:0;font-size:clamp(43px,7.4vw,92px);font-weight:500;letter-spacing:-.085em;line-height:.86}
+    .index-panel__copy{max-width:37ch;margin:0 0 4px;color:#d0d5d2;font-size:10px;line-height:1.6}
+    .index-panel__copy small{display:block;margin-block-end:9px;color:#aeb5b1;font-family:var(--mono);font-size:6px;letter-spacing:.1em;text-transform:uppercase}
+    .index-panel__link{display:inline-flex;align-items:center;gap:7px;margin-block-start:11px;color:var(--paper);font-size:8px;font-weight:600}
+    .index-panel__link span{display:grid;width:18px;height:18px;place-items:center;border:1px solid #747b77;border-radius:50%;font-size:10px}
+    .index-panel__link:hover span{color:var(--ink);background:var(--sage)}
+
+    .mosaic-section{padding-block:clamp(58px,8vw,105px)}
+    .section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.62fr);align-items:end;gap:24px;margin-block-end:clamp(23px,3.5vw,37px)}
+    .section-index{margin:0 0 10px;color:var(--faint);font-family:var(--mono);font-size:7px;letter-spacing:.12em;text-transform:uppercase}
+    .section-head h2{max-width:13ch;margin:0;font-size:clamp(30px,4.5vw,56px);font-weight:630;letter-spacing:-.075em;line-height:.98}
+    .section-head__copy{max-width:43ch;margin:0 0 3px;color:var(--muted);font-size:10px;line-height:1.65}
+    .mosaic-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:minmax(145px,auto);gap:10px}
+    .mosaic-card{position:relative;display:flex;min-width:0;flex-direction:column;overflow:hidden;padding:clamp(16px,2vw,25px);border-radius:14px;background:var(--white)}
+    .mosaic-card--statement{grid-column:span 5;grid-row:span 1;justify-content:space-between;color:var(--paper);background:var(--ink)}
+    .mosaic-card--diagram{grid-column:span 7;grid-row:span 1;justify-content:space-between;background:#e9eeeb}
+    .mosaic-card--route{grid-column:span 6;grid-row:span 1;background:#e7e9e7}
+    .mosaic-card--assistant{grid-column:span 3;grid-row:span 1;background:#dce6e1}
+    .mosaic-card--checkpoint{grid-column:span 3;grid-row:span 1;color:var(--paper);background:#222523}
+    .mosaic-card__top{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--faint);font-family:var(--mono);font-size:6px;letter-spacing:.09em;text-transform:uppercase}
+    .mosaic-card--statement .mosaic-card__top,.mosaic-card--checkpoint .mosaic-card__top{color:#c6cbc8}
+    .mosaic-card__title{max-width:14ch;margin:0;font-size:clamp(19px,2.2vw,28px);font-weight:620;letter-spacing:-.06em;line-height:1.02}
+    .mosaic-card__body{max-width:42ch;margin:8px 0 0;color:var(--muted);font-size:8px;line-height:1.55}
+    .mosaic-card--statement .mosaic-card__body,.mosaic-card--checkpoint .mosaic-card__body{color:#d0d5d2}
+    .mosaic-card__bigline{display:flex;align-items:center;gap:9px;margin-block-start:18px;color:var(--sage);font-family:var(--mono);font-size:7px;letter-spacing:.07em;text-transform:uppercase}
+    .mosaic-card__bigline::before{width:25px;height:1px;background:currentColor;content:""}
+    .mosaic-diagram{display:grid;flex:1;min-height:116px;place-items:center;margin-block:12px 4px}
+    .mosaic-diagram svg{width:min(100%,440px);height:auto;max-height:145px}
+    .mosaic-card--route .mosaic-card__title,.mosaic-card--assistant .mosaic-card__title,.mosaic-card--checkpoint .mosaic-card__title{margin-block-start:auto}
+    .mosaic-card__icon{display:grid;width:34px;height:34px;place-items:center;margin-block:13px;border:1px solid rgba(21,23,22,.3);border-radius:50%}
+    .mosaic-card__icon svg{width:18px;height:18px}
+    .mosaic-card--checkpoint .mosaic-card__icon{border-color:#78817b}
+
+    .opportunity-panel{margin-block:0 16px;padding:clamp(24px,4vw,48px);background:var(--paper)}
+    .opportunity-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-block-end:28px}
+    .opportunity-head .pill{white-space:nowrap}
+    .opportunity-head__note{margin:0;color:var(--faint);font-family:var(--mono);font-size:6px;letter-spacing:.1em;text-transform:uppercase;text-align:right}
+    .opportunity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:10px}
+    .opportunity-card{display:flex;min-height:186px;flex-direction:column;padding:clamp(16px,2.3vw,26px);border-radius:14px;background:var(--sage)}
+    .opportunity-card:nth-child(2){min-height:220px;color:var(--paper);background:#252826}
+    .opportunity-card:nth-child(3){min-height:162px;background:#e1e7e3}
+    .opportunity-card__title{margin:0 0 14px;font-size:clamp(18px,2.2vw,27px);font-weight:620;letter-spacing:-.06em;line-height:1.03}
+    .opportunity-card ul{display:grid;gap:7px;margin:0;padding-inline-start:15px;color:var(--muted);font-size:8px;line-height:1.45}
+    .opportunity-card:nth-child(2) ul{color:#d2d6d4}
+    .opportunity-card__note{margin:auto 0 0;padding-block-start:14px;color:var(--faint);font-family:var(--mono);font-size:6px;letter-spacing:.06em;text-transform:uppercase}
+    .opportunity-card:nth-child(2) .opportunity-card__note{color:#aeb5b1}
+
+    .contact-panel{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:25px;min-height:260px;margin-block-start:16px;padding:clamp(26px,4vw,49px);overflow:hidden;background:var(--white)}
+    .contact-panel__copy{position:relative;z-index:1}
+    .contact-panel h2{max-width:11ch;margin:0;font-size:clamp(37px,5.5vw,68px);font-weight:640;letter-spacing:-.08em;line-height:.93}
+    .contact-panel__text{max-width:48ch;margin:12px 0 0;color:var(--muted);font-size:10px;line-height:1.6}
+    .contact-panel__action{position:relative;z-index:1;display:grid;justify-items:start;gap:9px}
+    .contact-panel__placeholder{max-width:29ch;margin:0;color:var(--faint);font-family:var(--mono);font-size:6px;line-height:1.5}
+    .contact-panel__doodle{position:absolute;right:clamp(20px,4vw,50px);top:21px;width:min(24vw,280px);height:auto;opacity:.58;pointer-events:none}
+    .site-footer{display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(150px,1fr);align-items:center;gap:18px;min-height:65px;padding:13px clamp(17px,2.5vw,31px);color:var(--paper);background:var(--ink)}
+    .footer-brand{display:inline-flex;align-items:center;gap:7px;font-size:9px;font-weight:650}
+    .footer-brand__mark{display:grid;width:18px;height:18px;place-items:center;border:1px solid #8f9692;border-radius:50%}
+    .footer-brand__mark svg{width:11px;height:11px}
+    .footer-nav{display:flex;align-items:center;gap:clamp(12px,2vw,24px)}
+    .footer-nav a{display:inline-flex;align-items:center;min-height:30px;color:#c3c9c5;font-size:7px}
+    .footer-nav a:hover{color:var(--sage)}
+    .footer-note{justify-self:end;color:#aeb5b1;font-family:var(--mono);font-size:6px;letter-spacing:.04em;text-align:right}
+
+    .reveal{opacity:1;transform:none;transition:opacity 520ms var(--ease),transform 520ms var(--ease)}
+    .js .reveal{opacity:0;transform:translateY(13px)}
+    .js .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .js .reveal.delay-1{transition-delay:80ms}
+    .route-dash{stroke-dasharray:6 8;animation:route-dash 13s linear infinite}
+    @keyframes route-dash{to{stroke-dashoffset:-140}}
+
+    @media(max-width:1100px){
+      .hero-panel{grid-template-columns:minmax(0,1fr) minmax(220px,.82fr);gap:25px;padding:clamp(25px,4vw,46px)}
+      .hero-art{min-height:250px}
+      .mosaic-card--statement{grid-column:span 6}
+      .mosaic-card--diagram{grid-column:span 6}
+      .mosaic-card--route{grid-column:span 6}
+      .mosaic-card--assistant,.mosaic-card--checkpoint{grid-column:span 3}
+      .index-panel{grid-template-columns:minmax(0,1fr) minmax(210px,.65fr)}
+    }
+    @media(max-width:800px){
+      :root{--gutter:clamp(15px,3.5vw,28px)}
+      .site-header{grid-template-columns:minmax(0,1fr) auto;min-height:61px;gap:8px 12px}
+      .site-nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;flex-wrap:wrap;gap:4px 15px}
+      .header-cta{grid-column:1/-1;grid-row:3;justify-self:start}
+      .brand__direction{display:none}
+      .menu-toggle{display:none}
+      .js .menu-toggle{display:inline-flex;grid-column:2;grid-row:1}
+      .js .site-nav{display:none}
+      .js .header-cta{display:none}
+      .js .site-nav.is-open{display:flex;grid-column:1/-1;grid-row:2;gap:3px 9px;width:100%;padding:7px;border:1px solid var(--line-dark);border-radius:12px;background:var(--paper)}
+      .js .site-nav.is-open a{min-height:39px;padding-inline:9px;border-radius:8px}
+      .js .site-nav.is-open a:hover{background:var(--sage)}
+      .hero-panel{grid-template-columns:minmax(0,1fr);gap:22px;min-height:calc(100svh - 61px - 12px);padding:clamp(22px,5vw,42px)}
+      .hero-copy{max-width:690px}
+      .hero h1{max-width:13ch;font-size:clamp(43px,8.2vw,71px)}
+      .hero-art-wrap{min-height:220px}
+      .hero-art{min-height:220px}
+      .index-panel{grid-template-columns:minmax(0,1fr);min-height:310px}
+      .index-panel__num{top:25px;right:22px;font-size:clamp(130px,25vw,205px)}
+      .index-panel__bottom{grid-template-columns:minmax(0,1fr) minmax(180px,.75fr);margin-block-start:92px}
+      .index-panel h2{font-size:clamp(43px,8vw,72px)}
+      .section-head{grid-template-columns:minmax(0,1fr);gap:13px}
+      .opportunity-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+      .opportunity-card,.opportunity-card:nth-child(2),.opportunity-card:nth-child(3){min-height:190px}
+      .opportunity-card:nth-child(3){grid-column:1/-1;min-height:150px}
+      .contact-panel{grid-template-columns:minmax(0,1fr) auto;min-height:240px}
+      .site-footer{grid-template-columns:minmax(0,1fr) auto;gap:8px 18px}
+      .footer-brand{grid-column:1}
+      .footer-nav{grid-column:1/-1;grid-row:2;flex-wrap:wrap}
+      .footer-note{grid-column:2;grid-row:1}
+    }
+    @media(max-width:560px){
+      :root{--gutter:14px}
+      .page-frame{padding-inline:var(--gutter)}
+      .site-header{min-height:55px}
+      .brand__mark{width:20px;height:20px}
+      .brand__name{font-size:11px}
+      .hero-panel{min-height:calc(100svh - 55px - 10px);gap:18px;padding:20px 16px}
+      .hero h1{margin-block-start:16px;font-size:clamp(38px,10.5vw,55px)}
+      .hero-lead{margin-block-start:13px;font-size:11px}
+      .hero-actions{gap:7px;margin-block-start:18px}
+      .button{min-height:44px;padding:10px 12px;font-size:8px}
+      .hero-art-wrap{min-height:165px}
+      .hero-art{min-height:165px}
+      .hero-art__caption{right:7px;bottom:7px;font-size:5px}
+      .hero-art__foot{font-size:5px}
+      .section{margin-block-start:10px}
+      .index-panel{min-height:270px;padding:19px 16px}
+      .index-panel__num{top:47px;right:16px;font-size:clamp(112px,34vw,165px)}
+      .index-panel__bottom{grid-template-columns:minmax(0,1fr);gap:13px;margin-block-start:89px}
+      .index-panel h2{max-width:8ch;font-size:clamp(42px,12vw,60px)}
+      .index-panel__copy{max-width:39ch;font-size:9px}
+      .index-panel__copy small{font-size:5.5px}
+      .mosaic-section{padding-block:50px}
+      .section-head h2{font-size:clamp(30px,9.2vw,43px)}
+      .section-head__copy{font-size:9px}
+      .mosaic-grid{grid-template-columns:minmax(0,1fr);grid-auto-rows:minmax(170px,auto);gap:8px}
+      .mosaic-card--statement,.mosaic-card--diagram,.mosaic-card--route,.mosaic-card--assistant,.mosaic-card--checkpoint{grid-column:1;grid-row:auto;min-height:190px}
+      .mosaic-card--diagram{min-height:220px}
+      .mosaic-card__title{font-size:22px}
+      .mosaic-card--route,.mosaic-card--assistant,.mosaic-card--checkpoint{min-height:174px}
+      .mosaic-diagram{min-height:104px}
+      .opportunity-panel{padding:20px 15px;margin-block-end:10px}
+      .opportunity-head{align-items:flex-start;flex-direction:column;gap:8px;margin-block-end:18px}
+      .opportunity-head__note{text-align:left}
+      .opportunity-grid{grid-template-columns:minmax(0,1fr);gap:8px}
+      .opportunity-card,.opportunity-card:nth-child(2),.opportunity-card:nth-child(3){grid-column:auto;min-height:145px;padding:16px}
+      .opportunity-card:nth-child(2){min-height:160px}
+      .opportunity-card__title{font-size:21px;margin-block-end:11px}
+      .opportunity-card ul{gap:5px;font-size:8px}
+      .contact-panel{grid-template-columns:minmax(0,1fr);gap:18px;min-height:0;padding:24px 17px}
+      .contact-panel h2{max-width:10ch;font-size:clamp(36px,11vw,51px)}
+      .contact-panel__text{font-size:9px}
+      .contact-panel__action{justify-self:start}
+      .contact-panel__doodle{right:9px;top:20px;width:120px;opacity:.27}
+      .site-footer{grid-template-columns:minmax(0,1fr);padding:13px 16px}
+      .footer-brand,.footer-nav,.footer-note{grid-column:1;grid-row:auto;justify-self:start}
+      .footer-nav{gap:14px}
+      .footer-note{text-align:left}
+    }
+    @media(pointer:coarse){.site-nav a,.header-cta,.menu-toggle,.button,.footer-nav a{min-height:44px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+    :root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+    :root[data-motion="off"] .reveal{opacity:1;transform:none}
+    @media(forced-colors:active){.hero-panel,.index-panel,.mosaic-card,.opportunity-panel,.contact-panel{border:1px solid CanvasText}.hero-panel,.opportunity-panel,.mosaic-card{background:Canvas}.index-panel,.mosaic-card--statement,.mosaic-card--checkpoint{color:Canvas;background:CanvasText}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page-frame">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Relay Indexform concept, back to top"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="7" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="2" fill="#fff"/><circle cx="17" cy="17" r="2" fill="#fff"/><path d="m10 11 5-3m-5 5 5 3" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="brand__name">Relay</span><span class="brand__direction">Indexform</span></a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span>Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a href="#principle" data-nav="principle">Approach</a><a href="#examples" data-nav="examples">Patterns</a><a href="#opportunity" data-nav="opportunity">Guardrails</a><a href="#contact" data-nav="contact">Contact</a></nav>
+      <a class="header-cta" href="#contact">Start with the work <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="main">
+      <section class="hero-panel" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy"><span class="pill">Welcome / Relay work systems</span><h1 id="hero-title">Clear steps for <span>work that matters.</span></h1><p class="hero-lead">Relay brings business-first automation, AI assistants, and integrations into understandable workflows—with human checkpoints where judgment counts.</p><div class="hero-actions"><a class="button button--dark" href="#principle">Meet the approach <span class="button__arrow" aria-hidden="true">↘</span></a><a class="button button--light" href="#examples">See illustrative patterns <span class="button__arrow" aria-hidden="true">↓</span></a></div></div>
+        <div class="hero-art-wrap"><div class="hero-art" role="img" aria-label="Illustrative line drawing of a request connecting through a workflow map to a human review step"><svg viewBox="0 0 500 390" aria-hidden="true"><rect width="500" height="390" fill="#edf0ee"/><path d="M67 199h100c42 0 42-69 88-69h105c42 0 41 72 74 72" fill="none" stroke="#151716" stroke-width="2.3" stroke-dasharray="6 8" stroke-linecap="round" class="route-dash"/><g stroke="#151716" stroke-width="2.5" stroke-linejoin="round"><rect x="47" y="117" width="117" height="143" rx="8" fill="#fff"/><path d="M129 117v26h35" fill="#dce6e1"/><path d="M69 157h69m-69 16h57m-57 16h66" fill="none" stroke-linecap="round"/><rect x="69" y="213" width="44" height="22" rx="4" fill="#dce6e1"/><path d="M79 224h24" stroke-width="1.8" stroke-linecap="round"/><rect x="194" y="74" width="121" height="183" rx="10" fill="#fff"/><rect x="210" y="91" width="89" height="25" rx="5" fill="#edf0ee"/><path d="M254 126v26m0 0-28 24m28-24 28 24" fill="none"/><circle cx="254" cy="124" r="9" fill="#dce6e1"/><circle cx="226" cy="181" r="8" fill="#dce6e1"/><circle cx="282" cy="181" r="8" fill="#dce6e1"/><path d="M213 218h82m-82 12h55" fill="none" stroke-linecap="round"/><rect x="336" y="127" width="120" height="132" rx="8" fill="#fff"/><path d="M354 153h83m-83 13h53" fill="none" stroke-linecap="round"/><circle cx="370" cy="202" r="13" fill="#dce6e1"/><path d="m364 202 4 4 8-9m18-2h33m-33 12h25" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M355 231h83" fill="none" stroke-linecap="round"/></g><g fill="#151716"><circle cx="67" cy="199" r="5"/><circle cx="343" cy="202" r="5"/><path d="M160 60l4 9 10 4-10 3-4 10-3-10-9-3 9-4z"/><path d="M357 78l3 7 8 3-8 3-3 8-3-8-8-3 8-3z"/><circle cx="456" cy="85" r="4"/></g><g fill="#565a57" font-family="ui-monospace,monospace" font-size="8" letter-spacing="1" text-anchor="middle"><text x="105" y="283">REQUEST</text><text x="254" y="278">ROUTE</text><text x="396" y="282">REVIEW</text></g></svg></div><span class="hero-art__caption">Illustrative route / no client claims</span><div class="hero-art__foot"><span>Intake / context / decision</span><span>People remain accountable</span></div></div>
+      </section>
+
+      <section class="index-panel section reveal" id="principle" data-chapter aria-labelledby="principle-title"><span class="pill">01 / Business-first</span><span class="index-panel__num" aria-hidden="true">01</span><div class="index-panel__bottom"><h2 id="principle-title">Start with the work.</h2><div class="index-panel__copy"><small>Not the newest tool</small><p>First understand the outcome, the handoffs, and where judgment belongs. Then choose the smallest system that can make the next step clearer.</p><a class="index-panel__link" href="#examples">See working patterns <span aria-hidden="true">↘</span></a></div></div></section>
+
+      <section class="mosaic-section" id="examples" data-chapter aria-labelledby="mosaic-title"><div class="section-head reveal"><div><p class="section-index">02 / Illustrative workflow patterns</p><h2 id="mosaic-title">Show the route.<br>Skip the magic.</h2></div><p class="section-head__copy">These original diagrams describe possible workflow patterns—not real projects, partner logos, measured results, or a claim that every step should be automated.</p></div>
+        <div class="mosaic-grid reveal delay-1">
+          <article class="mosaic-card mosaic-card--statement"><div class="mosaic-card__top"><span>Pattern 01 / Automation</span><span>Routine → review</span></div><div><h3 class="mosaic-card__title">Repeatable work, with a visible stop.</h3><p class="mosaic-card__body">A routine request moves forward by clear rules. An exception pauses for a person.</p><span class="mosaic-card__bigline">Human approval stays in the route</span></div></article>
+          <article class="mosaic-card mosaic-card--diagram"><div class="mosaic-card__top"><span>Pattern 02 / Context handoff</span><span>Generic system roles</span></div><div class="mosaic-diagram" aria-hidden="true"><svg viewBox="0 0 470 145"><path d="M82 73h83m67 0h83m67 0h30" fill="none" stroke="#151716" stroke-width="2" stroke-dasharray="5 7"/><rect x="20" y="36" width="65" height="72" rx="8" fill="#fff" stroke="#151716" stroke-width="2"/><path d="M34 54h38m-38 10h28m-28 10h33" stroke="#151716" stroke-width="1.8" stroke-linecap="round"/><circle cx="165" cy="73" r="7" fill="#dce6e1" stroke="#151716" stroke-width="2"/><rect x="165" y="37" width="68" height="72" rx="8" fill="#fff" stroke="#151716" stroke-width="2"/><path d="M180 55h38m-38 10h28m-28 10h34" stroke="#151716" stroke-width="1.7" stroke-linecap="round"/><circle cx="315" cy="73" r="7" fill="#dce6e1" stroke="#151716" stroke-width="2"/><rect x="315" y="36" width="66" height="72" rx="8" fill="#fff" stroke="#151716" stroke-width="2"/><circle cx="335" cy="57" r="7" fill="#dce6e1" stroke="#151716" stroke-width="1.6"/><path d="m332 57 2 2 4-5m10 2h20m-20 8h16" fill="none" stroke="#151716" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="m392 68 7 5-7 5" fill="none" stroke="#151716" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="399" y="36" width="53" height="72" rx="8" fill="#dce6e1" stroke="#151716" stroke-width="2"/><path d="M411 55h29m-29 10h23m-23 10h26" stroke="#151716" stroke-width="1.7" stroke-linecap="round"/></svg></div><h3 class="mosaic-card__title">Keep context moving between steps.</h3><p class="mosaic-card__body">Connect a request, a shared record, an assistant, and a review point without naming vendors or assuming a particular stack.</p></article>
+          <article class="mosaic-card mosaic-card--route"><div class="mosaic-card__top"><span>Pattern 03 / AI assistant</span><span>Source-aware first pass</span></div><span class="mosaic-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM15 3v5h4M9 12h7m-7 3h5" fill="none" stroke="#151716" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="m17 15 1.5 2 3-4" fill="none" stroke="#151716" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="mosaic-card__title">Draft with context. Let a person decide.</h3><p class="mosaic-card__body">Search approved material, prepare a source-linked draft, and wait for review before sharing.</p></article>
+          <article class="mosaic-card mosaic-card--assistant"><div class="mosaic-card__top"><span>Pattern 04 / Integration</span><span>Handoff</span></div><span class="mosaic-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3" fill="none" stroke="#151716" stroke-width="1.5"/><circle cx="18" cy="6" r="3" fill="none" stroke="#151716" stroke-width="1.5"/><circle cx="18" cy="18" r="3" fill="none" stroke="#151716" stroke-width="1.5"/><path d="m9 11 6-4m-6 6 6 4" fill="none" stroke="#151716" stroke-width="1.5" stroke-linecap="round"/></svg></span><h3 class="mosaic-card__title">Carry the useful detail.</h3><p class="mosaic-card__body">Pass a status and next action between generic system roles so someone can pick up the work.</p></article>
+          <article class="mosaic-card mosaic-card--checkpoint"><div class="mosaic-card__top"><span>Pattern 05 / Human checkpoint</span><span>Decision gate</span></div><span class="mosaic-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3" fill="none" stroke="#dce6e1" stroke-width="1.5"/><path d="M8 9h8m-8 4h4m2 3 2 2 4-5" fill="none" stroke="#dce6e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="mosaic-card__title">Make the stop visible.</h3><p class="mosaic-card__body">Name the reviewer and the condition that calls for a human decision.</p></article>
+        </div>
+      </section>
+
+      <section class="opportunity-panel section reveal" id="opportunity" data-chapter aria-labelledby="opportunity-title"><div class="opportunity-head"><span class="pill">03 / The opportunity</span><p class="opportunity-head__note">A design brief / not a promised result</p></div><div class="opportunity-grid"><article class="opportunity-card"><h2 class="opportunity-card__title" id="opportunity-title">Pain points</h2><ul><li>Recurring manual entry</li><li>Handoffs that lose context</li><li>Approvals that are hard to see</li></ul><p class="opportunity-card__note">Where the work gets stuck</p></article><article class="opportunity-card"><h2 class="opportunity-card__title">Future objectives</h2><ul><li>Move predictable steps forward</li><li>Keep useful context with the work</li><li>Surface decisions at the right time</li></ul><p class="opportunity-card__note">What better could look like</p></article><article class="opportunity-card"><h2 class="opportunity-card__title">Guardrails</h2><ul><li>Keep a named owner</li><li>Test the exception paths</li><li>Put people in important decisions</li></ul><p class="opportunity-card__note">What the system must respect</p></article></div></section>
+
+      <section class="contact-panel section" id="contact" data-chapter aria-labelledby="contact-title"><div class="contact-panel__copy"><p class="section-index">Start with the workflow</p><h2 id="contact-title">Make the next step clear.</h2><p class="contact-panel__text">Bring a process that feels heavier than it should. Start with the outcome, then work out what belongs in the system—and what should stay with a person.</p></div><div class="contact-panel__action"><a class="button button--dark" href="mailto:hello@relayworks.example?subject=Start%20with%20one%20workflow">Talk through a workflow <span class="button__arrow" aria-hidden="true">↗</span></a><p class="contact-panel__placeholder">Sample inbox / hello@relayworks.example — illustrative placeholder.</p></div><svg class="contact-panel__doodle" viewBox="0 0 280 100" aria-hidden="true"><path d="M8 65h37l18-31 19 58 25-42h43l19-22 19 61 25-29h57" fill="none" stroke="#151716" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="65" r="4" fill="#151716"/><circle cx="272" cy="60" r="4" fill="#151716"/><path d="M53 61h14m44-4h26m45-11h14m38 7h20" stroke="#cbd8d2" stroke-width="6" stroke-linecap="round"/><circle cx="168" cy="50" r="5" fill="#dce6e1" stroke="#151716" stroke-width="1.5"/></svg></section>
+    </main>
+    <footer class="site-footer"><a class="footer-brand" href="#top"><span class="footer-brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="7" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="2" fill="#fff"/><circle cx="17" cy="17" r="2" fill="#fff"/><path d="m10 11 5-3m-5 5 5 3" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></span>Relay</a><nav class="footer-nav" aria-label="Footer navigation"><a href="#principle">Approach</a><a href="#examples">Patterns</a><a href="#opportunity">Guardrails</a><a href="#contact">Contact</a></nav><span class="footer-note">Indexform visual direction /<br>Illustrative workflows / no client claims</span></footer>
+  </div>
+
+  <script>
+    (()=>{
+      const root=document.documentElement;root.classList.add("js");
+      const toggle=document.getElementById("menu-toggle"),nav=document.getElementById("site-nav");
+      const closeMenu=()=>{toggle.setAttribute("aria-expanded","false");nav.classList.remove("is-open")};
+      toggle.addEventListener("click",()=>{const open=toggle.getAttribute("aria-expanded")!=="true";toggle.setAttribute("aria-expanded",String(open));nav.classList.toggle("is-open",open)});
+      nav.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMenu));
+      document.addEventListener("keydown",event=>{if(event.key==="Escape"&&toggle.getAttribute("aria-expanded")==="true"){closeMenu();toggle.focus()}});
+      if("IntersectionObserver" in window){
+        const revealObserver=new IntersectionObserver((entries,observer)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target)}}),{threshold:.1});
+        document.querySelectorAll(".reveal").forEach(item=>revealObserver.observe(item));
+        const links=Array.from(document.querySelectorAll("[data-nav]"));
+        const chapterObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting)return;links.forEach(link=>{if(link.dataset.nav===entry.target.id)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current")})}),{rootMargin:"-28% 0px -58% 0px",threshold:0});
+        document.querySelectorAll("[data-chapter]").forEach(section=>chapterObserver.observe(section));
+      }else document.querySelectorAll(".reveal").forEach(item=>item.classList.add("is-visible"));
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.motion="off";
+    })();
+  </script>
+</body>
+</html>
