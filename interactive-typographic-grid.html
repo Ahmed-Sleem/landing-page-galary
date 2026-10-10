@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive Relay brand-guidelines study: purpose, voice, geometry, and a human-centered system. Sample concept, not a client case study.">
+  <meta name="theme-color" content="#e6e5eb">
+  <title>Relay — Brand Guidelines / Interactive Study</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --mat: #e6e5eb;
+      --mat-deep: #d6d4de;
+      --night: #090711;
+      --night-soft: #15121d;
+      --bone: #fbf5ee;
+      --wire: #8b8598;
+      --wire-dim: #615b70;
+      --rule: #c1bec9;
+      --ink: #211d27;
+      --ink-muted: #514d58;
+      --focus: 3px solid #635a75;
+      --space: clamp(16px, 3vw, 48px);
+      --header: 54px;
+      --ease: cubic-bezier(.2,.75,.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; border-radius: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--header); background: var(--mat); }
+    body { min-width: 320px; margin: 0; overflow-x: hidden; color: var(--ink); background: var(--mat); font-family: Arial, Helvetica, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    button, input { color: inherit; font: inherit; }
+    button { cursor: pointer; }
+    svg { display: block; }
+    :focus-visible { outline: var(--focus); outline-offset: 4px; }
+    ::selection { color: var(--bone); background: var(--night); }
+    .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; clip-path: inset(50%); }
+    .reading-progress { position: fixed; z-index: 100; inset: 0 0 auto; height: 3px; pointer-events: none; }
+    .reading-progress span { display: block; width: 100%; height: 100%; background: var(--wire); transform: scaleX(var(--read-progress,0)); transform-origin: left center; }
+    .skip-link { position: fixed; z-index: 110; inset: 12px auto auto 12px; padding: 12px 16px; color: var(--bone); background: var(--night); transform: translateY(-160%); }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* Cover: a quiet mat surrounding one ink-black, landscape brand sheet. */
+    .cover-stage { position: relative; display: grid; min-height: 100svh; place-items: center; overflow: hidden; padding: 10svh 5vw 12svh; background-color: var(--mat); background-image: radial-gradient(circle,rgba(39,34,51,.075) .55px,transparent .85px),linear-gradient(135deg,rgba(255,255,255,.17),transparent 48%,rgba(54,48,67,.035)); background-size: 4px 4px,100% 100%; }
+    .cover-sheet { position: relative; width: min(88vw,1280px,132svh); aspect-ratio: 16 / 9; overflow: hidden; isolation: isolate; color: var(--bone); background: var(--night); box-shadow: 0 12px 36px rgba(25,20,33,.08); }
+    .cover-sheet::after { position: absolute; z-index: 8; inset: 0; pointer-events: none; border: 1px solid rgba(255,255,255,.1); content: ""; }
+    .cover-guides { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transform: translate(var(--drift-x,0px),var(--drift-y,0px)); transition: transform 220ms var(--ease); }
+    .cover-guides .hairline { fill: none; stroke: var(--wire); stroke-width: 1; opacity: .66; vector-effect: non-scaling-stroke; }
+    .cover-guides .hairline--faint { opacity: .36; }
+    .cover-guides .anchor { fill: var(--night); stroke: #aaa4b6; stroke-width: 1; vector-effect: non-scaling-stroke; }
+    .cover-guides .anchor-dot { fill: #aaa4b6; }
+    .cover-guides .highlight-guide { fill: none; stroke: var(--bone); stroke-width: 1; opacity: .44; vector-effect: non-scaling-stroke; }
+    .cover-meta { position: absolute; z-index: 4; inset: 3.1% auto auto 2.2%; display: grid; grid-template-columns: auto auto; gap: clamp(12px,2vw,26px); color: var(--bone); font-size: clamp(6px,.68vw,9px); font-weight: 600; line-height: 1.05; letter-spacing: -.015em; }
+    .cover-meta span { display: block; opacity: .94; }
+    .cover-meta__right { padding-inline-start: 3px; border-inline-start: 1px solid rgba(251,245,238,.55); }
+    .cover-title { position: absolute; z-index: 3; inset: 21.2% auto auto 1.55%; margin: 0; color: var(--bone); font-family: Arial, Helvetica, sans-serif; font-size: clamp(48px,12vw,164px); font-weight: 700; letter-spacing: -.082em; line-height: .78; }
+    .cover-title span { display: block; white-space: nowrap; }
+    .cover-claim { position: absolute; z-index: 3; inset: -1.5% -1% auto auto; width: 35%; color: transparent; font-size: clamp(19px,4.35vw,62px); font-weight: 300; letter-spacing: -.055em; line-height: .91; -webkit-text-stroke: 1px rgba(196,190,208,.84); text-stroke: 1px rgba(196,190,208,.84); }
+    .cover-claim p { margin: 0; }
+    .cover-claim__line { display: block; white-space: nowrap; }
+    .word-swap { display: inline-block; max-width: 100%; margin: 1px 0 2px; padding: 0 .1em .04em; border: 0; color: var(--night); background: var(--bone); font-size: .94em; font-weight: 400; letter-spacing: -.065em; line-height: 1.04; -webkit-text-stroke: 0; text-stroke: 0; vertical-align: baseline; transition: background 150ms ease, color 150ms ease; }
+    .word-swap:hover { color: var(--bone); background: var(--wire-dim); }
+    .cover-version { position: absolute; z-index: 4; inset: auto auto 15.5% 50%; margin: 0; color: var(--bone); font-size: clamp(10px,1.55vw,19px); font-weight: 400; letter-spacing: -.035em; white-space: nowrap; transform: translateX(-50%); }
+    .cover-hotspot { position: absolute; z-index: 6; display: grid; width: 24px; height: 24px; place-items: center; padding: 0; border: 1px solid rgba(200,194,213,.72); background: rgba(9,7,17,.42); transition: background 140ms ease, transform 140ms ease; }
+    .cover-hotspot::before { width: 5px; height: 5px; background: var(--wire); content: ""; }
+    .cover-hotspot:hover, .cover-hotspot[aria-pressed="true"] { background: var(--bone); transform: scale(1.08); }
+    .cover-hotspot:hover::before, .cover-hotspot[aria-pressed="true"]::before { background: var(--night); }
+    .cover-hotspot--one { left: 51%; top: 24%; }
+    .cover-hotspot--two { left: 72%; top: 56%; }
+    .cover-hotspot--three { left: 8%; top: 73%; }
+    .cover-annotation { position: absolute; z-index: 7; inset: auto 3.1% 4.2% auto; width: min(310px,36%); padding: 15px 17px 17px; color: var(--ink); background: rgba(251,245,238,.97); box-shadow: 5px 5px 0 rgba(139,133,152,.42); }
+    .cover-annotation[hidden] { display: none; }
+    .cover-annotation__head { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+    .cover-annotation__eyebrow { margin: 0 0 7px; color: var(--ink-muted); font-size: 8px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    .cover-annotation h2 { margin: 0; font-size: clamp(15px,1.8vw,21px); letter-spacing: -.04em; }
+    .cover-annotation p { margin: 9px 0 0; color: var(--ink-muted); font-size: 12px; line-height: 1.45; }
+    .annotation-close { display: grid; width: 28px; height: 28px; flex: 0 0 28px; place-items: center; border: 1px solid var(--rule); color: var(--ink); background: transparent; font-size: 17px; line-height: 1; }
+    .annotation-close:hover { color: var(--bone); background: var(--night); }
+    .cover-radar { position: absolute; z-index: 5; left: var(--pointer-x,50%); top: var(--pointer-y,50%); width: clamp(46px,7vw,88px); aspect-ratio: 1; border: 1px solid rgba(233,228,240,.42); border-radius: 50%; pointer-events: none; opacity: 0; transform: translate(-50%,-50%); transition: opacity 160ms ease; }
+    .cover-radar::before, .cover-radar::after { position: absolute; inset: 50% auto auto 50%; background: rgba(233,228,240,.58); content: ""; transform: translate(-50%,-50%); }
+    .cover-radar::before { width: 1px; height: 142%; }
+    .cover-radar::after { width: 142%; height: 1px; }
+    .cover-sheet.is-pointing .cover-radar { opacity: .72; }
+    .grain-layer { position: absolute; z-index: 9; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .13; mix-blend-mode: screen; }
+    .cover-caption { position: absolute; inset: auto 6vw 3.5vh; display: flex; align-items: center; justify-content: space-between; gap: 18px; color: #55515d; font-size: 8px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .cover-caption a { display: inline-flex; align-items: center; gap: 10px; min-height: 34px; padding: 5px 0; border-block-end: 1px solid var(--ink-muted); }
+    .cover-caption a:hover { color: var(--wire-dim); border-color: var(--wire-dim); }
+    .cover-caption__coordinate { display: flex; align-items: center; gap: 8px; }
+    .cover-caption__coordinate::before { width: 7px; height: 7px; border: 1px solid var(--wire-dim); content: ""; }
+
+    .guide-nav { position: sticky; z-index: 40; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: var(--header); padding-inline: var(--space); border-block: 1px solid var(--rule); color: var(--ink); background: rgba(230,229,235,.95); backdrop-filter: blur(8px); }
+    .guide-nav__brand { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 10px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .guide-nav__mark { display: grid; width: 24px; height: 24px; place-items: center; border: 1px solid var(--ink); background: var(--bone); font-size: 12px; }
+    .guide-nav__links { display: flex; align-items: center; gap: clamp(10px,2vw,26px); }
+    .guide-nav__links a { display: inline-flex; align-items: center; min-height: 40px; color: var(--ink-muted); font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .guide-nav__links a:hover, .guide-nav__links a[aria-current="location"] { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; }
+    .motion-toggle { min-height: 36px; padding: 7px 10px; border: 1px solid var(--ink); color: var(--ink); background: transparent; font-size: 8px; font-weight: 700; letter-spacing: .08em; }
+    .motion-toggle:hover { color: var(--bone); background: var(--night); }
+    .motion-toggle[hidden] { display: none; }
+
+    .folio-section { position: relative; padding: clamp(68px,10vw,136px) var(--space); }
+    .folio-shell { width: min(100%,1260px); margin-inline: auto; }
+    .section-kicker { display: flex; align-items: center; gap: 10px; margin: 0 0 17px; color: var(--ink-muted); font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .section-kicker::before { width: 8px; height: 8px; border: 1px solid var(--wire-dim); content: ""; }
+    .folio-section h2 { max-width: 12ch; margin: 0; font-size: clamp(40px,7.5vw,100px); font-weight: 600; letter-spacing: -.085em; line-height: .91; }
+    .section-lead { max-width: 54ch; margin: 21px 0 0; color: var(--ink-muted); font-size: clamp(14px,1.3vw,18px); line-height: 1.55; }
+
+    /* Principles / one decision changes the specimen. */
+    .principles-section { background: var(--mat); }
+    .principle-grid { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); gap: clamp(30px,7vw,96px); align-items: start; margin-block-start: 54px; }
+    .principle-list { display: grid; border-block-start: 1px solid var(--ink); }
+    .principle-choice { display: grid; grid-template-columns: 38px minmax(0,1fr) 20px; align-items: center; gap: 12px; min-height: 70px; padding: 10px 2px; border: 0; border-block-end: 1px solid var(--rule); text-align: left; background: transparent; }
+    .principle-choice__number { color: var(--wire-dim); font-size: 9px; font-weight: 700; }
+    .principle-choice__title { font-size: clamp(15px,1.6vw,20px); font-weight: 650; letter-spacing: -.035em; }
+    .principle-choice__mark { width: 12px; height: 12px; border: 1px solid var(--wire-dim); transform: rotate(45deg); transition: background 160ms ease,transform 160ms ease; }
+    .principle-choice:hover .principle-choice__mark, .principle-choice[aria-pressed="true"] .principle-choice__mark { background: var(--wire-dim); transform: rotate(135deg); }
+    .principle-choice[aria-pressed="true"] .principle-choice__title { text-decoration: underline; text-decoration-color: var(--wire); text-underline-offset: 5px; }
+    .principle-output { position: relative; min-height: 310px; overflow: hidden; padding: clamp(22px,4vw,46px); color: var(--bone); background: var(--night); }
+    .principle-output::before { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(251,245,238,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(251,245,238,.08) 1px,transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(130deg,#000,transparent 75%); content: ""; }
+    .principle-output__index { position: relative; margin: 0; color: #c2bdcb; font-size: 8px; letter-spacing: .14em; text-transform: uppercase; }
+    .principle-output h3 { position: relative; max-width: 14ch; margin: 52px 0 14px; font-size: clamp(28px,4vw,50px); letter-spacing: -.07em; line-height: .97; }
+    .principle-output p:last-child { position: relative; max-width: 40ch; margin: 0; color: #d4d0d9; font-size: 14px; line-height: 1.5; }
+    .principle-output__node { position: absolute; right: 24px; top: 24px; width: 22px; height: 22px; border: 1px solid var(--wire); }
+    .principle-output__node::after { position: absolute; inset: 6px; background: var(--bone); content: ""; }
+    .principle-note { margin: 12px 0 0; color: var(--ink-muted); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+
+    /* Voice studio / sliders edit a live writing sample. */
+    .voice-section { color: var(--bone); background: var(--night); }
+    .voice-section .section-kicker { color: #c4bfcd; }
+    .voice-section .section-kicker::before { border-color: #c4bfcd; }
+    .voice-section .section-lead { color: #d0cbd6; }
+    .voice-section h2 { max-width: 10ch; }
+    .voice-grid { display: grid; grid-template-columns: minmax(0,.75fr) minmax(0,1.25fr); gap: clamp(28px,7vw,92px); align-items: start; margin-block-start: 54px; }
+    .voice-controls { display: grid; gap: 27px; }
+    .voice-control { display: grid; gap: 10px; }
+    .voice-control__head { display: flex; justify-content: space-between; gap: 12px; color: var(--bone); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .voice-control__ends { display: flex; justify-content: space-between; gap: 12px; color: #aaa5b4; font-size: 9px; }
+    .voice-control input { width: 100%; height: 22px; margin: 0; accent-color: #c8c2d2; cursor: ew-resize; }
+    .voice-output { position: relative; min-height: 300px; padding: clamp(23px,4vw,45px); color: var(--ink); background: var(--bone); }
+    .voice-output::before { position: absolute; inset: 0 0 auto; height: 6px; background: var(--wire); content: ""; }
+    .voice-output__top { display: flex; justify-content: space-between; gap: 14px; color: var(--ink-muted); font-size: 8px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .voice-output blockquote { max-width: 22ch; margin: clamp(28px,5vw,55px) 0 28px; font-size: clamp(24px,3.4vw,43px); font-weight: 500; letter-spacing: -.065em; line-height: 1.03; }
+    .voice-output__footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block-start: 16px; border-block-start: 1px solid var(--rule); color: var(--ink-muted); font-size: 9px; }
+    .voice-action { min-height: 40px; padding: 8px 12px; border: 1px solid var(--ink); color: var(--ink); background: transparent; font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .voice-action:hover { color: var(--bone); background: var(--night); }
+    .voice-status { min-height: 18px; margin-block-start: 10px; color: #cac5d3; font-size: 10px; }
+
+    /* Geometry lab / real draggable anchor points on an SVG path. */
+    .geometry-section { background: var(--bone); }
+    .geometry-heading { display: grid; grid-template-columns: minmax(0,1fr) minmax(180px,.5fr); align-items: end; gap: 28px; }
+    .geometry-heading .section-lead { margin: 0 0 5px; }
+    .geometry-board { position: relative; margin-block-start: 46px; padding: clamp(10px,2vw,22px); border: 1px solid var(--ink); background: var(--mat); }
+    .geometry-board__header { display: flex; justify-content: space-between; gap: 14px; padding: 2px 4px 13px; color: var(--ink-muted); font-size: 8px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .geometry-svg { width: 100%; height: auto; min-height: 200px; touch-action: none; background: var(--night); }
+    .geometry-svg .guide { fill: none; stroke: #665f72; stroke-width: 1; vector-effect: non-scaling-stroke; }
+    .geometry-svg .guide--dash { stroke-dasharray: 3 8; opacity: .74; }
+    .geometry-svg .route { fill: none; stroke: var(--bone); stroke-width: 2; vector-effect: non-scaling-stroke; }
+    .geometry-svg .route-shadow { fill: none; stroke: #6d667a; stroke-width: 10; opacity: .28; vector-effect: non-scaling-stroke; }
+    .geometry-svg .anchor-handle { fill: var(--night); stroke: var(--bone); stroke-width: 2; vector-effect: non-scaling-stroke; cursor: grab; }
+    .geometry-svg [data-anchor]:hover .anchor-handle, .geometry-svg [data-anchor]:focus .anchor-handle { fill: var(--bone); stroke: var(--night); }
+    .geometry-svg [data-anchor]:active .anchor-handle { cursor: grabbing; }
+    .geometry-svg text { fill: #bdb7c8; font-family: Arial,Helvetica,sans-serif; font-size: 14px; letter-spacing: 2px; }
+    .geometry-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-block-start: 14px; color: var(--ink-muted); font-size: 9px; }
+    .geometry-status { min-height: 18px; }
+    .geometry-reset { min-height: 40px; padding: 8px 13px; border: 1px solid var(--ink); color: var(--ink); background: transparent; font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .geometry-reset:hover { color: var(--bone); background: var(--night); }
+
+    /* Palette / each swatch drives a small cover preview. */
+    .palette-section { background: var(--mat-deep); }
+    .palette-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: clamp(30px,7vw,90px); align-items: center; margin-block-start: 46px; }
+    .swatch-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+    .palette-swatch { display: grid; grid-template-columns: 52px minmax(0,1fr); align-items: center; gap: 12px; min-height: 72px; padding: 9px; border: 1px solid rgba(33,29,39,.35); text-align: left; background: rgba(251,245,238,.5); }
+    .palette-swatch:hover, .palette-swatch[aria-pressed="true"] { border-color: var(--ink); background: var(--bone); }
+    .palette-swatch__chip { display: block; width: 52px; height: 52px; border: 1px solid rgba(33,29,39,.35); background: var(--swatch); }
+    .palette-swatch__name { display: block; font-size: 11px; font-weight: 700; }
+    .palette-swatch__hex { display: block; margin-block-start: 4px; color: var(--ink-muted); font-family: Consolas,"Courier New",monospace; font-size: 9px; }
+    .palette-preview { position: relative; display: flex; min-height: 310px; flex-direction: column; justify-content: space-between; overflow: hidden; padding: clamp(24px,4vw,48px); color: var(--bone); background: var(--night); transition: background 180ms ease; }
+    .palette-preview::before { position: absolute; inset: 0; pointer-events: none; border: 1px solid rgba(255,255,255,.24); content: ""; }
+    .palette-preview__selected { position: relative; display: flex; align-items: center; gap: 10px; font-size: 8px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .palette-preview__selected::before { width: 8px; height: 8px; background: var(--picked,var(--wire)); content: ""; }
+    .palette-preview h3 { position: relative; margin: auto 0; font-size: clamp(44px,8vw,93px); font-weight: 700; letter-spacing: -.09em; line-height: .83; }
+    .palette-preview h3 span { display: block; }
+    .palette-preview__bottom { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block-start: 13px; border-block-start: 1px solid var(--wire); color: #d7d2dc; font-size: 9px; }
+    .palette-copy { min-height: 36px; padding: 7px 10px; border: 1px solid var(--bone); color: var(--bone); background: transparent; font-size: 8px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .palette-copy:hover { color: var(--night); background: var(--bone); }
+    .palette-status { min-height: 18px; margin-block-start: 12px; color: var(--ink-muted); font-size: 10px; }
+
+    .closing-section { padding-block: clamp(74px,11vw,150px); color: var(--bone); background: var(--night); }
+    .closing-frame { position: relative; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 30px; width: min(100%,1260px); margin-inline: auto; padding: clamp(24px,5vw,62px); border: 1px solid var(--wire-dim); }
+    .closing-frame::before { position: absolute; inset: 0 auto auto 0; width: 70px; height: 5px; background: var(--bone); content: ""; }
+    .closing-frame h2 { max-width: 10ch; margin: 17px 0; font-size: clamp(42px,7.5vw,93px); letter-spacing: -.08em; line-height: .88; }
+    .closing-frame p:not(.section-kicker) { max-width: 54ch; color: #d1ccd7; font-size: 14px; line-height: 1.55; }
+    .closing-frame .section-kicker { color: #bcb6c7; }
+    .closing-frame .section-kicker::before { border-color: #bcb6c7; }
+    .closing-action { display: grid; gap: 12px; justify-items: start; }
+    .closing-action a { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 10px 15px; border: 1px solid var(--bone); color: var(--night); background: var(--bone); font-size: 9px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+    .closing-action a:hover { color: var(--bone); background: transparent; }
+    .closing-action small { color: #c8c2d2; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+    .footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px; padding: 12px var(--space); color: var(--ink-muted); background: var(--mat); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+    .footer p { margin: 0; }
+    .footer a { min-height: 36px; display: inline-flex; align-items: center; }
+    .footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+    @media (max-width: 900px) {
+      .principle-grid, .voice-grid, .palette-grid { grid-template-columns: minmax(0,1fr); }
+      .principle-output { min-height: 265px; }
+      .principle-output h3 { margin-block-start: 35px; }
+      .voice-grid { gap: 32px; }
+      .geometry-heading { grid-template-columns: minmax(0,1fr); gap: 10px; }
+      .geometry-heading .section-lead { margin: 0; }
+      .guide-nav__links { gap: 12px; }
+    }
+    @media (max-width: 620px) {
+      :root { --space: 16px; --header: 48px; }
+      .cover-stage { min-height: 88svh; padding-inline: 4vw; }
+      .cover-sheet { width: min(92vw,132svh); }
+      .cover-meta { gap: 9px; font-size: 6px; }
+      .cover-title { top: 24%; left: 1.8%; font-size: clamp(40px,12.2vw,70px); }
+      .cover-claim { top: 1%; right: -2%; width: 42%; font-size: clamp(15px,4.7vw,28px); }
+      .cover-version { bottom: 13%; font-size: 10px; }
+      .cover-hotspot { width: 20px; height: 20px; }
+      .cover-hotspot--one { top: 23%; }
+      .cover-hotspot--two { top: 59%; }
+      .cover-annotation { right: 3%; bottom: 4%; width: min(82%,275px); padding: 11px 12px 12px; }
+      .cover-annotation p { font-size: 11px; }
+      .cover-caption { inset-inline: 4vw; bottom: 2.4vh; font-size: 7px; letter-spacing: .08em; }
+      .cover-caption__coordinate { display: none; }
+      .guide-nav { gap: 8px; padding-inline: 12px; }
+      .guide-nav__brand { gap: 6px; font-size: 8px; }
+      .guide-nav__mark { width: 20px; height: 20px; }
+      .guide-nav__links { gap: 8px; }
+      .guide-nav__links a { min-height: 36px; font-size: 7px; letter-spacing: .03em; }
+      .motion-toggle { min-height: 34px; padding: 6px; font-size: 7px; }
+      .folio-section { padding-block: 66px; }
+      .folio-section h2 { font-size: clamp(38px,10vw,60px); }
+      .section-lead { margin-block-start: 15px; font-size: 14px; }
+      .principle-grid, .voice-grid, .palette-grid { margin-block-start: 32px; }
+      .principle-choice { min-height: 60px; grid-template-columns: 30px minmax(0,1fr) 16px; gap: 8px; }
+      .principle-choice__title { font-size: 15px; }
+      .principle-output { min-height: 230px; padding: 20px; }
+      .principle-output h3 { margin-block: 32px 11px; font-size: 30px; }
+      .principle-output p:last-child { font-size: 13px; }
+      .voice-controls { gap: 22px; }
+      .voice-output { min-height: 260px; padding: 21px; }
+      .voice-output blockquote { margin-block: 35px 23px; font-size: 27px; }
+      .geometry-board { margin-block-start: 28px; padding: 8px; }
+      .geometry-board__header { font-size: 7px; }
+      .geometry-svg { min-height: 130px; }
+      .geometry-svg text { font-size: 18px; letter-spacing: 1px; }
+      .geometry-footer { font-size: 8px; }
+      .swatch-list { gap: 7px; }
+      .palette-swatch { grid-template-columns: 40px minmax(0,1fr); gap: 8px; min-height: 59px; padding: 6px; }
+      .palette-swatch__chip { width: 40px; height: 44px; }
+      .palette-swatch__name { font-size: 10px; }
+      .palette-swatch__hex { font-size: 8px; }
+      .palette-preview { min-height: 255px; padding: 21px; }
+      .palette-preview h3 { font-size: 54px; }
+      .palette-preview__bottom { font-size: 8px; }
+      .closing-frame { grid-template-columns: minmax(0,1fr); gap: 18px; padding: 20px; }
+      .closing-frame h2 { font-size: clamp(40px,11vw,59px); }
+      .closing-action { width: 100%; }
+      .closing-action a { width: 100%; }
+      .footer { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-height: 560px) and (min-width: 621px) {
+      .cover-stage { min-height: 560px; }
+      .cover-sheet { width: min(88vw,132svh); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+      .cover-radar { display: none !important; }
+    }
+    :root[data-motion="off"] *, :root[data-motion="off"] *::before, :root[data-motion="off"] *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    :root[data-motion="off"] .cover-radar { display: none; }
+    :root[data-motion="off"] .cover-guides { transform: none !important; }
+    @media (forced-colors: active) {
+      .cover-sheet, .principle-output, .voice-section, .voice-output, .geometry-svg, .palette-preview, .closing-frame { border: 1px solid CanvasText; }
+      .cover-guides .hairline, .geometry-svg .guide, .geometry-svg .route { stroke: CanvasText; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+
+  <main id="main">
+    <section class="cover-stage" id="top" aria-labelledby="cover-title">
+      <article class="cover-sheet" id="cover-sheet" aria-label="Relay brand guidelines cover">
+        <svg class="cover-guides" id="cover-guides" viewBox="0 0 1000 562" preserveAspectRatio="none" aria-hidden="true">
+          <g class="hairline">
+            <path d="M340 0v96h88v-96M428 96h76v-56h70v56h59V0M632 0v198h92v-68h128v-88h148"/>
+            <path d="M0 329h71v-18h102v32h92v-58h88M0 422h118c70 0 104 26 104 74v66M223 496v66M0 530h77v-20h94v52"/>
+            <path d="M692 0v244h106l76 82v-82h126M696 246v316M826 418l80 96v48M906 514h94"/>
+            <path d="M0 332h108l27-21M268 285h48v-76h62M620 198h72M872 244v-56h128" class="hairline--faint"/>
+            <path d="M694 329h94l76 87v-87h136M508 0v36M756 0v56M0 382h31v-20h42" class="hairline--faint"/>
+            <rect x="425" y="34" width="79" height="62"/><rect x="697" y="243" width="196" height="86"/><rect x="145" y="311" width="28" height="32"/>
+            <rect x="858" y="243" width="25" height="84"/><rect x="76" y="510" width="96" height="52"/>
+          </g>
+          <g class="anchor">
+            <rect x="422" y="31" width="6" height="6"/><rect x="501" y="31" width="6" height="6"/><rect x="422" y="93" width="6" height="6"/><rect x="501" y="93" width="6" height="6"/>
+            <rect x="694" y="240" width="6" height="6"/><rect x="787" y="240" width="6" height="6"/><rect x="864" y="324" width="6" height="6"/><rect x="987" y="324" width="6" height="6"/>
+            <rect x="68" y="308" width="6" height="6"/><rect x="169" y="308" width="6" height="6"/><rect x="218" y="493" width="6" height="6"/><rect x="218" y="559" width="6" height="6"/>
+            <rect x="73" y="507" width="6" height="6"/><rect x="169" y="507" width="6" height="6"/><rect x="890" y="511" width="6" height="6"/><rect x="986" y="511" width="6" height="6"/>
+          </g>
+          <g class="anchor-dot"><circle cx="108" cy="331" r="2.5"/><circle cx="258" cy="343" r="2.5"/><circle cx="316" cy="285" r="2.5"/><circle cx="692" cy="198" r="2.5"/><circle cx="798" cy="244" r="2.5"/></g>
+          <path class="highlight-guide" d="M0 330h70M695 329h84M859 244v80"/>
+        </svg>
+        <div class="cover-meta" aria-label="Cover metadata"><span>Relay<br>Applied Intelligence</span><span class="cover-meta__right">Brand<br>Guidelines<br>v.01 — 2026</span></div>
+        <div class="cover-claim" aria-label="People at the heart of everything we do">
+          <p><span class="cover-claim__line">People</span><span class="cover-claim__line">at the heart</span><span class="cover-claim__line">of <button class="word-swap" id="word-swap" type="button" aria-label="Change the highlighted word">everything</button></span><span class="cover-claim__line">we do.</span></p>
+        </div>
+        <h1 class="cover-title" id="cover-title"><span>Brand</span><span>Guidelines</span></h1>
+        <p class="cover-version">v.01 — 2026</p>
+        <button class="cover-hotspot cover-hotspot--one" type="button" data-note="typography" aria-label="Explore the typography note" aria-pressed="false" title="Typography note"></button>
+        <button class="cover-hotspot cover-hotspot--two" type="button" data-note="message" aria-label="Explore the message note" aria-pressed="false" title="Message note"></button>
+        <button class="cover-hotspot cover-hotspot--three" type="button" data-note="geometry" aria-label="Explore the geometry note" aria-pressed="false" title="Geometry note"></button>
+        <aside class="cover-annotation" id="cover-annotation" role="region" aria-label="Design annotation" hidden>
+          <div class="cover-annotation__head"><div><p class="cover-annotation__eyebrow" id="annotation-kicker">FIELD NOTE / 01</p><h2 id="annotation-title">The type sets the tone.</h2></div><button class="annotation-close" id="annotation-close" type="button" aria-label="Close annotation">×</button></div>
+          <p id="annotation-copy">Large, calm typography gives the idea room to lead.</p>
+        </aside>
+        <div class="cover-radar" aria-hidden="true"></div>
+        <svg class="grain-layer" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs><filter id="film-grain"><feTurbulence type="fractalNoise" baseFrequency=".88" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .22"/></feComponentTransfer></filter></defs><rect width="100%" height="100%" filter="url(#film-grain)" fill="#ffffff"/></svg>
+      </article>
+      <div class="cover-caption"><span class="cover-caption__coordinate">Interactive identity / 001</span><a href="#principles">Open the brand system <span aria-hidden="true">↓</span></a></div>
+    </section>
+
+    <nav class="guide-nav" aria-label="Brand guideline chapters">
+      <a class="guide-nav__brand" href="#top"><span class="guide-nav__mark" aria-hidden="true">R</span><span>Relay / Guidelines</span></a>
+      <div class="guide-nav__links"><a href="#principles" data-nav="principles">Principles</a><a href="#voice" data-nav="voice">Voice</a><a href="#geometry" data-nav="geometry">Geometry</a><a href="#palette" data-nav="palette">Palette</a></div>
+      <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false" aria-label="Turn motion effects off">MOTION: ON</button>
+    </nav>
+
+    <section class="folio-section principles-section" id="principles" data-chapter aria-labelledby="principles-title">
+      <div class="folio-shell">
+        <p class="section-kicker">01 / The operating idea</p>
+        <h2 id="principles-title">A system begins with a decision.</h2>
+        <p class="section-lead">This is a brand study, not a client case study. The identity starts with the work to improve, then gives every tool a clear role and every person a clear next step.</p>
+        <div class="principle-grid">
+          <div class="principle-list" role="group" aria-label="Choose a brand principle">
+            <button class="principle-choice" type="button" data-principle="outcome" aria-pressed="true"><span class="principle-choice__number">01</span><span class="principle-choice__title">Business before tools</span><span class="principle-choice__mark" aria-hidden="true"></span></button>
+            <button class="principle-choice" type="button" data-principle="human" aria-pressed="false"><span class="principle-choice__number">02</span><span class="principle-choice__title">People own the call</span><span class="principle-choice__mark" aria-hidden="true"></span></button>
+            <button class="principle-choice" type="button" data-principle="craft" aria-pressed="false"><span class="principle-choice__number">03</span><span class="principle-choice__title">Care lives in the details</span><span class="principle-choice__mark" aria-hidden="true"></span></button>
+            <p class="principle-note">Select a principle to change the specimen.</p>
+          </div>
+          <div class="principle-output" id="principle-output" aria-live="polite">
+            <span class="principle-output__node" aria-hidden="true"></span><p class="principle-output__index" id="principle-index">Principle / 01</p>
+            <h3 id="principle-heading">Start with the outcome.</h3><p id="principle-copy">Name what should change before choosing a system. Let the business objective set the brief; let technology serve it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="folio-section voice-section" id="voice" data-chapter aria-labelledby="voice-title">
+      <div class="folio-shell">
+        <p class="section-kicker">02 / Voice as an interface</p>
+        <h2 id="voice-title">Tune the temperature.</h2>
+        <p class="section-lead">Move the controls. The sample changes with them: clear enough to act on, warm enough to feel human, precise about where responsibility stays.</p>
+        <div class="voice-grid">
+          <div class="voice-controls" aria-label="Writing tone controls">
+            <label class="voice-control" for="voice-direct"><span class="voice-control__head"><span>Directness</span><output id="direct-value" for="voice-direct">Balanced</output></span><input id="voice-direct" type="range" min="0" max="100" value="56"><span class="voice-control__ends"><span>Considered</span><span>Direct</span></span></label>
+            <label class="voice-control" for="voice-warmth"><span class="voice-control__head"><span>Warmth</span><output id="warmth-value" for="voice-warmth">Open</output></span><input id="voice-warmth" type="range" min="0" max="100" value="66"><span class="voice-control__ends"><span>Restrained</span><span>Warm</span></span></label>
+            <label class="voice-control" for="voice-detail"><span class="voice-control__head"><span>Precision</span><output id="detail-value" for="voice-detail">Exact</output></span><input id="voice-detail" type="range" min="0" max="100" value="72"><span class="voice-control__ends"><span>Suggestive</span><span>Exact</span></span></label>
+          </div>
+          <div><div class="voice-output"><div class="voice-output__top"><span>Live sample / Relay voice</span><span id="voice-profile">Balanced / Open / Exact</span></div><blockquote id="voice-sample" aria-live="polite">Let’s start with the outcome, then map the work. Your team stays in control of the next step. Define the task, boundary, and human checkpoint.</blockquote><div class="voice-output__footer"><span>Sample copy / illustrative only</span><button class="voice-action" id="copy-voice" type="button">Copy sample</button></div></div><p class="voice-status" id="voice-status" role="status" aria-live="polite">Adjust a slider to rewrite this sample.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="folio-section geometry-section" id="geometry" data-chapter aria-labelledby="geometry-title">
+      <div class="folio-shell">
+        <div class="geometry-heading"><div><p class="section-kicker">03 / The line system</p><h2 id="geometry-title">Move the anchor. Change the idea.</h2></div><p class="section-lead">The paths and handles on the cover are not decoration alone. Drag a square, or focus it and use the arrow keys, to redraw the route.</p></div>
+        <div class="geometry-board">
+          <div class="geometry-board__header"><span>Vector study / editable anchors</span><span>Four points / one line</span></div>
+          <svg class="geometry-svg" id="geometry-svg" viewBox="0 0 1000 360" role="group" aria-label="Interactive vector path. Drag the four square anchors or use arrow keys when focused.">
+            <path class="guide" d="M0 60H1000M0 180H1000M0 300H1000M100 0V360M300 0V360M500 0V360M700 0V360M900 0V360"/>
+            <path class="guide guide--dash" d="M0 180H1000M500 0V360"/>
+            <polyline class="route-shadow" id="route-shadow" points="100,230 360,92 635,270 900,128"/>
+            <polyline class="route" id="route-line" points="100,230 360,92 635,270 900,128"/>
+            <text x="32" y="38">RELAY / VECTOR FIELD</text><text x="815" y="338">NODES: 04</text>
+            <g class="grid-anchor" data-anchor="0" data-x="100" data-y="230" tabindex="0" role="button" aria-label="Move anchor one with arrow keys"><rect class="anchor-hit" x="80" y="210" width="40" height="40" fill="transparent"/><rect class="anchor-handle" x="94" y="224" width="12" height="12"/></g>
+            <g class="grid-anchor" data-anchor="1" data-x="360" data-y="92" tabindex="0" role="button" aria-label="Move anchor two with arrow keys"><rect class="anchor-hit" x="340" y="72" width="40" height="40" fill="transparent"/><rect class="anchor-handle" x="354" y="86" width="12" height="12"/></g>
+            <g class="grid-anchor" data-anchor="2" data-x="635" data-y="270" tabindex="0" role="button" aria-label="Move anchor three with arrow keys"><rect class="anchor-hit" x="615" y="250" width="40" height="40" fill="transparent"/><rect class="anchor-handle" x="629" y="264" width="12" height="12"/></g>
+            <g class="grid-anchor" data-anchor="3" data-x="900" data-y="128" tabindex="0" role="button" aria-label="Move anchor four with arrow keys"><rect class="anchor-hit" x="880" y="108" width="40" height="40" fill="transparent"/><rect class="anchor-handle" x="894" y="122" width="12" height="12"/></g>
+          </svg>
+          <div class="geometry-footer"><span class="geometry-status" id="geometry-status" role="status" aria-live="polite">Ready. Drag any square anchor to reshape the path.</span><button class="geometry-reset" id="geometry-reset" type="button">Reset geometry</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="folio-section palette-section" id="palette" data-chapter aria-labelledby="palette-title">
+      <div class="folio-shell">
+        <p class="section-kicker">04 / Contrast and material</p>
+        <h2 id="palette-title">A small palette. A clear signal.</h2>
+        <p class="section-lead">Choose a material to test it in context. This study stays close to the reference: a quiet outer field, near-black ink, warm ivory, and soft technical lines.</p>
+        <div class="palette-grid">
+          <div><div class="swatch-list" role="group" aria-label="Choose a palette color">
+            <button class="palette-swatch" type="button" data-color="#090711" data-name="Night" aria-pressed="true"><span class="palette-swatch__chip" style="--swatch:#090711"></span><span><span class="palette-swatch__name">Night</span><span class="palette-swatch__hex">#090711</span></span></button>
+            <button class="palette-swatch" type="button" data-color="#fbf5ee" data-name="Bone" aria-pressed="false"><span class="palette-swatch__chip" style="--swatch:#fbf5ee"></span><span><span class="palette-swatch__name">Bone</span><span class="palette-swatch__hex">#FBF5EE</span></span></button>
+            <button class="palette-swatch" type="button" data-color="#8b8598" data-name="Wire" aria-pressed="false"><span class="palette-swatch__chip" style="--swatch:#8b8598"></span><span><span class="palette-swatch__name">Wire</span><span class="palette-swatch__hex">#8B8598</span></span></button>
+            <button class="palette-swatch" type="button" data-color="#e6e5eb" data-name="Mat" aria-pressed="false"><span class="palette-swatch__chip" style="--swatch:#e6e5eb"></span><span><span class="palette-swatch__name">Mat</span><span class="palette-swatch__hex">#E6E5EB</span></span></button>
+          </div><p class="palette-status" id="palette-status" role="status" aria-live="polite">Night selected / #090711</p></div>
+          <div class="palette-preview" id="palette-preview"><span class="palette-preview__selected" id="palette-preview-label">Selected material / Night</span><h3><span>Brand</span><span>Guidelines</span></h3><div class="palette-preview__bottom"><span id="palette-preview-hex">#090711</span><button class="palette-copy" id="copy-color" type="button">Copy hex</button></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing-section" id="contact" aria-labelledby="closing-title">
+      <div class="closing-frame"><div><p class="section-kicker">End matter / start with the work</p><h2 id="closing-title">Make room for the work that matters.</h2><p>This is a visual direction study for Relay, not a published brand guide or a claim about client results. Replace the sample inbox and confirm the language before launch.</p></div><div class="closing-action"><a href="mailto:hello@relayworks.example?subject=Relay%20brand%20guidelines%20study">Start a conversation <span aria-hidden="true">↗</span></a><small>Sample inbox / hello@relayworks.example</small></div></div>
+    </section>
+  </main>
+  <footer class="footer"><p>© 2026 Relay / Brand Guidelines Study</p><p>Business first / people still decide</p><a href="#top">Back to cover ↑</a></footer>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const cover = document.getElementById("cover-sheet");
+      const guides = document.getElementById("cover-guides");
+      const radar = cover.querySelector(".cover-radar");
+      const motionButton = document.getElementById("motion-toggle");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const setMotion = (on, persist = false) => {
+        root.dataset.motion = on ? "on" : "off";
+        motionButton.setAttribute("aria-pressed", String(!on));
+        motionButton.textContent = on ? "MOTION: ON" : "MOTION: OFF";
+        motionButton.setAttribute("aria-label", on ? "Turn motion effects off" : "Turn motion effects on");
+        if (persist) { try { window.localStorage.setItem("relay-guidelines-motion", on ? "on" : "off"); } catch { /* Preference remains local to this view. */ } }
+      };
+      let motionPreference = null;
+      try { motionPreference = window.localStorage.getItem("relay-guidelines-motion"); } catch { /* Use the accessible default. */ }
+      setMotion(!reducedMotion.matches && motionPreference !== "off");
+      if (reducedMotion.matches) motionButton.hidden = true;
+      motionButton.addEventListener("click", () => setMotion(root.dataset.motion === "off", true));
+      if (typeof reducedMotion.addEventListener === "function") reducedMotion.addEventListener("change", (event) => {
+        if (event.matches) { setMotion(false); motionButton.hidden = true; }
+        else { motionButton.hidden = false; setMotion(motionPreference !== "off"); }
+      });
+
+      const closeAnnotation = document.getElementById("annotation-close");
+      const annotation = document.getElementById("cover-annotation");
+      const annotationKicker = document.getElementById("annotation-kicker");
+      const annotationTitle = document.getElementById("annotation-title");
+      const annotationCopy = document.getElementById("annotation-copy");
+      const hotspotNotes = {
+        typography: ["TYPE / 01", "The type sets the tone.", "A single oversized voice gives the idea room to lead. The smaller labels behave like production notes."],
+        message: ["MESSAGE / 02", "People stay at the centre.", "The highlighted word is a deliberate interruption: one clear idea, set apart from the system around it."],
+        geometry: ["GRID / 03", "The construction stays visible.", "Open anchor points and fine routes make the underlying design logic part of the visual language."]
+      };
+      let activeHotspot = null;
+      const hotspots = Array.from(document.querySelectorAll(".cover-hotspot"));
+      const openAnnotation = (button) => {
+        const note = hotspotNotes[button.dataset.note];
+        if (!note) return;
+        hotspots.forEach((item) => { const active = item === button; item.setAttribute("aria-pressed", String(active)); });
+        activeHotspot = button;
+        annotationKicker.textContent = note[0];
+        annotationTitle.textContent = note[1];
+        annotationCopy.textContent = note[2];
+        annotation.hidden = false;
+        closeAnnotation.focus();
+      };
+      hotspots.forEach((button) => button.addEventListener("click", () => openAnnotation(button)));
+      closeAnnotation.addEventListener("click", () => {
+        annotation.hidden = true;
+        hotspots.forEach((item) => item.setAttribute("aria-pressed", "false"));
+        if (activeHotspot) activeHotspot.focus();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !annotation.hidden) closeAnnotation.click();
+      });
+      const wordSwap = document.getElementById("word-swap");
+      const words = ["everything", "people", "the work", "what matters"];
+      let wordIndex = 0;
+      wordSwap.addEventListener("click", () => {
+        wordIndex = (wordIndex + 1) % words.length;
+        wordSwap.textContent = words[wordIndex];
+        wordSwap.setAttribute("aria-label", `Highlighted word: ${words[wordIndex]}. Activate to change it.`);
+      });
+      cover.addEventListener("pointermove", (event) => {
+        const rect = cover.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        cover.style.setProperty("--pointer-x", `${Math.max(0,Math.min(1,x))*100}%`);
+        cover.style.setProperty("--pointer-y", `${Math.max(0,Math.min(1,y))*100}%`);
+        if (root.dataset.motion === "on" && event.pointerType !== "touch") {
+          cover.classList.add("is-pointing");
+          guides.style.setProperty("--drift-x", `${(x-.5)*-5}px`);
+          guides.style.setProperty("--drift-y", `${(y-.5)*-5}px`);
+        }
+      });
+      cover.addEventListener("pointerleave", () => {
+        cover.classList.remove("is-pointing");
+        guides.style.setProperty("--drift-x", "0px");
+        guides.style.setProperty("--drift-y", "0px");
+      });
+
+      const principleCopy = {
+        outcome: ["01 / BUSINESS FIRST", "Start with the outcome.", "Name what should change before choosing a system. Let the business objective set the brief; let technology serve it."],
+        human: ["02 / HUMAN JUDGMENT", "Keep people in the loop.", "Let systems prepare, route, and clarify. Keep consequential choices visible, owned, and reviewable by a person."],
+        craft: ["03 / DETAILS MATTER", "Design the handoff.", "Clear states, useful boundaries, and a visible next step turn an impressive demo into a system people can actually use."]
+      };
+      const principleButtons = Array.from(document.querySelectorAll("[data-principle]"));
+      const principleIndex = document.getElementById("principle-index");
+      const principleHeading = document.getElementById("principle-heading");
+      const principleText = document.getElementById("principle-copy");
+      const choosePrinciple = (button) => {
+        const data = principleCopy[button.dataset.principle];
+        if (!data) return;
+        principleButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        principleIndex.textContent = data[0];
+        principleHeading.textContent = data[1];
+        principleText.textContent = data[2];
+      };
+      principleButtons.forEach((button) => button.addEventListener("click", () => choosePrinciple(button)));
+
+      const direct = document.getElementById("voice-direct");
+      const warmth = document.getElementById("voice-warmth");
+      const detail = document.getElementById("voice-detail");
+      const voiceSample = document.getElementById("voice-sample");
+      const voiceProfile = document.getElementById("voice-profile");
+      const directValue = document.getElementById("direct-value");
+      const warmthValue = document.getElementById("warmth-value");
+      const detailValue = document.getElementById("detail-value");
+      const voiceStatus = document.getElementById("voice-status");
+      const pick = (value, low, middle, high) => Number(value) < 34 ? low : Number(value) > 66 ? high : middle;
+      const voiceLabels = (value, low, middle, high) => Number(value) < 34 ? low : Number(value) > 66 ? high : middle;
+      const updateVoice = () => {
+        const d = pick(direct.value,"Before choosing a tool, name what needs to change.","Let’s start with the outcome, then map the work.","Start with the outcome. Design the assist around it.");
+        const w = pick(warmth.value,"A person remains responsible for the next decision.","Your team stays in control of the next step.","People keep the final call.");
+        const p = pick(detail.value,"We can test one useful assist.","We’ll choose a focused assist with a clear review.","Define the task, boundary, and human checkpoint.");
+        const dLabel = voiceLabels(direct.value,"Considered","Balanced","Direct");
+        const wLabel = voiceLabels(warmth.value,"Restrained","Open","Warm");
+        const pLabel = voiceLabels(detail.value,"Suggestive","Specific","Exact");
+        directValue.value = dLabel; warmthValue.value = wLabel; detailValue.value = pLabel;
+        voiceProfile.textContent = `${dLabel} / ${wLabel} / ${pLabel}`;
+        voiceSample.textContent = `${d} ${w} ${p}`;
+        voiceStatus.textContent = "Sample updated / adjust any control to find a different register.";
+      };
+      [direct,warmth,detail].forEach((input) => input.addEventListener("input", updateVoice));
+      const copyVoice = document.getElementById("copy-voice");
+      copyVoice.addEventListener("click", async () => {
+        const text = voiceSample.textContent;
+        try {
+          if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); voiceStatus.textContent = "Sample copied to clipboard."; return; }
+        } catch { /* Use the selectable sample as a graceful fallback. */ }
+        voiceStatus.textContent = "Select the sample text to copy it.";
+      });
+      updateVoice();
+
+      const geometry = document.getElementById("geometry-svg");
+      const anchors = Array.from(geometry.querySelectorAll("[data-anchor]"));
+      const route = document.getElementById("route-line");
+      const routeShadow = document.getElementById("route-shadow");
+      const geometryStatus = document.getElementById("geometry-status");
+      const initialPoints = [[100,230],[360,92],[635,270],[900,128]];
+      let dragging = null;
+      const clamp = (value,min,max) => Math.max(min,Math.min(max,value));
+      const redrawGeometry = (announce = true) => {
+        const points = anchors.map((anchor) => [Number(anchor.dataset.x),Number(anchor.dataset.y)]);
+        const string = points.map((point) => point.join(",")).join(" ");
+        route.setAttribute("points", string); routeShadow.setAttribute("points", string);
+        anchors.forEach((anchor,index) => {
+          const [x,y] = points[index];
+          anchor.querySelector(".anchor-handle").setAttribute("x", String(x-6));
+          anchor.querySelector(".anchor-handle").setAttribute("y", String(y-6));
+          anchor.querySelector(".anchor-hit").setAttribute("x", String(x-20));
+          anchor.querySelector(".anchor-hit").setAttribute("y", String(y-20));
+          anchor.setAttribute("aria-label", `Move anchor ${index+1}; current point ${x}, ${y}. Use arrow keys to adjust.`);
+        });
+        if (announce) geometryStatus.textContent = dragging === null ? "Path updated. Drag another square or reset the geometry." : `Anchor ${Number(dragging.dataset.anchor)+1} / ${dragging.dataset.x}, ${dragging.dataset.y}`;
+      };
+      const svgPoint = (event) => {
+        const point = geometry.createSVGPoint();
+        point.x = event.clientX; point.y = event.clientY;
+        return point.matrixTransform(geometry.getScreenCTM().inverse());
+      };
+      geometry.addEventListener("pointerdown", (event) => {
+        const anchor = event.target.closest("[data-anchor]");
+        if (!anchor) return;
+        dragging = anchor;
+        if (typeof geometry.setPointerCapture === "function") geometry.setPointerCapture(event.pointerId);
+        geometryStatus.textContent = `Anchor ${Number(anchor.dataset.anchor)+1} selected. Move to reshape the line.`;
+        event.preventDefault();
+      });
+      geometry.addEventListener("pointermove", (event) => {
+        if (!dragging) return;
+        const point = svgPoint(event);
+        dragging.dataset.x = String(Math.round(clamp(point.x,28,972)));
+        dragging.dataset.y = String(Math.round(clamp(point.y,44,316)));
+        redrawGeometry();
+      });
+      const stopDragging = () => { if (!dragging) return; dragging = null; redrawGeometry(); };
+      geometry.addEventListener("pointerup", stopDragging);
+      geometry.addEventListener("pointercancel", stopDragging);
+      anchors.forEach((anchor,index) => anchor.addEventListener("keydown", (event) => {
+        const step = event.shiftKey ? 20 : 8;
+        let x = Number(anchor.dataset.x), y = Number(anchor.dataset.y), changed = true;
+        if (event.key === "ArrowLeft") x -= step;
+        else if (event.key === "ArrowRight") x += step;
+        else if (event.key === "ArrowUp") y -= step;
+        else if (event.key === "ArrowDown") y += step;
+        else if (event.key === "Home") [x,y] = initialPoints[index];
+        else changed = false;
+        if (!changed) return;
+        event.preventDefault();
+        anchor.dataset.x = String(Math.round(clamp(x,28,972)));
+        anchor.dataset.y = String(Math.round(clamp(y,44,316)));
+        redrawGeometry();
+      }));
+      document.getElementById("geometry-reset").addEventListener("click", () => {
+        anchors.forEach((anchor,index) => { anchor.dataset.x=String(initialPoints[index][0]); anchor.dataset.y=String(initialPoints[index][1]); });
+        dragging = null; redrawGeometry(); geometryStatus.textContent = "Geometry reset to its original four-point route.";
+      });
+
+      const swatches = Array.from(document.querySelectorAll(".palette-swatch"));
+      const palettePreview = document.getElementById("palette-preview");
+      const palettePreviewLabel = document.getElementById("palette-preview-label");
+      const palettePreviewHex = document.getElementById("palette-preview-hex");
+      const paletteStatus = document.getElementById("palette-status");
+      let selectedColor = "#090711";
+      let selectedName = "Night";
+      const chooseSwatch = (button) => {
+        selectedColor = button.dataset.color;
+        selectedName = button.dataset.name;
+        swatches.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        palettePreview.style.setProperty("--picked", selectedColor);
+        palettePreviewLabel.textContent = `Selected material / ${selectedName}`;
+        palettePreviewHex.textContent = selectedColor.toUpperCase();
+        paletteStatus.textContent = `${selectedName} selected / ${selectedColor.toUpperCase()}`;
+      };
+      swatches.forEach((button) => button.addEventListener("click", () => chooseSwatch(button)));
+      document.getElementById("copy-color").addEventListener("click", async () => {
+        try {
+          if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(selectedColor.toUpperCase()); paletteStatus.textContent = `${selectedColor.toUpperCase()} copied.`; return; }
+        } catch { /* Show the value; selection remains available. */ }
+        paletteStatus.textContent = `Selected value: ${selectedColor.toUpperCase()}`;
+      });
+
+      const progressBar = document.getElementById("reading-progress-bar");
+      const updateProgress = () => {
+        const max = Math.max(1,document.documentElement.scrollHeight - window.innerHeight);
+        progressBar.style.transform = `scaleX(${Math.max(0,Math.min(1,window.scrollY/max))})`;
+      };
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      window.addEventListener("resize", updateProgress, { passive: true });
+      updateProgress();
+      if ("IntersectionObserver" in window) {
+        const links = Array.from(document.querySelectorAll("[data-nav]"));
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            links.forEach((link) => {
+              if (link.dataset.nav === entry.target.id) link.setAttribute("aria-current","location");
+              else link.removeAttribute("aria-current");
+            });
+          });
+        }, { rootMargin: "-25% 0px -55% 0px", threshold: 0 });
+        document.querySelectorAll("[data-chapter]").forEach((section) => observer.observe(section));
+      }
+    })();
+  </script>
+</body>
+</html>

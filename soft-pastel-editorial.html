@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Relay builds business-first automation, AI assistants, and integrations that give teams room for meaningful work.">
+  <meta name="theme-color" content="#fffafa">
+  <title>Relay — Room for Real Work</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --ink:#231f27;
+      --ink-soft:#36323a;
+      --paper:#fffafa;
+      --white:#ffffff;
+      --cream:#fffaf0;
+      --cream-deep:#f7f1e8;
+      --muted:#77717a;
+      --line:#ece7e8;
+      --lilac:#f2dcfa;
+      --butter:#fff2cf;
+      --mint:#eff9d7;
+      --lime:#e3f7b3;
+      --coral:#f17a5d;
+      --gutter:clamp(18px,5vw,76px);
+      --nav-h:58px;
+      --focus:3px solid #8d6a9c;
+      --ease:cubic-bezier(.2,.76,.2,1);
+      --serif:Georgia,"Times New Roman",serif;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h);background:var(--paper)}
+    body{min-width:320px;margin:0;overflow-x:hidden;color:var(--ink);background:var(--paper);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    button{color:inherit;font:inherit;cursor:pointer}
+    svg{display:block;max-width:100%}
+    :focus-visible{outline:var(--focus);outline-offset:4px}
+    ::selection{color:var(--paper);background:var(--ink)}
+    .skip-link{position:fixed;z-index:300;inset:12px auto auto 12px;padding:11px 14px;color:var(--white);background:var(--ink);transform:translateY(-160%)}
+    .skip-link:focus{transform:translateY(0)}
+    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%);border:0}
+    .scroll-progress{position:fixed;z-index:230;inset:0 0 auto;height:3px;pointer-events:none}
+    .scroll-progress span{display:block;width:100%;height:100%;background:var(--coral);transform:scaleX(var(--progress,0));transform-origin:left}
+
+    /* Full-bleed opening: minimum one live viewport tall, allowed to grow rather than crop. */
+    .hero{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr);width:100%;min-height:100vh;min-height:100svh;padding:14px var(--gutter) 30px;background:radial-gradient(ellipse at 50% 39%,rgba(251,238,247,.48),transparent 55%),var(--paper)}
+    .hero::before{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle,rgba(95,77,91,.08) .7px,transparent .9px);background-size:16px 16px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.22),transparent 70%);content:""}
+    .site-header{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:46px;padding-inline:clamp(3px,.5vw,8px)}
+    .brand{display:inline-flex;align-items:center;gap:8px;min-height:42px;flex:0 0 auto}
+    .brand-mark{width:26px;height:26px;flex:0 0 26px}
+    .brand-name{display:block;font-size:12px;font-weight:900;letter-spacing:-.055em;line-height:1}
+    .brand-note{display:block;margin-block-start:4px;color:var(--muted);font-size:6px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+    .site-nav{display:flex;align-items:center;gap:clamp(15px,2.8vw,36px);margin-inline-start:auto}
+    .site-nav a{display:inline-flex;align-items:center;min-height:42px;color:#4e4950;font-size:9px;font-weight:600}
+    .site-nav a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+    .header-cta{display:inline-flex;align-items:center;gap:7px;min-height:31px;margin-inline-start:clamp(12px,2vw,26px);padding:6px 11px;border:1px solid #d9efac;border-radius:99px;color:#3c5727;background:var(--lime);font-size:8px;font-weight:800;transition:transform 140ms ease,box-shadow 140ms ease}
+    .header-cta:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(117,148,59,.15)}
+    .header-cta__spark{font-size:11px}
+    .menu-trigger{display:none;align-items:center;justify-content:center;gap:7px;min-width:66px;min-height:37px;border:1px solid #d5d1d3;border-radius:99px;background:var(--white);font-size:8px;font-weight:800;text-transform:uppercase}
+    .menu-trigger:hover,.menu-trigger[aria-expanded=true]{color:var(--white);background:var(--ink);border-color:var(--ink)}
+    .menu-icon{display:grid;gap:3px}
+    .menu-icon i{display:block;width:10px;height:1px;background:currentColor}
+
+    .hero-main{position:relative;z-index:1;display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:1440px;margin-inline:auto;padding:clamp(22px,3.4vh,38px) 0 0;text-align:center}
+    .orb{position:relative;width:70px;height:70px;flex:0 0 auto;margin-block:0 -12px;border-radius:50%;background:radial-gradient(circle at 52% 68%,rgba(255,155,94,.95) 0 8%,rgba(255,190,146,.85) 16%,rgba(242,190,235,.56) 42%,rgba(244,216,249,.19) 66%,transparent 74%);filter:blur(5px);animation:orb-breathe 5.5s ease-in-out infinite}
+    @keyframes orb-breathe{0%,100%{transform:translateY(1px) scale(.96);opacity:.78}50%{transform:translateY(-4px) scale(1.06);opacity:1}}
+    .hero-kicker{display:flex;align-items:center;gap:8px;margin:0 0 11px;color:#716b71;font-size:7px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+    .hero-kicker::before{width:6px;height:6px;border-radius:50%;background:var(--coral);content:""}
+    .hero h1{max-width:13ch;margin:0;font-family:var(--serif);font-size:clamp(48px,7.4vw,96px);font-weight:400;letter-spacing:-.065em;line-height:.91}
+    .hero h1 span{display:block}
+    .hero h1 em{font-weight:400}
+    .hero-lead{max-width:54ch;margin:13px 18px 0;color:#5b555d;font-size:clamp(11px,1.2vw,14px);line-height:1.5}
+    .hero-action{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:44px;margin-block-start:17px;padding:7px 9px 7px 15px;border:1px solid #d8edac;border-radius:99px;color:#375124;background:linear-gradient(110deg,#e1f7b0,#f1fad9);font-size:9px;font-weight:800;box-shadow:0 2px 0 rgba(116,151,67,.08);transition:transform 150ms ease,box-shadow 150ms ease}
+    .hero-action:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(116,151,67,.15)}
+    .hero-action__icon{display:grid;width:27px;height:27px;place-items:center;border-radius:50%;color:var(--white);background:var(--ink);font-size:12px}
+    .hero-micro{margin:7px 0 0;color:#78717a;font-size:6px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .hero-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:15px;width:min(100%,960px);margin:clamp(26px,4.3vh,47px) auto 0;padding:0 11px}
+    .idea-card{position:relative;display:grid;grid-template-rows:auto 1fr;min-width:0;min-height:142px;padding:15px 16px 13px;border:1px solid rgba(64,52,67,.055);border-radius:17px;text-align:left;box-shadow:0 12px 26px rgba(52,39,50,.055);transition:transform 220ms var(--ease),box-shadow 220ms ease}
+    .idea-card:nth-child(1){z-index:1;background:var(--lilac);transform:rotate(-2.4deg) translateY(8px)}
+    .idea-card:nth-child(2){z-index:2;background:var(--butter);transform:translateY(-3px)}
+    .idea-card:nth-child(3){z-index:1;background:var(--mint);transform:rotate(2deg) translateY(8px)}
+    .idea-card:hover{z-index:4;box-shadow:0 16px 34px rgba(52,39,50,.12)}
+    .idea-card:nth-child(1):hover{transform:rotate(-1deg) translateY(-3px)}
+    .idea-card:nth-child(2):hover{transform:translateY(-7px)}
+    .idea-card:nth-child(3):hover{transform:rotate(1deg) translateY(-3px)}
+    .idea-card__top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#55505a;font-size:7px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .idea-card__top span:last-child{font-family:Consolas,"Courier New",monospace;font-size:7px;opacity:.7}
+    .idea-card__content{display:grid;grid-template-columns:minmax(0,1fr) 64px;align-items:end;gap:10px;margin-block-start:10px}
+    .idea-card h2{max-width:17ch;margin:0;font-family:var(--serif);font-size:clamp(14px,1.75vw,20px);font-weight:600;letter-spacing:-.04em;line-height:1.05}
+    .idea-card p{max-width:25ch;margin:7px 0 0;color:#4f4a51;font-size:8px;line-height:1.35}
+    .idea-card__art{display:grid;width:64px;height:57px;place-items:center;overflow:hidden;border-radius:9px;background:rgba(255,255,255,.56)}
+    .idea-card__art svg{width:100%;height:100%}
+    .hero-foot{position:absolute;right:var(--gutter);bottom:4.5vh;left:var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:18px;color:#706a72;font-size:7px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .hero-foot a{display:inline-flex;align-items:center;gap:6px;min-height:24px;color:#625b63}
+    .hero-foot a:hover{color:var(--ink)}
+
+    .menu-overlay{position:fixed;z-index:180;inset:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.72fr);align-items:end;gap:25px;padding:clamp(24px,7vw,84px);color:var(--white);background:rgba(35,31,39,.98)}
+    .menu-overlay[hidden]{display:none}
+    .menu-close{position:absolute;top:clamp(18px,4vw,40px);right:clamp(18px,4vw,40px);display:grid;width:44px;height:44px;place-items:center;border:1px solid #9d959e;border-radius:50%;color:var(--white);background:transparent;font-size:24px}
+    .menu-close:hover{color:var(--ink);background:var(--lime);border-color:var(--lime)}
+    .menu-label{margin:0 0 18px;color:#c7e89b;font-size:8px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .menu-links{display:grid}
+    .menu-links a{display:flex;align-items:baseline;gap:15px;width:fit-content;padding-block:5px;font-family:var(--serif);font-size:clamp(42px,8vw,98px);letter-spacing:-.065em;line-height:.92}
+    .menu-links a:hover{color:#d9f1ac}
+    .menu-links small{color:#a29aa3;font-family:Consolas,"Courier New",monospace;font-size:9px;letter-spacing:0}
+    .menu-aside{max-width:33ch;justify-self:end;color:#d3cdd4;font-size:12px;line-height:1.55}
+    .menu-aside strong{display:block;margin-block-end:11px;color:var(--white);font-size:16px}
+
+    .section-nav{position:sticky;z-index:90;top:0;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;min-height:var(--nav-h);padding-inline:var(--gutter);border-block:1px solid #28242b;color:var(--white);background:var(--ink)}
+    .section-nav__brand{display:inline-flex;align-items:center;gap:8px;min-height:44px;flex:0 0 auto;font-size:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .section-nav__mark{display:grid;width:21px;height:21px;place-items:center;border:1px solid #cfdfb1;border-radius:50%;color:#dff3ba;font-size:8px}
+    .section-nav__links{display:flex;align-items:center;gap:clamp(12px,2.5vw,32px)}
+    .section-nav__links a{display:inline-flex;align-items:center;min-height:42px;color:#ded9df;font-size:7px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+    .section-nav__links a:hover,.section-nav__links a[aria-current=location]{color:#dff3ba}
+    .section-nav__cta{display:inline-flex;align-items:center;gap:7px;min-height:33px;padding:6px 10px;border:1px solid #77717a;border-radius:99px;font-size:7px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .section-nav__cta:hover{border-color:#dff3ba;color:#dff3ba}
+
+    .ethos-section{width:100%;padding:clamp(45px,6.4vw,88px) var(--gutter) clamp(54px,7vw,94px);background:var(--white)}
+    .ethos-wrap{width:min(100%,1160px);margin-inline:auto;text-align:center}
+    .ethos-section h2{margin:0;font-family:var(--serif);font-size:clamp(24px,3vw,38px);font-style:italic;font-weight:400;letter-spacing:-.045em}
+    .ethos-intro{max-width:55ch;margin:11px auto 0;color:var(--muted);font-size:11px;line-height:1.5}
+    .ethos-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-block-start:25px;border:1px solid var(--line);border-radius:14px;background:#fff}
+    .ethos-value{display:flex;align-items:center;justify-content:center;gap:9px;min-height:58px;padding:10px 14px;border-inline-end:1px solid var(--line);font-size:9px;font-weight:800}
+    .ethos-value:last-child{border-inline-end:0}
+    .ethos-value__dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:var(--coral)}
+    .ethos-value:nth-child(2) .ethos-value__dot{background:#a985c2}
+    .ethos-value:nth-child(3) .ethos-value__dot{background:#8fb969}
+
+    .section-wrap{width:min(100%,1220px);margin-inline:auto}
+    .services-section{width:100%;padding:clamp(68px,9vw,128px) var(--gutter);background:var(--paper)}
+    .section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,.56fr);align-items:end;gap:28px;margin-block-end:clamp(26px,4vw,45px)}
+    .eyebrow{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:#655e67;font-size:7px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+    .eyebrow::before{width:6px;height:6px;border:1px solid var(--coral);border-radius:50%;background:var(--coral);content:""}
+    .section-head h2,.work-head h2,.approach-head h2,.contact-section h2{max-width:13ch;margin:0;font-family:var(--serif);font-size:clamp(37px,6vw,74px);font-weight:400;letter-spacing:-.065em;line-height:.98}
+    .section-head__intro{max-width:46ch;margin:0 0 4px;color:#625c64;font-size:12px;line-height:1.55}
+    .service-list{display:grid;gap:15px}
+    .service-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(250px,.9fr);align-items:center;gap:clamp(23px,5vw,63px);min-width:0;padding:clamp(20px,4vw,43px);border:1px solid rgba(65,51,68,.045);border-radius:20px;background:var(--cream);box-shadow:0 8px 28px rgba(49,38,48,.025)}
+    .service-row:nth-child(2){background:#fbf8ff}
+    .service-row:nth-child(3){background:#f7faef}
+    .service-row__copy{min-width:0}
+    .service-label{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:#6c656d;font-size:7px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .service-label span{display:grid;width:20px;height:20px;place-items:center;border-radius:6px;color:#60566b;background:var(--lilac);font-size:8px}
+    .service-row:nth-child(2) .service-label span{color:#8c6445;background:var(--butter)}
+    .service-row:nth-child(3) .service-label span{color:#496139;background:var(--lime)}
+    .service-row h3{max-width:14ch;margin:0;font-family:var(--serif);font-size:clamp(27px,3.7vw,45px);font-weight:500;letter-spacing:-.055em;line-height:1.01}
+    .service-row__desc{max-width:48ch;margin:12px 0 0;color:#5d565f;font-size:11px;line-height:1.55}
+    .service-points{display:grid;gap:6px;margin:16px 0 0;padding:0;list-style:none}
+    .service-points li{display:flex;align-items:flex-start;gap:8px;color:#544e56;font-size:9px;line-height:1.4}
+    .service-points li::before{width:13px;height:13px;flex:0 0 13px;margin-block-start:1px;border:1px solid #d4cbd8;border-radius:4px;background:var(--white);content:"✓";color:#61506a;font-size:8px;font-weight:800;text-align:center;line-height:12px}
+    .service-link{display:inline-flex;align-items:center;gap:8px;min-height:36px;margin-block-start:16px;padding:7px 10px;border:1px solid #ded7dd;border-radius:99px;background:rgba(255,255,255,.72);font-size:8px;font-weight:800;transition:border-color 130ms ease,transform 130ms ease}
+    .service-link:hover{transform:translateY(-1px);border-color:#a99eab}
+    .service-link span{font-size:12px}
+    .service-visual{position:relative;display:grid;min-height:205px;place-items:center;overflow:hidden;border-radius:15px;background:var(--lilac)}
+    .service-row:nth-child(2) .service-visual{background:#ffefd4}
+    .service-row:nth-child(3) .service-visual{background:#e8f4d8}
+    .service-visual::before{position:absolute;inset:12px;border:1px solid rgba(50,41,53,.08);border-radius:11px;pointer-events:none;content:""}
+    .service-visual svg{position:relative;z-index:1;width:min(100%,360px);height:auto}
+
+    .approach-section{width:100%;padding:clamp(70px,9vw,128px) var(--gutter);background:var(--cream-deep)}
+    .approach-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,.55fr);align-items:end;gap:28px}
+    .approach-head h2{max-width:12ch}
+    .approach-head p{max-width:45ch;margin:0 0 4px;color:#625b63;font-size:12px;line-height:1.55}
+    .approach-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-block-start:35px}
+    .approach-card{min-height:167px;padding:17px;border:1px solid #ebe4e3;border-radius:13px;background:rgba(255,255,255,.78)}
+    .approach-card__num{color:#847d84;font-family:Consolas,"Courier New",monospace;font-size:8px}
+    .approach-card h3{margin:28px 0 8px;font-family:var(--serif);font-size:20px;font-weight:500;letter-spacing:-.035em}
+    .approach-card p{max-width:34ch;margin:0;color:#655e66;font-size:10px;line-height:1.5}
+    .approach-note{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-block-start:16px;padding:14px 16px;border-radius:11px;color:#514b53;background:#eee7ef;font-size:9px;line-height:1.45}
+    .approach-note strong{color:var(--ink)}
+    .approach-note span:last-child{font-family:Consolas,"Courier New",monospace;font-size:8px;white-space:nowrap}
+
+    .work-section{width:100%;padding:clamp(68px,9vw,126px) var(--gutter);background:var(--white)}
+    .work-head{display:flex;align-items:end;justify-content:space-between;gap:24px}
+    .work-head h2{max-width:11ch}
+    .work-intro{max-width:47ch;margin:13px 0 0;color:#625c64;font-size:11px;line-height:1.5}
+    .work-filters{display:flex;flex-wrap:wrap;justify-content:end;gap:6px}
+    .work-filters button{min-height:33px;padding:6px 10px;border:1px solid #e3dfe2;border-radius:99px;color:#5d565f;background:transparent;font-size:7px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;transition:color 130ms ease,background 130ms ease,border-color 130ms ease}
+    .work-filters button:hover,.work-filters button[aria-pressed=true]{border-color:#c7d9a5;color:#3e572d;background:#eef8d8}
+    .work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-block-start:32px}
+    .work-card{min-width:0;overflow:hidden;border:1px solid #eee9ea;border-radius:14px;background:var(--paper);transition:transform 180ms var(--ease),box-shadow 180ms ease}
+    .work-card:hover{transform:translateY(-3px);box-shadow:0 13px 28px rgba(44,37,46,.07)}
+    .work-card[hidden]{display:none}
+    .work-card__art{position:relative;display:grid;min-height:154px;aspect-ratio:1.48;place-items:center;overflow:hidden;background:#f3e3fa}
+    .work-card:nth-child(2) .work-card__art{background:#fff1d7}
+    .work-card:nth-child(3) .work-card__art{background:#edf6d9}
+    .work-card__art svg{width:100%;height:100%}
+    .work-card__index{position:absolute;top:9px;left:10px;padding:5px 7px;border:1px solid rgba(35,31,39,.08);border-radius:5px;background:rgba(255,255,255,.76);font-family:Consolas,"Courier New",monospace;font-size:7px}
+    .work-card__body{padding:13px 13px 15px}
+    .work-card__category{margin:0 0 7px;color:#827a83;font-size:6px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    .work-card__body h3{margin:0;font-family:var(--serif);font-size:17px;font-weight:500;letter-spacing:-.035em}
+    .work-card__body p{margin:6px 0 0;color:#625b64;font-size:9px;line-height:1.45}
+    .work-card__route{display:flex;flex-wrap:wrap;gap:5px;margin-block-start:10px}
+    .work-card__route span{padding:4px 6px;border:1px solid #e6e0e3;border-radius:5px;color:#655e66;background:#fff;font-family:Consolas,"Courier New",monospace;font-size:6px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+    .work-disclaimer{margin:12px 0 0;color:#625b64;font-size:7px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+
+    .contact-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,.65fr);align-items:end;gap:30px;width:100%;padding:clamp(72px,9vw,128px) var(--gutter);background:var(--lilac)}
+    .contact-section .eyebrow{margin-block-end:15px}
+    .contact-section h2{max-width:11ch}
+    .contact-copy{max-width:50ch;margin:17px 0 0;color:#514951;font-size:12px;line-height:1.55}
+    .contact-actions{display:grid;justify-items:start;gap:10px}
+    .contact-actions a{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-width:min(100%,278px);min-height:47px;padding:10px 13px;border:1px solid #d5edaa;border-radius:99px;color:#395226;background:#e5f7bc;font-size:8px;font-weight:800;transition:transform 130ms ease,box-shadow 130ms ease}
+    .contact-actions a:hover{transform:translateY(-2px);box-shadow:0 7px 15px rgba(84,108,53,.13)}
+    .contact-actions a span{display:grid;width:25px;height:25px;place-items:center;border-radius:50%;color:var(--white);background:var(--ink);font-size:12px}
+    .contact-actions small{max-width:35ch;color:#514951;font-size:7px;font-weight:800;letter-spacing:.06em;line-height:1.45;text-transform:uppercase}
+    .footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;min-height:58px;padding:11px var(--gutter);color:#ddd7de;background:var(--ink);font-size:7px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .footer p{margin:0}
+    .footer a{display:inline-flex;align-items:center;min-height:34px;color:#dff3ba}
+    .footer a:hover{text-decoration:underline;text-underline-offset:4px}
+
+    .reveal{opacity:1;transform:none;transition:opacity 600ms var(--ease),transform 600ms var(--ease)}
+    .js .reveal{opacity:0;transform:translateY(17px)}
+    .js .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .delay-1{transition-delay:70ms}
+    .delay-2{transition-delay:140ms}
+
+    @media(max-width:960px){
+      .hero-cards{width:min(100%,800px);gap:10px}
+      .idea-card{min-height:132px;padding:13px}
+      .idea-card__content{grid-template-columns:minmax(0,1fr) 54px;gap:7px}
+      .idea-card__art{width:54px;height:50px}
+      .section-head,.approach-head{grid-template-columns:minmax(0,1fr);gap:15px}
+      .section-head__intro,.approach-head p{max-width:55ch}
+      .service-row{grid-template-columns:minmax(0,1.1fr) minmax(220px,.9fr);gap:23px}
+      .work-head{align-items:start;flex-direction:column}
+      .work-filters{justify-content:start}
+    }
+    @media(max-width:760px){
+      :root{--gutter:20px;--nav-h:52px}
+      .site-nav{display:none}
+      .header-cta{margin-inline-start:auto}
+      .menu-trigger{display:inline-flex}
+      .hero{padding-block:10px 24px}
+      .hero-main{padding-block:21px 0}
+      .hero h1{font-size:clamp(47px,8.2vw,68px)}
+      .hero-cards{width:min(100%,700px);gap:9px;margin-block-start:27px;padding-inline:4px}
+      .idea-card{min-height:129px;padding:12px;border-radius:14px}
+      .idea-card h2{font-size:clamp(13px,1.9vw,17px)}
+      .idea-card p{font-size:7px}
+      .idea-card__content{grid-template-columns:minmax(0,1fr) 44px;gap:6px}
+      .idea-card__art{width:44px;height:43px;border-radius:7px}
+      .hero-foot{position:static;grid-column:1/-1;margin-block-start:19px;font-size:6px}
+      .section-nav__links{gap:12px}
+      .principle{padding-inline:10px}
+      .ethos-values{margin-block-start:20px}
+      .service-row{grid-template-columns:minmax(0,1fr);gap:17px;padding:22px}
+      .service-visual{min-height:180px}
+      .service-visual svg{width:min(100%,340px)}
+      .service-row__copy{order:0}
+      .service-row__visual{order:1}
+      .approach-grid{gap:8px}
+      .work-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .work-card:last-child{grid-column:1/-1}
+      .work-card:last-child .work-card__art{aspect-ratio:2.1}
+      .contact-section{grid-template-columns:minmax(0,1fr);gap:23px}
+    }
+    @media(max-width:540px){
+      :root{--gutter:15px}
+      .site-header{gap:7px;min-height:42px}
+      .brand{gap:6px}
+      .brand-mark{width:23px;height:23px;flex-basis:23px}
+      .brand-note{font-size:5px}
+      .header-cta{gap:5px;min-height:29px;margin-inline-start:auto;padding:5px 8px;font-size:7px}
+      .menu-trigger{min-width:58px;min-height:34px;font-size:7px}
+      .hero{padding-block:8px 20px}
+      .hero-main{padding-block:18px 0}
+      .orb{width:58px;height:58px;margin-block-end:-10px}
+      .hero-kicker{margin-block-end:9px;font-size:6px;letter-spacing:.11em}
+      .hero h1{font-size:clamp(41px,11.4vw,59px);line-height:.95}
+      .hero-lead{max-width:39ch;margin-block-start:10px;font-size:10px}
+      .hero-action{min-height:40px;margin-block-start:13px;font-size:8px}
+      .hero-action__icon{width:24px;height:24px}
+      .hero-micro{font-size:5px}
+      .hero-cards{grid-template-columns:minmax(0,1fr);gap:8px;width:min(100%,390px);margin-block-start:24px;padding-inline:0}
+      .idea-card,.idea-card:nth-child(1),.idea-card:nth-child(2),.idea-card:nth-child(3){grid-template-columns:minmax(0,1fr) 63px;grid-template-rows:auto 1fr;min-height:94px;padding:10px 12px;border-radius:12px;transform:none}
+      .idea-card:hover,.idea-card:nth-child(1):hover,.idea-card:nth-child(2):hover,.idea-card:nth-child(3):hover{transform:translateY(-2px)}
+      .idea-card__top{grid-column:1/-1;font-size:6px}
+      .idea-card__content{grid-column:1/-1;grid-template-columns:minmax(0,1fr) 56px;align-items:center;margin-block-start:6px}
+      .idea-card h2{font-size:15px}
+      .idea-card p{max-width:35ch;margin-block-start:4px;font-size:7px}
+      .idea-card__art{width:56px;height:45px}
+      .hero-foot{align-items:flex-start;gap:8px;margin-block-start:16px}
+      .hero-foot span{max-width:22ch}
+      .header-cta{flex:0 0 auto}
+      .menu-overlay{grid-template-columns:minmax(0,1fr);align-items:end;gap:18px;padding:23px}
+      .menu-links a{font-size:clamp(42px,14vw,66px)}
+      .menu-aside{justify-self:start;font-size:10px}
+      .section-nav{gap:8px;min-height:47px;padding-inline:9px}
+      .section-nav__brand{gap:5px;font-size:6px}
+      .section-nav__mark{width:19px;height:19px;font-size:7px}
+      .section-nav__links{min-width:0;gap:8px;overflow-x:auto;scrollbar-width:none}
+      .section-nav__links::-webkit-scrollbar{display:none}
+      .section-nav__links a{min-height:38px;flex:0 0 auto;font-size:6px;white-space:nowrap}
+      .section-nav__cta{gap:4px;min-height:30px;padding:5px 6px;font-size:6px;white-space:nowrap}
+      .ethos-section{padding-block:43px 48px}
+      .ethos-section h2{font-size:25px}
+      .ethos-intro{font-size:10px}
+      .ethos-values{grid-template-columns:minmax(0,1fr);margin-block-start:17px}
+      .ethos-value{justify-content:flex-start;min-height:43px;padding-inline:13px;border-inline-end:0;border-block-end:1px solid var(--line);font-size:8px}
+      .ethos-value:last-child{border-block-end:0}
+      .services-section,.approach-section,.work-section{padding-block:62px}
+      .section-head h2,.work-head h2,.approach-head h2,.contact-section h2{font-size:clamp(36px,11vw,56px)}
+      .section-head__intro,.approach-head p{font-size:11px}
+      .service-list{gap:10px}
+      .service-row{gap:13px;padding:16px;border-radius:15px}
+      .service-row h3{font-size:27px}
+      .service-row__desc{font-size:10px}
+      .service-points li{font-size:8px}
+      .service-visual{min-height:150px;border-radius:11px}
+      .service-visual svg{width:min(100%,290px)}
+      .approach-grid{grid-template-columns:minmax(0,1fr);gap:7px;margin-block-start:24px}
+      .approach-card{display:grid;grid-template-columns:32px minmax(0,1fr);min-height:0;gap:0 8px;padding:11px;border-radius:10px}
+      .approach-card__num{grid-row:1 / span 2;padding-block-start:2px;font-size:7px}
+      .approach-card h3{margin:0 0 4px;font-size:16px}
+      .approach-card p{grid-column:2;font-size:9px}
+      .approach-note{align-items:flex-start;flex-direction:column;gap:7px;margin-block-start:10px;padding:11px;font-size:8px}
+      .approach-note span:last-child{font-size:7px;white-space:normal}
+      .work-head{gap:15px}
+      .work-intro{font-size:10px}
+      .work-filters{gap:4px}
+      .work-filters button{min-height:29px;padding:5px 7px;font-size:6px}
+      .work-grid{grid-template-columns:minmax(0,1fr);gap:10px;margin-block-start:23px}
+      .work-card:last-child{grid-column:auto}
+      .work-card:last-child .work-card__art{aspect-ratio:1.48}
+      .work-card__art{min-height:148px}
+      .contact-section{gap:18px;padding-block:61px}
+      .contact-copy{font-size:10px}
+      .contact-actions a{width:100%;min-width:0}
+      .footer{align-items:flex-start;flex-direction:column;padding-block:13px}
+    }
+    @media(max-width:540px) and (max-height:700px){
+      .hero-main{padding-block:9px 0}
+      .orb{width:42px;height:42px;margin-block-end:-8px}
+      .hero h1{font-size:clamp(38px,10.2vw,49px)}
+      .hero-lead{margin-block-start:7px;font-size:9px}
+      .hero-action{min-height:35px;margin-block-start:8px}
+      .hero-action__icon{width:21px;height:21px}
+      .hero-micro{display:none}
+      .hero-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-block-start:12px}
+      .idea-card,.idea-card:nth-child(1),.idea-card:nth-child(2),.idea-card:nth-child(3){min-height:68px;padding:7px 8px}
+      .idea-card:nth-child(3){grid-column:1/-1}
+      .idea-card__top{font-size:5px}
+      .idea-card__content{grid-template-columns:minmax(0,1fr) 36px;gap:4px;margin-block-start:4px}
+      .idea-card__art{width:36px;height:31px}
+      .idea-card h2{font-size:11px}
+      .idea-card p{font-size:6px}
+      .hero-foot{margin-block-start:10px}
+    }
+    @media(max-height:700px) and (min-width:761px){
+      .hero{padding-block:9px 23px}
+      .hero-main{padding-block:14px 0}
+      .orb{width:54px;height:54px;margin-block-end:-10px}
+      .hero h1{font-size:clamp(44px,6.7vw,75px)}
+      .hero-cards{margin-block-start:21px}
+      .idea-card{min-height:122px}
+      .hero-action{min-height:39px;margin-block-start:12px}
+      .hero-foot{bottom:2.5vh}
+    }
+    @media(pointer:coarse){
+      .site-nav a,.header-cta,.menu-trigger,.menu-close,.section-nav__links a,.section-nav__cta,.service-link,.work-filters button,.contact-actions a{min-height:44px}
+      .hero-foot a{min-height:40px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+      .js .reveal{opacity:1;transform:none}
+    }
+    :root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+    :root[data-motion="off"] .reveal{opacity:1;transform:none}
+    @media(forced-colors:active){
+      .idea-card,.service-row,.work-card,.contact-actions a{border:1px solid CanvasText}
+      .hero,.contact-section{border-block:1px solid CanvasText}
+      .orb{display:none}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><span id="page-progress"></span></div>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="Relay, home"><svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M13 3h14v7h6v7h4v6h-4v7h-6v7H13v-7H7v-7H3v-6h4v-7h6z" fill="#231f27"/><path d="M16 13h8v4h4v6h-4v4h-8v-4h-4v-6h4z" fill="#fffafa"/><circle cx="20" cy="20" r="2.2" fill="#f17a5d"/></svg><span><span class="brand-name">Relay</span><span class="brand-note">Applied intelligence</span></span></a>
+        <nav class="site-nav" aria-label="Main navigation"><a href="#services">Services</a><a href="#approach">Our approach</a><a href="#work">Work notes</a></nav>
+        <a class="header-cta" href="#contact">Start a conversation <span class="header-cta__spark" aria-hidden="true">↗</span></a>
+        <button class="menu-trigger" id="menu-trigger" type="button" aria-expanded="false" aria-controls="menu-overlay"><span class="menu-icon" aria-hidden="true"><i></i><i></i></span>Menu</button>
+      </header>
+      <div class="hero-main">
+        <div class="orb" aria-hidden="true"></div>
+        <p class="hero-kicker">Relay / Business-first systems</p>
+        <h1 id="hero-title">Make room<br>for <em>real work.</em></h1>
+        <p class="hero-lead">Automation, AI assistants, and integrations—designed around the work your business needs to do, with people still in charge of the important calls.</p>
+        <a class="hero-action" href="#services"><span class="hero-action__icon" aria-hidden="true">↗</span>Explore what Relay can do</a>
+        <p class="hero-micro">Outcome first / human checkpoints built in</p>
+        <div class="hero-cards" role="group" aria-label="Three illustrative ways Relay can support work">
+          <a class="idea-card" href="#automation"><div class="idea-card__top"><span>Automation</span><span>01</span></div><div class="idea-card__content"><div><h2>Route the repeatable.</h2><p>Let routine requests move—with clear rules and an owner.</p></div><span class="idea-card__art"><svg viewBox="0 0 72 62" aria-hidden="true"><rect x="13" y="9" width="35" height="44" rx="6" fill="#fff"/><path d="M21 20h19M21 27h14M21 34h18" stroke="#4c4450" stroke-width="2" stroke-linecap="round"/><circle cx="49" cy="42" r="12" fill="#e2f3b9"/><path d="m44 42 3 3 6-7" fill="none" stroke="#556d35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></a>
+          <a class="idea-card" href="#assistant"><div class="idea-card__top"><span>AI assistants</span><span>02</span></div><div class="idea-card__content"><div><h2>Find the useful answer.</h2><p>Ground a first draft in approved team knowledge.</p></div><span class="idea-card__art"><svg viewBox="0 0 72 62" aria-hidden="true"><rect x="13" y="12" width="46" height="33" rx="9" fill="#fff"/><path d="M23 25h26M23 32h18" stroke="#736477" stroke-width="2" stroke-linecap="round"/><path d="m24 44-4 8 13-7" fill="#fff"/><circle cx="52" cy="44" r="11" fill="#f3d7f8"/><path d="M52 38v12M46 44h12" stroke="#714d7a" stroke-width="2" stroke-linecap="round"/></svg></span></div></a>
+          <a class="idea-card" href="#integrations"><div class="idea-card__top"><span>Integrations</span><span>03</span></div><div class="idea-card__content"><div><h2>Keep handoffs moving.</h2><p>Carry the right context to the next step.</p></div><span class="idea-card__art"><svg viewBox="0 0 72 62" aria-hidden="true"><rect x="8" y="15" width="20" height="26" rx="5" fill="#fff"/><rect x="44" y="22" width="20" height="26" rx="5" fill="#fff"/><path d="M28 28h15M39 24l5 4-5 4" fill="none" stroke="#657449" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="28" r="3" fill="#f17a5d"/><circle cx="54" cy="35" r="3" fill="#d0e9a5"/></svg></span></div></a>
+        </div>
+      </div>
+      <div class="hero-foot"><span>Automation / assistants / connected systems</span><a href="#principles">Scroll to explore <span aria-hidden="true">↓</span></a></div>
+    </section>
+
+    <div class="menu-overlay" id="menu-overlay" role="dialog" aria-modal="true" aria-label="Main menu" hidden>
+      <button class="menu-close" id="menu-close" type="button" aria-label="Close menu">×</button>
+      <div><p class="menu-label">Relay / Real work, better systems</p><nav class="menu-links" aria-label="Expanded navigation"><a href="#principles"><small>01</small>Principles</a><a href="#services"><small>02</small>Services</a><a href="#approach"><small>03</small>Approach</a><a href="#work"><small>04</small>Work notes</a><a href="#contact"><small>05</small>Contact</a></nav></div>
+      <p class="menu-aside"><strong>Start with the work.</strong>We map the real workflow first, then decide where automation, assistants, and integrations can help—and where a person should stay in the loop.</p>
+    </div>
+
+    <nav class="section-nav" aria-label="Page sections">
+      <a class="section-nav__brand" href="#top"><span class="section-nav__mark" aria-hidden="true">R</span><span>Relay / Systems for people</span></a>
+      <div class="section-nav__links"><a href="#principles" data-nav="principles">Principles</a><a href="#services" data-nav="services">Services</a><a href="#approach" data-nav="approach">Approach</a><a href="#work" data-nav="work">Work notes</a></div>
+      <a class="section-nav__cta" href="#contact">Talk through a workflow <span aria-hidden="true">↗</span></a>
+    </nav>
+
+    <section class="ethos-section" id="principles" data-chapter aria-labelledby="ethos-title">
+      <div class="ethos-wrap reveal"><h2 id="ethos-title">A better system starts with the work.</h2><p class="ethos-intro">No tool-first pitch. We make technology useful by giving it a clear role inside a real workflow.</p><div class="ethos-values"><div class="ethos-value"><span class="ethos-value__dot" aria-hidden="true"></span><span>Business need leads</span></div><div class="ethos-value"><span class="ethos-value__dot" aria-hidden="true"></span><span>People own the decisions</span></div><div class="ethos-value"><span class="ethos-value__dot" aria-hidden="true"></span><span>Systems fit the way work moves</span></div></div></div>
+    </section>
+
+    <section class="services-section" id="services" data-chapter aria-labelledby="services-title">
+      <div class="section-wrap">
+        <div class="section-head reveal"><div><p class="eyebrow">01 / Thoughtful automation</p><h2 id="services-title">A little less busy.<br>A lot more useful.</h2></div><p class="section-head__intro">Relay brings the right kind of support to the right part of the work—from repeatable routing to knowledge and cross-tool handoffs.</p></div>
+        <div class="service-list">
+          <article class="service-row reveal" id="automation"><div class="service-row__copy"><p class="service-label"><span>01</span>Automation</p><h3>Move the repeatable work forward.</h3><p class="service-row__desc">Reduce manual routing and re-entry with clear rules, sensible exceptions, and a named human owner.</p><ul class="service-points"><li>Route common requests to the next right step</li><li>Keep edge cases visible instead of forcing a guess</li><li>Make approvals and ownership easy to see</li></ul><a class="service-link" href="#contact">Explore workflow automation <span aria-hidden="true">↗</span></a></div><div class="service-visual"><svg viewBox="0 0 420 260" role="img" aria-label="Illustration of a request being sorted into a clear, human-reviewed workflow"><rect x="45" y="38" width="124" height="174" rx="18" fill="#fff"/><rect x="64" y="61" width="78" height="10" rx="5" fill="#85758b"/><rect x="64" y="83" width="89" height="6" rx="3" fill="#dad1dc"/><rect x="64" y="100" width="70" height="6" rx="3" fill="#dad1dc"/><rect x="64" y="127" width="64" height="51" rx="9" fill="#f3dcfa"/><path d="M80 150h32M80 161h24" stroke="#78677e" stroke-width="4" stroke-linecap="round"/><path d="M170 124h51v65h54V76h48" fill="none" stroke="#796c80" stroke-width="3" stroke-dasharray="5 7" stroke-linecap="round"/><circle cx="170" cy="124" r="8" fill="#fff" stroke="#806f86" stroke-width="3"/><circle cx="221" cy="124" r="8" fill="#f17a5d"/><circle cx="275" cy="189" r="8" fill="#fff" stroke="#806f86" stroke-width="3"/><circle cx="323" cy="76" r="8" fill="#dcefad" stroke="#806f86" stroke-width="3"/><rect x="289" y="105" width="79" height="54" rx="12" fill="#fff"/><circle cx="313" cy="132" r="10" fill="#e4f4bd"/><path d="m309 132 3 3 6-7" fill="none" stroke="#607243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M331 127h24M331 137h18" stroke="#aaa0ad" stroke-width="3" stroke-linecap="round"/></svg></div></article>
+          <article class="service-row reveal delay-1" id="assistant"><div class="service-row__copy"><p class="service-label"><span>02</span>AI assistants</p><h3>Answers that know where they came from.</h3><p class="service-row__desc">Help teams find approved information, shape a useful draft, and leave the review decision with a person.</p><ul class="service-points"><li>Search connected, approved knowledge</li><li>Show sources alongside the answer</li><li>Prepare, never silently send</li></ul><a class="service-link" href="#contact">Explore AI assistants <span aria-hidden="true">↗</span></a></div><div class="service-visual"><svg viewBox="0 0 420 260" role="img" aria-label="Illustration of a source-grounded assistant response awaiting a human review"><rect x="53" y="40" width="314" height="178" rx="17" fill="#fff"/><rect x="53" y="40" width="314" height="36" rx="17" fill="#fff0d2"/><circle cx="75" cy="58" r="5" fill="#f17a5d"/><circle cx="92" cy="58" r="5" fill="#e3c994"/><circle cx="109" cy="58" r="5" fill="#e3c994"/><rect x="75" y="98" width="82" height="94" rx="12" fill="#fff5df"/><path d="M91 120h49M91 133h36M91 146h43M91 168h31" stroke="#af886c" stroke-width="4" stroke-linecap="round"/><rect x="179" y="99" width="157" height="9" rx="4" fill="#504650"/><rect x="179" y="119" width="143" height="5" rx="2" fill="#d2c8d2"/><rect x="179" y="133" width="151" height="5" rx="2" fill="#d2c8d2"/><rect x="179" y="157" width="141" height="27" rx="8" fill="#e5f3c4"/><circle cx="193" cy="170" r="5" fill="#87a45e"/><path d="M205 168h96M205 175h69" stroke="#83906b" stroke-width="3" stroke-linecap="round"/><path d="M157 143h15" stroke="#f17a5d" stroke-width="2" stroke-dasharray="3 3"/></svg></div></article>
+          <article class="service-row reveal" id="integrations"><div class="service-row__copy"><p class="service-label"><span>03</span>Integrations</p><h3>Keep the handoff feeling effortless.</h3><p class="service-row__desc">Connect the tools already holding the work so context moves with it and the next action is easier to pick up.</p><ul class="service-points"><li>Carry key information across systems</li><li>Surface suggested owners and next actions</li><li>Let a teammate confirm before assignment</li></ul><a class="service-link" href="#contact">Explore integrations <span aria-hidden="true">↗</span></a></div><div class="service-visual"><svg viewBox="0 0 420 260" role="img" aria-label="Illustration of connected work tools passing context between teams"><rect x="49" y="70" width="94" height="111" rx="18" fill="#fff"/><rect x="164" y="42" width="94" height="111" rx="18" fill="#fff"/><rect x="279" y="94" width="94" height="111" rx="18" fill="#fff"/><circle cx="96" cy="106" r="16" fill="#f2dcfa"/><circle cx="211" cy="78" r="16" fill="#fff0d2"/><circle cx="326" cy="130" r="16" fill="#e5f3c4"/><path d="M91 106h10M206 78h10M321 130h10" stroke="#625866" stroke-width="3" stroke-linecap="round"/><path d="M70 139h51M70 150h38M185 111h51M185 122h37M300 163h51M300 174h38" stroke="#c8bdca" stroke-width="4" stroke-linecap="round"/><path d="M143 118h16M155 114l5 4-5 4M258 93h16M270 89l5 4-5 4" fill="none" stroke="#7d8971" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="approach-section" id="approach" data-chapter aria-labelledby="approach-title">
+      <div class="section-wrap"><div class="approach-head reveal"><div><p class="eyebrow">02 / A people-first method</p><h2 id="approach-title">Thoughtful by default.</h2></div><p>Technology should make good work easier, not harder to own. So we keep the whole route in view—from the first request to the person accountable for what happens next.</p></div><div class="approach-grid reveal delay-1"><article class="approach-card"><span class="approach-card__num">01 / LISTEN</span><h3>Start with why.</h3><p>Get clear on the business outcome before choosing a tool.</p></article><article class="approach-card"><span class="approach-card__num">02 / MAP</span><h3>See the real work.</h3><p>Understand the handoffs, exceptions, and context people use.</p></article><article class="approach-card"><span class="approach-card__num">03 / BUILD</span><h3>Fit the right assist.</h3><p>Give automation and AI a useful, bounded job to do.</p></article></div><div class="approach-note reveal"><span><strong>Human checkpoints are part of the design.</strong> People stay responsible for review, approval, and the moments that need judgment.</span><span>OUTCOME → WORK → ASSIST → OWNER</span></div></div>
+    </section>
+
+    <section class="work-section" id="work" data-chapter aria-labelledby="work-title">
+      <div class="section-wrap"><div class="work-head reveal"><div><p class="eyebrow">03 / Illustrative workflows</p><h2 id="work-title">A few good places to begin.</h2><p class="work-intro">Sample workflow ideas, shown to make the approach concrete. They are not client projects, case studies, or outcome claims.</p></div><div class="work-filters" role="group" aria-label="Filter illustrative workflows"><button type="button" data-filter="all" aria-pressed="true">All ideas</button><button type="button" data-filter="automation" aria-pressed="false">Automation</button><button type="button" data-filter="knowledge" aria-pressed="false">Knowledge</button><button type="button" data-filter="handoff" aria-pressed="false">Handoffs</button></div></div><div class="work-grid">
+        <article class="work-card" data-category="automation"><div class="work-card__art"><span class="work-card__index">IDEA / 01</span><svg viewBox="0 0 420 260" role="img" aria-label="Illustrative request routing workflow"><rect x="53" y="54" width="89" height="125" rx="14" fill="#fff"/><rect x="69" y="73" width="54" height="8" rx="4" fill="#8f7c96"/><rect x="69" y="92" width="60" height="5" rx="2" fill="#d3cad6"/><rect x="69" y="105" width="49" height="5" rx="2" fill="#d3cad6"/><rect x="69" y="127" width="40" height="33" rx="7" fill="#f2dcfa"/><path d="M143 111h62v63h75V82h74" fill="none" stroke="#8b7c8c" stroke-width="3" stroke-dasharray="5 7"/><circle cx="143" cy="111" r="7" fill="#fff" stroke="#8b7c8c" stroke-width="3"/><circle cx="205" cy="111" r="7" fill="#f17a5d"/><circle cx="280" cy="174" r="7" fill="#fff" stroke="#8b7c8c" stroke-width="3"/><circle cx="354" cy="82" r="7" fill="#e3f5bb" stroke="#8b7c8c" stroke-width="3"/><rect x="257" y="44" width="67" height="53" rx="11" fill="#fff"/><path d="M271 61h38M271 71h29M271 81h34" stroke="#8b7c8c" stroke-width="3" stroke-linecap="round"/></svg></div><div class="work-card__body"><p class="work-card__category">Automation / intake</p><h3>A calmer first response.</h3><p>Capture a request, route routine work, and make exceptions easy to spot.</p><div class="work-card__route"><span>request</span><span>route</span><span>review</span></div></div></article>
+        <article class="work-card" data-category="knowledge"><div class="work-card__art"><span class="work-card__index">IDEA / 02</span><svg viewBox="0 0 420 260" role="img" aria-label="Illustrative knowledge assistant preparing a source-linked answer for review"><rect x="58" y="49" width="304" height="159" rx="16" fill="#fff"/><rect x="58" y="49" width="304" height="29" rx="16" fill="#fff0d2"/><circle cx="77" cy="63" r="4" fill="#f17a5d"/><circle cx="91" cy="63" r="4" fill="#dfc28d"/><circle cx="105" cy="63" r="4" fill="#dfc28d"/><rect x="78" y="96" width="76" height="87" rx="10" fill="#fff7e5"/><path d="M92 118h47M92 130h36M92 142h43M92 161h31" stroke="#9b8065" stroke-width="3" stroke-linecap="round"/><rect x="173" y="97" width="157" height="8" rx="4" fill="#514850"/><rect x="173" y="115" width="140" height="4" rx="2" fill="#d6ced5"/><rect x="173" y="128" width="147" height="4" rx="2" fill="#d6ced5"/><rect x="173" y="148" width="142" height="27" rx="8" fill="#e6f4c9"/><circle cx="187" cy="161" r="5" fill="#8aa866"/><path d="M199 159h97M199 166h60" stroke="#899277" stroke-width="3" stroke-linecap="round"/></svg></div><div class="work-card__body"><p class="work-card__category">AI assistant / knowledge</p><h3>Context with the answer.</h3><p>Find approved material and prepare a source-linked first draft.</p><div class="work-card__route"><span>source</span><span>draft</span><span>human check</span></div></div></article>
+        <article class="work-card" data-category="handoff"><div class="work-card__art"><span class="work-card__index">IDEA / 03</span><svg viewBox="0 0 420 260" role="img" aria-label="Illustrative notes-to-actions handoff with a person confirming the owner"><rect x="47" y="45" width="218" height="167" rx="14" fill="#fff"/><rect x="63" y="60" width="186" height="25" rx="7" fill="#e8f4d6"/><circle cx="78" cy="72" r="5" fill="#91aa72"/><path d="M93 70h102" stroke="#60734b" stroke-width="4" stroke-linecap="round"/><g fill="#f3dcf8"><rect x="65" y="102" width="14" height="14" rx="4"/><rect x="65" y="132" width="14" height="14" rx="4"/><rect x="65" y="162" width="14" height="14" rx="4"/></g><g stroke="#bbb1bc" stroke-width="4" stroke-linecap="round"><path d="M90 109h145M90 139h126M90 169h141"/></g><path d="M267 133h43v29h24" fill="none" stroke="#887989" stroke-width="3" stroke-dasharray="5 6"/><circle cx="361" cy="162" r="37" fill="#fff0d2" stroke="#7f7283" stroke-width="2"/><circle cx="349" cy="156" r="3" fill="#4a414b"/><circle cx="373" cy="156" r="3" fill="#4a414b"/><path d="M348 173h25" stroke="#f17a5d" stroke-width="3" stroke-linecap="round"/></svg></div><div class="work-card__body"><p class="work-card__category">Integration / handoff</p><h3>Notes that go somewhere.</h3><p>Turn meeting context into suggested owners and next steps.</p><div class="work-card__route"><span>notes</span><span>owner</span><span>confirm</span></div></div></article>
+      </div><p class="work-disclaimer reveal">Illustrative examples only / no real client information</p></div>
+    </section>
+
+    <section class="contact-section" id="contact" aria-labelledby="contact-title"><div><p class="eyebrow">Start with one workflow</p><h2 id="contact-title">Make room for what matters.</h2><p class="contact-copy">Bring a process that feels heavier than it should. Start with the outcome, map how the work moves, and decide where a system can help—without losing the human thread.</p></div><div class="contact-actions"><a href="mailto:hello@relayworks.example?subject=Start%20with%20one%20workflow">Talk through a workflow <span aria-hidden="true">↗</span></a><small>Sample inbox / hello@relayworks.example — illustrative placeholder</small></div></section>
+  </main>
+  <footer class="footer"><p>Relay / Room for real work concept</p><p>Business first / human checkpoints built in</p><a href="#top">Back to the beginning ↑</a></footer>
+
+  <script>
+    (()=>{
+      const root=document.documentElement;root.classList.add("js");
+      const trigger=document.getElementById("menu-trigger"),overlay=document.getElementById("menu-overlay"),close=document.getElementById("menu-close");
+      const openMenu=()=>{overlay.hidden=false;trigger.setAttribute("aria-expanded","true");close.focus()};
+      const closeMenu=()=>{overlay.hidden=true;trigger.setAttribute("aria-expanded","false");trigger.focus()};
+      trigger.addEventListener("click",()=>overlay.hidden?openMenu():closeMenu());close.addEventListener("click",closeMenu);
+      overlay.querySelectorAll("a").forEach(link=>link.addEventListener("click",()=>{const target=document.querySelector(link.getAttribute("href"));overlay.hidden=true;trigger.setAttribute("aria-expanded","false");if(target){target.setAttribute("tabindex","-1");target.focus({preventScroll:true})}}));
+      overlay.addEventListener("keydown",event=>{if(event.key!=="Tab")return;const items=Array.from(overlay.querySelectorAll("a,button")).filter(item=>!item.disabled);if(!items.length)return;const first=items[0],last=items[items.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}});
+      document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!overlay.hidden)closeMenu()});
+      const filters=Array.from(document.querySelectorAll("[data-filter]")),cards=Array.from(document.querySelectorAll(".work-card"));
+      filters.forEach(button=>button.addEventListener("click",()=>{const category=button.dataset.filter;filters.forEach(item=>item.setAttribute("aria-pressed",String(item===button)));cards.forEach(card=>{card.hidden=category!=="all"&&card.dataset.category!==category})}));
+      const updateProgress=()=>{const max=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);root.style.setProperty("--progress",String(Math.max(0,Math.min(1,window.scrollY/max))))};
+      window.addEventListener("scroll",updateProgress,{passive:true});window.addEventListener("resize",updateProgress,{passive:true});updateProgress();
+      if("IntersectionObserver" in window){const revealObserver=new IntersectionObserver((entries,observer)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(item=>revealObserver.observe(item));const links=Array.from(document.querySelectorAll("[data-nav]"));const navObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting)return;links.forEach(link=>{if(link.dataset.nav===entry.target.id)link.setAttribute("aria-current","location");else link.removeAttribute("aria-current")})}),{rootMargin:"-25% 0px -57% 0px",threshold:0});document.querySelectorAll("[data-chapter]").forEach(section=>navObserver.observe(section))}else{document.querySelectorAll(".reveal").forEach(item=>item.classList.add("is-visible"))}
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)root.dataset.motion="off";
+    })();
+  </script>
+</body>
+</html>
