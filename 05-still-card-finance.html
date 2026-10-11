@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A polished, responsive finance-card product concept with an interactive palette switcher and clear sample-only disclosures.">
+<meta name="theme-color" content="#e9ecea">
+<title>Still — Soft Finance Card Concept</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{margin:0;min-width:320px;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;font-synthesis:none;text-rendering:optimizeLegibility}
+img,svg{max-width:100%}
+img{display:block}
+button,input,select,textarea{font:inherit}
+a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.2em}
+button{touch-action:manipulation}
+:focus-visible{outline:3px solid var(--focus,#2357d6);outline-offset:4px}
+[hidden]{display:none!important}
+.skip-link{position:absolute;z-index:999;inset-block-start:1rem;inset-inline-start:1rem;transform:translateY(-180%);padding:.7rem 1rem;border-radius:.7rem;background:#fff;color:#111;font-weight:700}
+.skip-link:focus{transform:none}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+:root{--ink:#1b2024;--paper:#f2f3f1;--surface:#ffffff;--muted:#6d7478;--line:#d9ddda;--focus:#286a55;--tone:#b9eedf}
+body{background:#e9ecea;color:var(--ink)}
+body[data-tone="mint"]{--tone:#b9eedf}body[data-tone="lilac"]{--tone:#d9c8ff}body[data-tone="peach"]{--tone:#ffcbb8}body[data-tone="sky"]{--tone:#b9d7ff}
+.shell{width:min(100% - 1.4rem,1320px);margin:1rem auto 3rem;background:var(--surface);border:1px solid #d4d9d5;border-radius:1.6rem;overflow:hidden;box-shadow:0 16px 48px #1d2b2410}
+.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding-inline:clamp(1rem,4vw,3.2rem);border-bottom:1px solid #e5e8e4}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-weight:900;letter-spacing:.07em}.brand-mark{width:1.3rem;aspect-ratio:1;border-radius:.35rem;background:linear-gradient(135deg,#74c69d,#baefdd);transform:rotate(45deg)}
+.nav{display:flex;gap:clamp(1rem,3vw,2rem);font-size:.82rem;color:#5c6563}.nav a{text-decoration:none}.nav a:hover{text-decoration:underline}
+.top-action{background:var(--ink);color:white;text-decoration:none;padding:.65rem 1rem;border-radius:999px;font-size:.76rem;font-weight:800}
+.hero{padding:clamp(2.5rem,6vw,5.5rem) clamp(1rem,5vw,4.5rem) 3rem;text-align:center;background:linear-gradient(180deg,#fff 0%,#fafbf9 100%)}
+.kicker{font-size:.73rem;letter-spacing:.17em;text-transform:uppercase;color:#69716e;font-weight:800;margin:0 0 .9rem}
+h1{max-width:13ch;margin:0 auto;font-size:clamp(3.2rem,8vw,7.3rem);line-height:.86;letter-spacing:-.09em;font-weight:780}
+.hero-sub{max-width:34rem;margin:1.1rem auto 0;color:#6c7471}
+.card-stage{position:relative;min-height:390px;display:grid;place-items:center;margin:2rem auto 0;max-width:960px;isolation:isolate}
+.card-glow{position:absolute;width:74%;height:66%;border-radius:50%;background:var(--tone);filter:blur(30px);opacity:.45;z-index:-1;transition:background .25s}
+.sample-card{width:min(100%,520px);aspect-ratio:1.58;border:1px solid #ffffffa6;border-radius:1.25rem;background:linear-gradient(135deg,var(--tone),#ffffff 70%);box-shadow:0 32px 70px #32463c25;padding:clamp(1.2rem,4vw,2rem);display:flex;flex-direction:column;justify-content:space-between;text-align:left;position:relative;overflow:hidden;transition:background .25s,transform .25s}
+.sample-card::before{content:"";position:absolute;width:58%;aspect-ratio:1;border:1px solid #ffffffa8;border-radius:50%;right:-9%;top:-37%;box-shadow:0 0 0 1.7rem #ffffff30,0 0 0 3.5rem #ffffff22}
+.card-head,.card-foot{display:flex;justify-content:space-between;gap:1rem;position:relative;z-index:1}
+.card-head{font-size:.74rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.chip{width:2.6rem;height:1.9rem;border-radius:.45rem;background:linear-gradient(135deg,#dce6dd,#9bab99);border:1px solid #839487;position:relative}.chip::after{content:"";position:absolute;inset:0 50%;border-left:1px solid #839487}.chip::before{content:"";position:absolute;inset:50% 0;border-top:1px solid #839487}
+.card-foot{align-items:end;font-size:.78rem}.card-foot strong{display:block;font-size:1.03rem}.card-foot span{color:#4f5d56}
+.palette{display:flex;justify-content:center;align-items:center;gap:.65rem;flex-wrap:wrap;margin:1rem auto 0}
+.swatch{display:flex;align-items:center;gap:.5rem;min-height:44px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:.4rem .8rem .4rem .45rem;cursor:pointer;color:var(--ink);font-size:.76rem;font-weight:750}
+.swatch-dot{width:1.45rem;aspect-ratio:1;border:1px solid #0002;border-radius:50%;background:var(--swatch)}
+.swatch[aria-pressed="true"]{border-color:#1b2024;box-shadow:0 0 0 1px #1b2024}
+.status{min-height:1.4rem;margin:.65rem 0 0;color:#5b6661;font-size:.78rem}
+.section{padding:clamp(3rem,6vw,5rem) clamp(1rem,5vw,4.5rem);border-top:1px solid #e5e8e4}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:1.5rem}
+.section-head h2{font-size:clamp(2.3rem,5vw,4.5rem);line-height:.9;letter-spacing:-.075em;margin:0}
+.section-head p{max-width:28rem;color:#66706c;margin:0}
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.principle{background:#f6f7f5;border-radius:1rem;padding:1.2rem;min-height:170px;display:flex;flex-direction:column;justify-content:space-between}
+.principle span{font-size:.72rem;color:#75807a;letter-spacing:.12em;text-transform:uppercase}.principle h3{font-size:1.2rem;margin:.8rem 0 .2rem;letter-spacing:-.03em}.principle p{margin:0;color:#68716c;font-size:.9rem}
+.notice{padding:1rem;border:1px solid #d8e3dd;background:#f2f7f4;border-radius:.8rem;color:#58635d;font-size:.84rem;margin-top:1.2rem}
+footer{padding:1.4rem clamp(1rem,5vw,4.5rem) 2rem;border-top:1px solid #e5e8e4;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:#68716c;font-size:.73rem}footer a{color:inherit}
+@media(max-width:740px){.card-stage{min-height:320px}.principles{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:520px){.shell{margin:.4rem auto 1rem;border-radius:1rem}.topbar{height:auto;padding-block:1rem;flex-wrap:wrap;gap:.8rem}.nav{order:3;width:100%;justify-content:space-between}.top-action{font-size:.7rem}.hero{padding-top:3rem}.card-stage{min-height:250px}.sample-card{aspect-ratio:1.42}.card-head,.card-foot{font-size:.66rem}.card-foot strong{font-size:.9rem}}
+
+.footer-mark{width:1.1rem;height:1.1rem;display:inline-block;vertical-align:middle;color:#3e855f;margin-inline:.3rem}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="shell" id="top"><header class="topbar"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span> STILL / CARD STUDY</a><nav class="nav" aria-label="Main navigation"><a href="#card">Card designs</a><a href="#principles">Principles</a><a href="#about">About this concept</a></nav><a class="top-action" href="#card">Explore the surface ↘</a></header>
+<main id="main">
+<section class="hero" aria-labelledby="hero-title"><p class="kicker">A soft-finance product study</p><h1 id="hero-title">Money, made a little quieter.</h1><p class="hero-sub">A calm visual direction for a card-and-account concept — designed to make the product feel clear, without pretending a real financial service is connected.</p>
+<div class="card-stage" id="card"><div class="card-glow" aria-hidden="true"></div><div class="sample-card" id="sample-card" aria-label="Decorative sample payment card"><div class="card-head"><span>Still / daily</span><span>Sample card</span></div><span class="chip" aria-hidden="true"></span><div class="card-foot"><div><strong>Everyday card</strong><span>Concept only · no account</span></div><strong aria-label="masked sample card number">•••• &nbsp;••••</strong></div></div></div>
+<div class="palette" role="group" aria-label="Choose the card surface"><button class="swatch" type="button" style="--swatch:#b9eedf" data-tone="mint" aria-pressed="true"><span class="swatch-dot" aria-hidden="true"></span>Mint</button><button class="swatch" type="button" style="--swatch:#d9c8ff" data-tone="lilac" aria-pressed="false"><span class="swatch-dot" aria-hidden="true"></span>Lilac</button><button class="swatch" type="button" style="--swatch:#ffcbb8" data-tone="peach" aria-pressed="false"><span class="swatch-dot" aria-hidden="true"></span>Peach</button><button class="swatch" type="button" style="--swatch:#b9d7ff" data-tone="sky" aria-pressed="false"><span class="swatch-dot" aria-hidden="true"></span>Sky</button></div><p class="status" id="palette-status" role="status" aria-live="polite">Mint surface selected.</p></section>
+<section class="section" id="principles" aria-labelledby="principles-title"><div class="section-head"><h2 id="principles-title">A softer kind<br>of interface.</h2><p>The visual system borrows the quiet spacing and tactile colors of the reference while keeping the interaction focused on the sample card.</p></div><div class="principles"><article class="principle"><span>01 / Readability</span><div><h3>Let the detail breathe.</h3><p>Clear labels, generous type, and no tiny account controls.</p></div></article><article class="principle"><span>02 / Choice</span><div><h3>Keep choices visible.</h3><p>Color options are easy to compare and easy to change.</p></div></article><article class="principle"><span>03 / Honesty</span><div><h3>Show what is a sample.</h3><p>Every card here is decorative; no payment service or financial data is involved.</p></div></article></div><p class="notice" id="about">This is a fictional visual product study, not a bank, payment instrument, financial recommendation, or connected account. No card numbers or personal details are real.</p></section>
+</main>
+<footer><span>Soft finance/card landing page concept</span><span>Decorative SVG detail: <a href="https://svgdoodles.com/" target="_blank" rel="noopener noreferrer">SVG Doodles by Mike Andreuzza / Lexingtonthemes · CC BY 3.0</a> <svg class="doodle-vector footer-mark" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 84 87"><path fill="currentColor" d="m42.007 0 .46 40.995 18.2-36.736-17.373 37.134 32.337-25.2L43.867 42.11l40.069-8.674-39.865 9.57 39.865 9.57-40.07-8.674 31.765 25.919L43.294 44.62l17.373 37.134-18.2-36.735-.46 40.994-.46-40.994-18.2 36.735L40.72 44.621l-32.337 25.2 31.764-25.918L.078 52.577l39.865-9.57-39.865-9.57 40.07 8.674L8.382 16.193l32.337 25.2L23.347 4.26l18.2 36.736z"/></svg></span></footer></div>
+
+<script>
+
+(() => {
+  const controls = [...document.querySelectorAll('[data-tone]')];
+  const status = document.getElementById('palette-status');
+  const card = document.getElementById('sample-card');
+  const names = {mint:'Mint',lilac:'Lilac',peach:'Peach',sky:'Sky'};
+  controls.forEach((button) => button.addEventListener('click', () => {
+    document.body.dataset.tone = button.dataset.tone;
+    controls.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+    status.textContent = `${names[button.dataset.tone]} surface selected.`;
+    card.setAttribute('aria-label', `Decorative sample payment card, ${names[button.dataset.tone]} surface`);
+  }));
+})();
+
+</script>
+</body>
+</html>

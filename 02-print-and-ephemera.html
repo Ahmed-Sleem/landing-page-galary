@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A bold editorial landing page for a fictional print and ephemera archive, with original poster compositions and sourced SVG doodles.">
+<meta name="theme-color" content="#171817">
+<title>Paper Is a Place — Print Studies</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{margin:0;min-width:320px;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;font-synthesis:none;text-rendering:optimizeLegibility}
+img,svg{max-width:100%}
+img{display:block}
+button,input,select,textarea{font:inherit}
+a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.2em}
+button{touch-action:manipulation}
+:focus-visible{outline:3px solid var(--focus,#2357d6);outline-offset:4px}
+[hidden]{display:none!important}
+.skip-link{position:absolute;z-index:999;inset-block-start:1rem;inset-inline-start:1rem;transform:translateY(-180%);padding:.7rem 1rem;border-radius:.7rem;background:#fff;color:#111;font-weight:700}
+.skip-link:focus{transform:none}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+
+:root{--ink:#f7f2e8;--night:#171817;--blue:#9dc7d7;--paper:#f1e7d4;--orange:#ef7952;--focus:#9dc7d7}
+body{background:var(--night);color:var(--ink)}
+.wrap{width:min(100% - 2rem,1320px);margin-inline:auto}
+.topbar{height:74px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff30;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.wordmark{font-weight:900;text-decoration:none;letter-spacing:.22em}
+.nav{display:flex;gap:clamp(1rem,3vw,2.3rem)}.nav a{text-decoration:none;color:#c8c5bd}.nav a:hover{color:white}
+.issue{color:#aaa69d;font-variant-numeric:tabular-nums}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.2rem,4vw,4rem);align-items:center;min-height:calc(100svh - 75px);padding-block:clamp(3rem,7vw,6rem)}
+.hero h1{font-size:clamp(4rem,12.4vw,10rem);line-height:.78;letter-spacing:-.095em;margin:0;font-weight:900;text-transform:uppercase}
+.hero h1 span{color:var(--blue)}
+.hero-copy{max-width:27rem;color:#b9b5ac;margin:1.5rem 0 0;font-size:1rem}
+.action{display:inline-flex;margin-top:1.1rem;padding:.75rem 1rem;border:1px solid var(--ink);border-radius:999px;text-decoration:none;font-size:.78rem;font-weight:800;gap:.65rem;align-items:center}
+.action:hover{background:var(--ink);color:var(--night)}
+.collage{position:relative;min-height:480px;display:grid;place-items:center;isolation:isolate}
+.sheet{position:absolute;width:min(76%,390px);aspect-ratio:.74;border:1px solid #211f1d;box-shadow:0 24px 60px #0005;display:flex;flex-direction:column;justify-content:space-between;padding:1.1rem;color:#111;overflow:hidden}
+.sheet-a{background:var(--blue);transform:rotate(-8deg) translate(-13%,4%);z-index:1}
+.sheet-b{background:var(--paper);transform:rotate(5deg) translate(14%,0);z-index:2}
+.sheet-c{background:var(--orange);transform:rotate(-1deg) translate(0,2%);z-index:3;width:min(60%,310px);aspect-ratio:.85}
+.sheet-top{display:flex;justify-content:space-between;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase}
+.sheet-title{font-size:clamp(2rem,4vw,3.8rem);line-height:.84;letter-spacing:-.09em;font-weight:950;text-transform:uppercase}
+.sheet-line{height:1px;background:#111;opacity:.65}
+.sheet-copy{font-family:Georgia,serif;font-size:.85rem;max-width:15rem;line-height:1.2}
+.sheet-art{position:absolute;right:8%;bottom:10%;width:24%;color:#111;transform:rotate(10deg)}
+.sheet-b .sheet-art{width:28%;right:5%;bottom:12%;color:#153a6c}
+.sheet-c .sheet-art{width:30%;right:4%;bottom:10%;color:#111}
+.hero-mark{position:absolute;z-index:4;right:4%;top:9%;width:15%;color:var(--blue);transform:rotate(16deg)}
+.section{padding-block:clamp(4rem,8vw,7rem);border-top:1px solid #ffffff30}
+.section-header{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:2rem}
+.section-header h2{margin:0;font-size:clamp(2.8rem,7vw,6rem);line-height:.86;letter-spacing:-.08em;text-transform:uppercase}
+.section-header p{max-width:25rem;color:#b9b5ac;margin:0}
+.collection{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.print-card{background:#222422;border:1px solid #ffffff2e;padding:.7rem;border-radius:.25rem}
+.poster{min-height:330px;aspect-ratio:.82;display:flex;flex-direction:column;justify-content:space-between;padding:1rem;color:#131313;overflow:hidden;position:relative}
+.poster-a{background:#9dc7d7}.poster-b{background:#e8dfcf}.poster-c{background:#df704e}
+.poster h3{font-size:clamp(2rem,4vw,3.3rem);line-height:.84;letter-spacing:-.085em;text-transform:uppercase;margin:1rem 0;font-weight:950}
+.poster p{font-size:.78rem;max-width:14rem;font-weight:700}
+.poster svg{position:absolute;right:7%;bottom:6%;width:25%;color:#161616}
+.card-meta{padding:.9rem .3rem .35rem;display:flex;justify-content:space-between;gap:1rem;color:#b9b5ac;font-size:.73rem;letter-spacing:.1em;text-transform:uppercase}
+.print-card details{margin:.6rem .2rem 0;color:#d3cfc7;font-size:.86rem}
+.print-card summary{cursor:pointer;min-height:36px;font-weight:750}
+.print-card details p{margin:.5rem 0 1rem;color:#b9b5ac}
+.note-strip{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1rem 0;border-block:1px solid #ffffff30;color:#b9b5ac;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}
+footer{padding:2rem 0 3rem;color:#a8a39a;font-size:.75rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer a{color:inherit}
+@media(max-width:850px){.hero{grid-template-columns:1fr;min-height:auto}.collage{min-height:440px}.collection{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.topbar{height:auto;padding-block:1rem;gap:.7rem;flex-wrap:wrap}.nav{order:3;width:100%;justify-content:space-between}.hero h1{font-size:clamp(4rem,18vw,6rem)}.collage{min-height:370px}.sheet{width:75%}.sheet-c{width:61%}.section-header{align-items:flex-start;flex-direction:column}.collection{grid-template-columns:1fr}.poster{min-height:290px}}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="topbar"><a class="wordmark" href="#top">PAPER / STUDY</a><nav class="nav" aria-label="Main navigation"><a href="#collection">Print index</a><a href="#method">Material notes</a><a href="#about">About</a></nav><span class="issue">Independent studies · 2026</span></header>
+<main id="main">
+<section class="hero" id="top" aria-labelledby="title">
+  <div><p class="issue">Ink, paper, type — arranged by hand</p><h1 id="title">Print<br>is a <span>place.</span></h1><p class="hero-copy">A small collection of graphic experiments made for the page, the wall, and the drawer you keep going back to.</p><a class="action" href="#collection">Open the print index <span aria-hidden="true">↘</span></a></div>
+  <div class="collage" aria-label="A layered composition of original typographic poster studies">
+    <div class="sheet sheet-a"><div class="sheet-top"><span>Set 01</span><span>Print / 2026</span></div><div class="sheet-title">A shape<br>for the<br>everyday</div><div class="sheet-line"></div><div class="sheet-copy">Make room for the things that hold still.</div><svg class="doodle-vector sheet-art" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 99 91"><path stroke="currentColor" stroke-linecap="round" stroke-width="1.836" d="M46.59 90c-14.328-7.42-24.922-14.178-33.18-27.98C9 54.65 4.916 47.013 2.69 38.66-.54 26.53.795 10.386 12.99 3.53 28.14-4.986 49.2 9.316 45.285 26.77c-.121.542-1.643 3.86-.855 2.02 4.242-9.907 16.833-19.04 26.718-22.303 15.64-5.163 26.637 3.146 26.043 19.577-.429 11.873-8.72 25.831-16.996 33.973-9.76 9.603-22.88 15.366-29.766 27.536"/></svg></div>
+    <div class="sheet sheet-b"><div class="sheet-top"><span>Fold / unfold</span><span>Vol. 02</span></div><div class="sheet-title">Cut<br>fold<br>repeat</div><div class="sheet-line"></div><div class="sheet-copy">A note on repetition, rhythm, and the useful accident.</div><svg class="doodle-vector sheet-art" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 83"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M3.233 26.751C15.223 15.96 30.46 1.601 47.888 1.5c9.943-.058 14.487 8.287 14.286 17.268-.49 21.898-22.13 42.988-38.273 55.1-3.954 2.967-10.354 7.744-15.825 7.412-7.656-.465-6.711-9.602-4.746-14.6 4.52-11.495 16.599-18.574 27.23-23.638 4.23-2.015 3.183-1.941-.327.119-7.5 4.401-14.931 10.188-20.703 16.7C7.57 62.073-.792 74.723 8.39 73.572c6.364-.798 11.972-8.537 15.038-13.486 2.24-3.613 5.75-13.499-2.498-8.506-2.335 1.413-17.11 13.589-12.279 17.73 5.934 5.086 18.565-8.783 21.41-12.65 8.182-11.128-5.906-4.099-10.046.323-1.87 1.997-10.681 20.04-3.448 13.433 3.022-2.76 6.417-6.853 7.345-10.956.867-3.836-2.911-5.96-5.905-3.695-4.193 3.174-4.156 8.991-2.686 13.26"/></svg></div>
+    <div class="sheet sheet-c"><div class="sheet-top"><span>Loose print</span><span>03</span></div><div class="sheet-title">Keep<br>the<br>mark.</div><div class="sheet-line"></div><div class="sheet-copy">Paper studies, no client brief attached.</div><svg class="doodle-vector sheet-art" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 79 78"><path fill="currentColor" fill-rule="evenodd" d="M38.261 2.878c0 2.785.785 10.326.9 10.326.116 0 .901-7.541.901-10.326 0-2.784-.785-2.878-.9-2.878-.116 0-.9.094-.9 2.878m2.86 29.331c0-6.654-1.704-19.005-1.955-19.005-.25 0-1.955 12.35-1.955 19.005q0 .167.002.33-.422-.457-.928-.964c-4.695-4.695-14.61-12.206-14.787-12.029-.177.178 7.334 10.093 12.028 14.787a27 27 0 0 0 2.267 2.05c-.917-.136-2.088-.222-3.584-.222-6.654 0-19.005 1.704-19.005 1.955s12.35 1.955 19.005 1.955c.913 0 1.704-.032 2.391-.088q-.505.461-1.074 1.03c-4.694 4.694-12.205 14.609-12.028 14.786s10.092-7.334 14.787-12.028q.553-.554 1.004-1.047c-.05.657-.078 1.408-.078 2.265 0 6.655 1.704 19.005 1.955 19.005s1.955-12.35 1.955-19.005c0-.865-.028-1.622-.08-2.283q.46.501 1.022 1.065c4.694 4.694 14.61 12.205 14.787 12.028s-7.334-10.092-12.028-14.787q-.57-.567-1.074-1.029c.66.05 1.413.08 2.276.08 6.639 0 18.96-1.7 18.96-1.951 0-.25-12.321-1.95-18.96-1.95-1.423 0-2.551.077-3.446.203a27 27 0 0 0 2.244-2.032c4.694-4.694 12.205-14.61 12.028-14.787S46.757 26.88 42.063 31.575q-.516.516-.943.98zm-2.86 42.111c0-2.784.785-10.326.9-10.326.116 0 .901 7.542.901 10.326s-.785 2.878-.9 2.878c-.116 0-.9-.093-.9-2.878m-25.057-36.2c0 .116-7.541.9-10.326.9-2.784 0-2.878-.784-2.878-.9s.094-.9 2.878-.9 10.326.785 10.326.9m62.083.894c-2.778 0-10.302-.783-10.302-.898s7.524-.898 10.302-.898 2.871.783 2.871.898-.093.898-2.871.898m-18.44 16.79c-.082.081 4.685 5.955 6.65 7.92 1.964 1.964 2.583 1.476 2.665 1.394.081-.081.569-.7-1.396-2.665s-7.838-6.731-7.92-6.65m-41.996 7.92c1.965-1.965 6.731-7.839 6.65-7.92-.082-.082-5.955 4.685-7.92 6.649s-1.477 2.584-1.395 2.665c.081.082.701.57 2.665-1.395m6.65-44.182c.081-.081-4.685-5.955-6.65-7.92-1.964-1.964-2.584-1.476-2.665-1.395-.082.082-.57.701 1.395 2.666s7.838 6.73 7.92 6.65m41.995-7.92c-1.964 1.965-6.73 7.839-6.65 7.92.082.082 5.956-4.685 7.92-6.65 1.965-1.964 1.477-2.583 1.396-2.665s-.701-.569-2.666 1.395" clip-rule="evenodd"/></svg></div>
+    <svg class="doodle-vector hero-mark" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 147 148"><path fill="currentColor" d="M77.055.148h-7.109v147h7.109z"/><path fill="currentColor" d="M147 70.094H0v7.108h147z"/><path fill="currentColor" d="m24.028 19.158-5.026 5.026 103.944 103.944 5.026-5.027z"/><path fill="currentColor" d="M122.946 19.156 19.002 123.1l5.026 5.026L127.972 24.183z"/><path fill="currentColor" d="m6.793 42.648-2.682 6.583 136.137 55.464 2.682-6.583z"/><path fill="currentColor" d="M97.963 4.27 42.5 140.406l6.583 2.682L104.546 6.952z"/><path fill="currentColor" d="M140.41 42.896 4.038 97.786l2.654 6.594 136.372-54.89z"/><path fill="currentColor" d="m49.312 4.189-6.594 2.653 54.875 136.372 6.594-2.653z"/></svg>
+  </div>
+</section>
+<section class="section" id="collection" aria-labelledby="collection-title">
+  <div class="section-header"><h2 id="collection-title">Paper<br>gestures.</h2><p>Type, shape, and sourced doodle marks sit together as a set of self-directed print studies — the layouts are original, and no archival object is reproduced.</p></div>
+  <div class="collection">
+    <article class="print-card"><div class="poster poster-a"><div class="sheet-top"><span>Poster 01</span><span>Blue / black</span></div><h3>Make a<br>little<br>noise</h3><p>TYPE NOTES / SHEET A</p><svg class="doodle-vector" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 115 82"><path stroke="currentColor" stroke-width=".875" d="M61.611.376c.594 4.125.956 8.26 1.768 12.375M58.075 2.144v13.26M51.888 3.028v10.608m-7.072-9.724v11.599M37.745 3.912v13.259M29.79 9.216c.147 2.656.032 4.852 1.717 7.194.355.494.818 1.092.934 1.645m-7.955-8.839c.513 3.102 3.77 11.99 2.25 9.183m-8.438-6.531c.378 1.948.237 6.477 3.536 7.955m-7.956-5.303c1.334 4.277 3.528 7.503 5.304 11.49M5.039 37.502l6.188.884M.62 43.69c5.008-.283 10.013-.885 15.026-.885M1.503 48.95c5.536.044 11.37.243 16.795-.841M5.039 56.065c4.212-.3 9.298-.322 13.259-1.768M6.807 64.904c4.146-.754 8.13-1.667 12.375-1.768m-5.304 9.724c4.389-1.828 9.113-3.274 12.375-6.188M21.834 79.93c3.846-3.8 7.084-8.014 9.723-12.374m4.42.884c-1.526 4.118-2.627 8.335-4.42 12.375m8.436-13.259c-.659 3.434-1.546 6.879-1.332 10.318.01.163 1.204 2.175 1.736 2.051m5.359-11.485c.068 1.958-.666 11.327 1.712 12.375m6.188-13.259c.474 3.552.859 7.15 1.703 10.675.086.36.23 1.7.948 1.7m5.304-13.259a353 353 0 0 0 2.652 6.187m.884-7.955c2.942 3.473 5.668 7.284 8.84 10.607m-.001-10.607c.29.152 12.079 7.218 13.26 6.06m-5.304-9.596c3.14 1.712 9.52 6.842 14.143 7.072m-7.072-12.375c3.856 1.121 7.858 2.14 11.491 3.535M69.567 2.144v13.26m4.419-10.608c-.344 4.45-.669 8.886-1.768 13.26M93.433 45.43c7.124.045 14.198.153 21.214-.857M95.2 49.877c5.645.849 11.125 1.341 16.796 1.768m-18.563 0c5.23 2.572 10.504 4.818 15.911 7.071m-20.331 0q6.624 3.544 13.259 7.072m-20.33-.884 7.071 5.304M70.45 64.02l11.492 11.49m-23.867-7.954 6.188 12.375M50.12 67.556V79.93M5.039 58.716c5.937.7 10.881 1.217 16.795.627m55.688-42.172c2.334-2.693 4.633-6.697 7.955-8.84m-7.955 14.144c3.393-2.318 7.524-4.445 10.607-7.072m-6.187 9.724c4.379-2.644 9.07-5.067 13.259-7.956m-7.956 10.607c4.658-.987 9.28-2.108 14.143-2.651m-10.607 7.071c4.39-.479 8.968-.692 13.259-1.768m-12.375 8.375c5.77-.016 11.932-1.19 17.679.465M95.2 42.805a438 438 0 0 0 13.26 1.768M5.039 35.734c4.741-3.255 6.289-3.334 10.984-1.213 1.165.526 2.943 1.73 4.043.732M5.039 27.778c3.497 1.372 7.48 2.364 10.607 4.42M5.923 21.59a240 240 0 0 0 8.84 7.072"/></svg></div><div class="card-meta"><span>01 / Broadside</span><span>2026</span></div><details><summary>Open process note</summary><p>A high-contrast page study built around scale shifts and generous margins.</p></details></article>
+    <article class="print-card"><div class="poster poster-b"><div class="sheet-top"><span>Poster 02</span><span>Paper / ink</span></div><h3>Keep<br>the<br>good bits</h3><p>FRAGMENTS / SHEET B</p><svg class="doodle-vector" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 110 33"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M.734 32.043C28.12 20.863 58.321 14.416 87.7 11.227c5.992-.65 12.087-1.094 17.982-2.4.884-.197 1.985-.376 2.576-1.115"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M105.295 7.554c-2.044-1.14-7.225-2.823-7.896-5.537-.023-.092-.09-.7-.062-.638.837 1.824.263 5.941.084 7.943-.047.528-1.025 6.06-.56 5.827 4.374-2.187 8.5-6.316 12.581-9.096"/></svg></div><div class="card-meta"><span>02 / Ephemera</span><span>2026</span></div><details><summary>Open process note</summary><p>Small labels, one strong phrase, and an intentionally off-center composition.</p></details></article>
+    <article class="print-card"><div class="poster poster-c"><div class="sheet-top"><span>Poster 03</span><span>Orange / ink</span></div><h3>Not<br>perfect.<br>Print.</h3><p>PRESS TEST / SHEET C</p><svg class="doodle-vector" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 106 109"><path stroke="currentColor" stroke-width=".875" d="M70.842 9.867c-11.18-4.26-21.002-8.75-32.387-3.952a113 113 0 0 0-11.526 5.63c-8.471 4.768-15.69 12.582-19.47 21.545-9.344 22.15.353 53.453 20.517 66.118 10.828 6.801 26.83 5.841 38.844 3.941 16.153-2.554 29.402-13.018 33.763-29.127 8.323-30.747-21.855-69.84-54.924-64.487-25.497 4.126-30.816 37.484-29.62 58.377 1.925 33.644 46.464 48.821 71.987 28.331C121.788 69.141 98.972 16.627 63.66 3.697 47.542-2.205 27.226 2.67 13.4 11.732 3.844 17.992-.323 26.838 1.652 38.29c4.51 26.158 19.729 49.463 35.246 70.346"/></svg></div><div class="card-meta"><span>03 / Type test</span><span>2025</span></div><details><summary>Open process note</summary><p>A playful study of imperfect edges and dense type, shown as a digital preview.</p></details></article>
+  </div>
+</section>
+<section class="section" id="method" aria-labelledby="method-title"><div class="section-header"><h2 id="method-title">A note on<br>the process.</h2><p>Physical design asks the screen to become something else: a surface that folds, takes ink, and keeps a mark. These pages borrow that material logic while remaining honest about being digital previews.</p></div><div class="note-strip"><span>Paper first</span><span>One ink can be enough</span><span>Leave a little room</span><span>Keep the test print</span></div></section>
+<section class="section" id="about"><div class="section-header"><h2>Designed to<br>be held.</h2><p>This is a concept landing page for a print-focused graphic design archive. All names and copy are original sample content; the referenced image is used for visual direction only.</p></div></section>
+</main>
+<footer><span>Print & ephemera concept · 2026</span><span>Decorative SVG artwork: <a href="https://svgdoodles.com/" target="_blank" rel="noopener noreferrer">SVG Doodles by Mike Andreuzza / Lexingtonthemes · CC BY 3.0</a></span></footer>
+</div>
+
+
+</body>
+</html>
